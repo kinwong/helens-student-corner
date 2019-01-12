@@ -1,0 +1,44 @@
+<mat-card class="practice-card">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+    <mat-card-title>
+    </mat-card-title>
+  </mat-card-header>
+  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+  <mat-card-content>
+    <mat-form-field class="practice-control-panel">
+      <label>Course:</label>
+      <mat-select [(value)]="courseSelected">
+        <mat-option *ngFor="let course of courses" value="course">
+          {{course.name}}
+        </mat-option>
+      </mat-select>
+      <button mat-raised-button color="primary" (click)="speech.speak()">Start</button>
+      <button mat-raised-button color="primary" (click)="speech.speak()">Pause</button>
+      <button mat-raised-button color="primary" (click)="speech.speak()">Resume</button>
+      <button mat-raised-button color="primary" (click)="speech.speak()">Stop</button>
+    </mat-form-field>
+
+    <p>{{textToRead}}</p>
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <p>FIRST STEP</p>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+  </mat-card-content>
+  <mat-card-actions>
+
+  </mat-card-actions>
+</mat-card>
