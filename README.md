@@ -1,8 +1,4 @@
-# Angular-Express-Typescript-Starter
-
-A simple starter with frontend using Angular 4+ and API server with NodeJS and Express framework. Typescript is configured for both Frontend and API server.
-
-Frontend is created using angular-cli. So we can use all of the angular-cli commands from `client` folder.
+# Helen Wong Music
 
 This starter can be used in two different ways:
 1. Separate Frontend and API server.
