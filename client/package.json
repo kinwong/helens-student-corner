@@ -1,5 +1,5 @@
 {
-  "name": "abrsm-piano-practice",
+  "name": "helen-wong-music-angular-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -40,7 +40,6 @@
     "@angular/language-service": "~7.2.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/moment": "^2.13.0",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
