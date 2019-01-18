@@ -6,7 +6,7 @@ export enum StateType {
   stopped,
   playing,
   paused
-};
+}
 
 @Component({
   selector: 'app-practice',
@@ -23,10 +23,17 @@ export class PracticeComponent implements OnInit, OnDestroy {
   public courseSelected: Course;
   public state: StateType;
 
+  public get playButtonText() {
+    if (this.state === StateType.paused) {
+      return 'Resume';
+    } else {
+      return 'Start';
+    }
+  }
+  public get canSelectCourse(): boolean { return this.state === StateType.stopped; }
   public get canPlay(): boolean { return this.courseSelected && (this.state === StateType.paused || this.state === StateType.stopped); }
   public get canPause(): boolean { return this.state === StateType.playing; }
   public get canStop(): boolean { return this.state === StateType.playing; }
-
 
   constructor(public speech: SpeechService) {
     this.courses = courses;

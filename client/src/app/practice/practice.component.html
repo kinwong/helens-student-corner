@@ -7,14 +7,15 @@
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content class="practice-control-panel">
     <mat-form-field>
-      <mat-select id="select-course" placeholder="Select Course to play" [(value)]="courseSelected">
+      <mat-select id="select-course" placeholder="Select Course to play" 
+        [disabled]="!canSelectCourse" [(value)]="courseSelected">
         <mat-option *ngFor="let course of courses" value="course">
           {{course.name}} - {{course.description}}
         </mat-option>
       </mat-select>
       <button mat-raised-button color="primary" 
         [disabled]="!canPlay" (click)="play()">
-        Start<mat-icon>play_arrow</mat-icon>
+        {{playButtonText}}<mat-icon>play_arrow</mat-icon>
       </button>
       <button mat-raised-button color="primary" 
         [disabled]="!canPause" (click)="pause()">
