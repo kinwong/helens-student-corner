@@ -4,17 +4,13 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav role="navigation">
     <mat-nav-list>
-      <a mat-list-item>
-        <mat-icon class="icon">input</mat-icon>
-        <span class="label">Login</span>
-      </a>
       <a mat-list-item routerLink="/">
         <mat-icon class="icon">home</mat-icon>
         <span class="label">Home</span>
       </a>
-      <a mat-list-item routerLink="/dashboard">
+      <a mat-list-item routerLink="/practice">
         <mat-icon class="icon">dashboard</mat-icon>
-        <span class="label">Dashboard</span>
+        <span class="label">Practice</span>
       </a>
       <a mat-list-item routerLink="/settings">
         <mat-icon class="icon">settings</mat-icon>
@@ -31,7 +27,8 @@
       </div>
       <div>
         <a routerLink="/">
-          Helen Wong Music
+          <mat-icon class="icon">music_video</mat-icon>
+          <span class="label">Helen Wong Music</span>
         </a>
       </div>
       <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>

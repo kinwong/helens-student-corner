@@ -10,7 +10,6 @@ a {
   text-decoration: none;
   color: white;
 }
-
 a:hover,
 a:active {
   color: lightgray;
@@ -25,17 +24,11 @@ a:active {
 
 .icon {
   display: inline-block;
-  height: 30px;
-  margin: 0 auto;
-  padding-right: 5px;
+  //height: 60px;
   text-align: center;
   vertical-align: middle;
-  width: 15%;
 }
-
 .label {
   display: inline-block;
-  line-height: 30px;
-  margin: 0;
-  width: 85%;
+  vertical-align: middle;
 }
