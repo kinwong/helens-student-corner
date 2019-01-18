@@ -7,17 +7,24 @@
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content class="practice-control-panel">
     <mat-form-field>
-      <mat-select  placeholder="Course to play" [(value)]="courseSelected">
+      <mat-select id="select-course" placeholder="Select Course to play" [(value)]="courseSelected">
         <mat-option *ngFor="let course of courses" value="course">
           {{course.name}} - {{course.description}}
         </mat-option>
       </mat-select>
-      <button mat-raised-button color="primary" (click)="speech.speak()">Start</button>
-      <button mat-raised-button color="primary" (click)="speech.speak()">Pause</button>
-      <button mat-raised-button color="primary" (click)="speech.speak()">Resume</button>
-      <button mat-raised-button color="primary" (click)="speech.speak()">Stop</button>
+      <button mat-raised-button color="primary" 
+        [disabled]="!canPlay" (click)="play()">
+        Start<mat-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" 
+        [disabled]="!canPause" (click)="pause()">
+        Pause<mat-icon>pause_circle_online</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" 
+      [disabled]="!canStop" (click)="stop()">
+        Stop<mat-icon>stop</mat-icon>
+      </button>
     </mat-form-field>
-
     <p>{{textToRead}}</p>
     <mat-horizontal-stepper linear="true" #stepper>
       <mat-step [stepControl]="firstFormGroup">
