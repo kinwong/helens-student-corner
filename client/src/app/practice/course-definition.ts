@@ -70,13 +70,13 @@ const minorScaleExercise: Exercise = {
 export const courses: Course[] = [
   {
     name: 'Level 1 Scale Practice',
-    description: 'Level 1 Scale Practice',
+    description: 'Practice basic',
     greeting: 'Good afternoon, please be seated, and get your stool adjusted, we can start when you\'re ready.',
     exercises: [majorScaleExercise, minorScaleExercise]
   },
   {
     name: 'Level 2 Scale Practice',
-    description: 'Level 2 Scale Practice',
+    description: 'Practice basic again',
     greeting: 'Good afternoon, please be seated, and get your stool adjusted, we can start when you\'re ready.',
     exercises: [majorScaleExercise, minorScaleExercise]
   }

@@ -5,12 +5,11 @@
     </mat-card-title>
   </mat-card-header>
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-  <mat-card-content>
-    <mat-form-field class="practice-control-panel">
-      <label>Course:</label>
-      <mat-select [(value)]="courseSelected">
+  <mat-card-content class="practice-control-panel">
+    <mat-form-field>
+      <mat-select  placeholder="Course to play" [(value)]="courseSelected">
         <mat-option *ngFor="let course of courses" value="course">
-          {{course.name}}
+          {{course.name}} - {{course.description}}
         </mat-option>
       </mat-select>
       <button mat-raised-button color="primary" (click)="speech.speak()">Start</button>
@@ -20,7 +19,7 @@
     </mat-form-field>
 
     <p>{{textToRead}}</p>
-    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-horizontal-stepper linear="true" #stepper>
       <mat-step [stepControl]="firstFormGroup">
         <p>FIRST STEP</p>
       </mat-step>

@@ -1,13 +1,10 @@
 .practice-card {
   margin: 10pt;
 }
-
 .practice-control-panel {
   display: flex;
   flex-direction: column;
 }
-
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+button {
+  margin: 2pt;
 }
