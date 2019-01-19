@@ -5,28 +5,26 @@
     </mat-card-title>
   </mat-card-header>
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-  <mat-card-content class="practice-control-panel">
-    <mat-form-field>
-      <mat-select id="select-course" placeholder="Select Course to play" 
-        [disabled]="!canSelectCourse" [(value)]="courseSelected">
-        <mat-option *ngFor="let course of courses" value="course">
-          {{course.name}} - {{course.description}}
-        </mat-option>
-      </mat-select>
-      <button mat-raised-button color="primary" 
-        [disabled]="!canPlay" (click)="play()">
+  <mat-card-content>
+
+    <mat-select id="select-course" placeholder="Select Course to play" [disabled]="!canSelectCourse" [(value)]="courseSelected">
+      <mat-option *ngFor="let course of courses" value="course">
+        {{course.name}} - {{course.description}}
+      </mat-option>
+    </mat-select>
+
+    <div class="practice-control-panel">
+      <button mat-raised-button color="primary" [disabled]="!canPlay" (click)="play()">
         {{playButtonText}}<mat-icon>play_arrow</mat-icon>
       </button>
-      <button mat-raised-button color="primary" 
-        [disabled]="!canPause" (click)="pause()">
+      <button mat-raised-button color="primary" [disabled]="!canPause" (click)="pause()">
         Pause<mat-icon>pause_circle_online</mat-icon>
       </button>
-      <button mat-raised-button color="primary" 
-      [disabled]="!canStop" (click)="stop()">
+      <button mat-raised-button color="primary" [disabled]="!canStop" (click)="stop()">
         Stop<mat-icon>stop</mat-icon>
       </button>
-    </mat-form-field>
-    <p>{{textToRead}}</p>
+    </div>
+
     <mat-horizontal-stepper linear="true" #stepper>
       <mat-step [stepControl]="firstFormGroup">
         <p>FIRST STEP</p>
