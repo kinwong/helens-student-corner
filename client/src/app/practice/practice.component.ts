@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { courses, Exercise, Course } from './course-definition';
-import { SpeechService } from '../services/speech.service';
+import { TextToSpeechService } from '../services/google/text-to-speech.service';
 
 export enum StateType {
   stopped,
@@ -35,7 +35,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   public get canPause(): boolean { return this.state === StateType.playing; }
   public get canStop(): boolean { return this.state === StateType.playing; }
 
-  constructor(public speech: SpeechService) {
+  constructor(private _speech: TextToSpeechService) {
     this.courses = courses;
     this.state = StateType.stopped;
   }
@@ -48,6 +48,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
   public play(): void {
     this.state = StateType.playing;
+    this._speech.speak('Hello there').subscribe(_ => {
+      console.log('Done!');
+    });
   }
   public pause(): void {
     this.state = StateType.paused;

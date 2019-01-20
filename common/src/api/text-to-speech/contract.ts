@@ -13,7 +13,7 @@ export enum SsmlVoiceGender {
  * @enum {number}
  */
 export enum AudioEncoding {
-  unspecified = 'AUDIO_ENCODING_UNSPECIFIED',
+  Unspecified = 'AUDIO_ENCODING_UNSPECIFIED',
   Linear16 = 'LINEAR16',
   MP3 = 'MP3',
   Ogg = 'OGG_OPUS'
@@ -38,14 +38,14 @@ export interface Voice {
  * @interface SynthesisInput
  */
 export interface SynthesisInput {
-  text: string,
-  ssml: string
+  text?: string,
+  ssml?: string
 }
 
 export interface VoiceSelectionParams {
   languageCode: string,
-  name: string,
-  ssmlGender: SsmlVoiceGender
+  name?: string,
+  ssmlGender?: SsmlVoiceGender
 }
 
 /**
@@ -56,10 +56,10 @@ export interface VoiceSelectionParams {
 export interface AudioConfig {
   // Required. The format of the requested audio byte stream.
   audioEncoding: AudioEncoding,
-  speakingRate: number,
-  pitch: number,
-  volumeGainDb: number,
-  sampleRateHertz: number
+  speakingRate?: number,
+  pitch?: number,
+  volumeGainDb?: number,
+  sampleRateHertz?: number
 }
 
 

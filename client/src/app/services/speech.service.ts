@@ -7,16 +7,6 @@ import { NGXLogger } from 'ngx-logger';
 
 import Speech from 'speak-tts';
 
-export type LanguageCode = 'en-US' | 'en-B';
-
-interface Voice {
-  volume: number;
-  lang: string;
-  rate: number;
-  pitch: number;
-  listeners: any;
-}
-
 @Injectable({
   providedIn: 'root'
 })

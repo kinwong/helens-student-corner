@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+  public genderSelected: string;
 
   constructor() { }
-  public genderSelected: string;
 
   ngOnInit() {
   }
