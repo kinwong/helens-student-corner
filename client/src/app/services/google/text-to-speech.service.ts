@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
 
-import {SynthesizeRequest, SynthesizeResponse, AudioEncoding } from '../../../api/text-to-speech/contract';
+import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender } from '../../../api/text-to-speech/contract';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,7 @@ export class TextToSpeechService {
   constructor(private _http: HttpClient) {
   }
   public speak(text: string): Observable<boolean> {
+    console.log('speaking ' + text);
     return this.requestSpeech(text)
       .pipe(concatMap(mp3 => {
         return this.play(mp3);
@@ -29,6 +30,7 @@ export class TextToSpeechService {
       },
       voice: {
         languageCode: 'en-GB',
+        ssmlGender: SsmlVoiceGender.Male
       },
       audioConfig: {
         audioEncoding: AudioEncoding.MP3
@@ -41,7 +43,7 @@ export class TextToSpeechService {
   }
   private post(call: string, request: any): Observable<any> {
     return this._http.post(
-      `{apiBaseUrl}/{apiVersion}/{call}?key={apiKey}`, request);
+      `${TextToSpeechService.apiBaseUrl}/${TextToSpeechService.apiVersion}/${call}?key=${TextToSpeechService.apiKey}`, request);
   }
   private play(mp3: string): Observable<boolean> {
     const audio = new Audio('data:audio/mp3;base64,' + mp3);

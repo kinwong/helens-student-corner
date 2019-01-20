@@ -48,7 +48,14 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
   public play(): void {
     this.state = StateType.playing;
-    this._speech.speak('Hello there').subscribe(_ => {
+    const toSpeak =
+    'Good afternoon, please be seated, and get your stool adjusted, we can start when you\'re ready.' +
+    'C major left hand. ' +
+    'C major right hand. ' +
+    'C major both hand. ';
+
+    this._speech.speak(toSpeak
+      ).subscribe(_ => {
       console.log('Done!');
     });
   }
