@@ -26,11 +26,12 @@ export class TextToSpeechService {
   requestSpeech(text: string): Observable<string> {
     const request: SynthesizeRequest = {
       input: {
-        text: text
+        ssml: `<speak>${text}</speak>`
       },
       voice: {
         languageCode: 'en-GB',
-        ssmlGender: SsmlVoiceGender.Male
+        name: 'en-GB-Wavenet-C',
+        ssmlGender: SsmlVoiceGender.Female
       },
       audioConfig: {
         audioEncoding: AudioEncoding.MP3
