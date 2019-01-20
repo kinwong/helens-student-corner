@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 import { AppRouters } from './app.routes';
@@ -28,6 +29,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    MatDividerModule,
 
     LoggerModule.forRoot({
       serverLoggingUrl: '/api/logs',
