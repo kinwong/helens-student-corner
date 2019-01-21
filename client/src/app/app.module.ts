@@ -1,18 +1,21 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgModule } from '@angular/core';
 
 import { MaterialModule } from './material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatDividerModule} from '@angular/material/divider';
-
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppRouters } from './app.routes';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SettingsComponent } from './settings/settings.component';
+
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
@@ -24,12 +27,14 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     SettingsComponent,
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    BrowserModule,
     FlexLayoutModule,
+    HttpClientModule,
     MatDividerModule,
+    MaterialModule,
+    MatInputModule,
+    MatSlideToggleModule,
 
     LoggerModule.forRoot({
       serverLoggingUrl: '/api/logs',
@@ -38,7 +43,9 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     }),
     AppRouters
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

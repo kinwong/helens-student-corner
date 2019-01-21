@@ -1,11 +1,25 @@
 .practice-card {
   margin: 10pt;
 }
-.practice-control-panel {
+
+.control-container {
   display: flex;
   flex-direction: column;
 }
-button {
-  margin: 3pt;
+
+.control-container > * {
+  width: 100%;
+}
+
+.practice-control-panel {
+  padding: 4pt;
+  display: block;
+  text-align: center;
+  flex-direction: column;
+}
+.practice-control-panel > * {
+  width: 20%;
+  min-width: 80pt;
   vertical-align: middle;
+  margin: 2pt;
 }

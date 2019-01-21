@@ -3,20 +3,19 @@
     <mat-card-title>Practice</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-select #selectCourse placeholder="Select Course to play" [disabled]="!canSelectCourse" [(value)]="courseSelected">
-      <mat-option *ngFor="let course of courses; let i=index" value="course">
-        {{i+1}}. {{course.name}} - {{course.description}}
-      </mat-option>
-    </mat-select>
-    <mat-card>
-      <mat-card-content>
-          <mat-divider></mat-divider>
-        <label>Description</label>
-        <div>{{selectCourse?.value?.description}}</div>
-        <mat-divider></mat-divider>
-      </mat-card-content>
-    </mat-card>
-
+    <div class="control-container">
+      <mat-form-field>
+        <mat-select #selectedCourse placeholder="Select Course to play" [disabled]="!canSelectOption" [(value)]="courseSelected">
+          <mat-option *ngFor="let course of courses; let i=index" value="course">
+            {{i+1}}. {{course.name}} - {{course.description}}
+          </mat-option>
+        </mat-select>
+        <!-- <mat-hint align="start">iscjvsdifjwrvie{{courseSelected?.description}}</mat-hint> -->
+      </mat-form-field>
+      <mat-slide-toggle color="primary" [disabled]="!canSelectOption" [(checked)]="showSubtitle">
+        Show subtitle?
+      </mat-slide-toggle>
+    </div>
     <div class="practice-control-panel">
       <button mat-raised-button color="primary" [disabled]="!canPlay" (click)="play()">
         {{playButtonText}}<mat-icon>play_arrow</mat-icon>

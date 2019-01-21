@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { courses, Exercise, Course } from './course-definition';
 import { TextToSpeechService } from '../services/google/text-to-speech.service';
+import { CookieService } from 'ngx-cookie-service';
 
 export enum StateType {
   stopped,
@@ -22,6 +23,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   public courses: Course[];
   public courseSelected: Course;
   public state: StateType;
+  public showSubtitle: boolean;
 
   public get playButtonText() {
     if (this.state === StateType.paused) {
@@ -30,12 +32,16 @@ export class PracticeComponent implements OnInit, OnDestroy {
       return 'Start';
     }
   }
-  public get canSelectCourse(): boolean { return this.state === StateType.stopped; }
+  public get canSelectOption(): boolean { return this.state === StateType.stopped; }
   public get canPlay(): boolean { return this.courseSelected && (this.state === StateType.paused || this.state === StateType.stopped); }
   public get canPause(): boolean { return this.state === StateType.playing; }
   public get canStop(): boolean { return this.state === StateType.playing; }
 
-  constructor(private _speech: TextToSpeechService) {
+  constructor(
+    private _cookies: CookieService,
+    private _speech: TextToSpeechService) {
+
+    this.showSubtitle = false;
     this.courses = courses;
     this.state = StateType.stopped;
   }
@@ -45,7 +51,13 @@ export class PracticeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }
-
+  public palyOrResume(): void {
+    if (this.state === StateType.paused) {
+      this.resume();
+    } else {
+      this.play();
+    }
+  }
   public play(): void {
     this.state = StateType.playing;
     const toSpeak =
@@ -58,6 +70,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
       ).subscribe(_ => {
       console.log('Done!');
     });
+  }
+  public resume(): void {
   }
   public pause(): void {
     this.state = StateType.paused;
