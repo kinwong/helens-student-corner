@@ -2,9 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
+import {Howl} from 'howler';
 
 import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender } from '../../../api/text-to-speech/contract';
 
+export interface MediaControl {
+  /**
+   * Pauses a music.
+   */
+  pause: () => void;
+  resume: () => void;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +23,7 @@ export class TextToSpeechService {
 
   constructor(private _http: HttpClient) {
   }
-  public speak(text: string): Observable<boolean> {
-    console.log('speaking ' + text);
+  public speak(text: string): Observable<MediaControl> {
     return this.requestSpeech(text)
       .pipe(concatMap(mp3 => {
         return this.play(mp3);
@@ -46,12 +53,30 @@ export class TextToSpeechService {
     return this._http.post(
       `${TextToSpeechService.apiBaseUrl}/${TextToSpeechService.apiVersion}/${call}?key=${TextToSpeechService.apiKey}`, request);
   }
-  private play(mp3: string): Observable<boolean> {
-    const audio = new Audio('data:audio/mp3;base64,' + mp3);
+  private play(mp3: string): Observable<MediaControl> {
+    const data = 'data:audio/mp3;base64,' + mp3;
     return Observable.create(observer => {
-        audio.play();
-        observer.next(true);
-        observer.complete(true);
+        const sound = new Howl({
+          src: [data],
+          volume: 1.0,
+          onloaderror: (_, error) => {
+            observer.error(error);
+          },
+          onplayerror: (_, error) => {
+            observer.error(error);
+          },
+          onend: (_) => {
+            observer.complete();
+          }
+        });
+        sound.play();
+        observer.next({
+          pause: sound.pause(),
+          resume: sound.play()
+        });
+        return () => {
+          sound.stop();
+        };
     });
   }
 }
