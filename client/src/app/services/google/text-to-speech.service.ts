@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
 import {Howl} from 'howler';
+import { NGXLogger } from 'ngx-logger';
 
 import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender } from '../../../api/text-to-speech/contract';
 
@@ -21,15 +22,18 @@ export class TextToSpeechService {
   private static apiVersion = 'v1';
   private static apiKey = 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk';
 
-  constructor(private _http: HttpClient) {
+  constructor(
+    private _logger: NGXLogger,
+    private _http: HttpClient) {
   }
   public speak(text: string): Observable<MediaControl> {
+    // tslint:disable-next-line:no-console
+    console.info('Speaking: ' + text);
     return this.requestSpeech(text)
       .pipe(concatMap(mp3 => {
         return this.play(mp3);
       }));
   }
-
   requestSpeech(text: string): Observable<string> {
     const request: SynthesizeRequest = {
       input: {
@@ -59,6 +63,8 @@ export class TextToSpeechService {
         const sound = new Howl({
           src: [data],
           volume: 1.0,
+          onplay: id => this._logger.debug(`play(${id})`),
+          onpause: id => this._logger.debug(`pause(${id})`),
           onloaderror: (_, error) => {
             observer.error(error);
           },
@@ -71,12 +77,10 @@ export class TextToSpeechService {
         });
         sound.play();
         observer.next({
-          pause: sound.pause(),
-          resume: sound.play()
+          pause: () => sound.pause(),
+          resume: () => sound.play()
         });
-        return () => {
-          sound.stop();
-        };
+        return () => sound.stop();
     });
   }
 }

@@ -1,19 +1,27 @@
+import { Voice } from '../../api/text-to-speech/contract';
+
+export interface Speaker {
+  humanName: string;
+  voice: Voice;
+}
+
 export interface Exercise {
   name: string;
   description?: string;
-  greeting: string;
   instruction: string;
   scales: string[];
 }
+
 export interface Course {
   name: string;
   description: string;
-  greeting: string;
+  greetings: string[];
   exercises: Exercise[];
+  valedictions: string[];
 }
+
 const majorScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Major Scales',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'C major left hand',
@@ -56,7 +64,6 @@ const majorScaleExercise: Exercise = {
 };
 const minorScaleExercise: Exercise = {
   name: 'ABRSM Scales Practice - Grade 5 Harmonic Minor Scales',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'A harmonic minor left hand',
@@ -99,7 +106,6 @@ const minorScaleExercise: Exercise = {
 };
 const melodicMinorScaleExercise: Exercise = {
   name: 'ABRSM Scales Practice - Grade 5 Melodic Minor Scales',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'A melodic minor left hand',
@@ -143,7 +149,6 @@ const melodicMinorScaleExercise: Exercise = {
 const contraryMotionGroup1ScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Contrary Motion Scales Group 1',
   description: 'F major, Db major, F harmonic minor, C# harmonic minor',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'Scale in Contrary motion, F major',
@@ -155,7 +160,6 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
 const contraryMotionGroup2ScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Contrary Motion Scales Group 2',
   description: 'F# major, Bb major, F# harmonic minor, Bb harmonic minor',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'Scale in Contrary motion, F sharp major',
@@ -167,7 +171,6 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
 const chromaticScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Chromatic Scales',
   description: 'Grade 5 Chromatic Scales',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'Chromatic scale beginning on C right hand',
@@ -210,7 +213,6 @@ const chromaticScaleExercise: Exercise = {
 };
 const chromaticContratyMotionScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Chromatic Contraty-Motion Scales',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'Scale in Chromatic Contrary-Motion beginning on D',
@@ -219,7 +221,6 @@ const chromaticContratyMotionScaleExercise: Exercise = {
 };
 const arpeggiosScaleExercise: Exercise = {
   name: 'ABRSM Exam Scales Practice - Grade 5 Arpeggios',
-  greeting: '',
   instruction: 'LISTEN and PLAY',
   scales: [
     'C major Arpeggio right hand',
@@ -301,51 +302,89 @@ export const courses: Course[] = [
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Major Scales',
     description: 'Starting Practising',
-    greeting: 'Good afternoon, please be seated, and get your stool adjusted, ' +
-    'we can start when you\'re ready. Let\'s start with Major scales.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: [
+      'Good afternoon, please be seated and get your stool adjusted, ' +
+    'we will start when you\'re ready.'],
+    exercises: [
+      majorScaleExercise,
+      minorScaleExercise
+    ],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Harmonic Minor Scales',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Harmonic Minor Scales.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: ['Now, moving on to the Harmonic Minor Scales.'],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Melodic Minor Scales',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Melodic Minor Scales.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: [
+      'Now, moving on to the Melodic Minor Scales.'
+    ],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Contrary Motion Scales Group 1 (F major, Db major, F harmonic minor, C# harmonic minor)',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Contrary Motion Scales Group 1.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: ['Now, moving on to the Contrary Motion Scales Group 1.'],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Contrary Motion Scales Group 2 (F# major, Bb major, F# harmonic minor, Bb harmonic minor)',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Contrary Motion Scales Group 2.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: ['Now, moving on to the Contrary Motion Scales Group 2.'],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Chromatic Scales',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Chromatic Scales.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: ['Now, moving on to the Chromatic Scales.'],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Chromatic Contraty-Motion Scales',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Chromatic Contraty-Motion Scales.',
-    exercises: [majorScaleExercise, minorScaleExercise]
+    greetings: ['Now, moving on to the Chromatic Contraty-Motion Scales.'],
+    exercises: [majorScaleExercise, minorScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
   {
     name: 'ABRSM Exam Scales Practice - Grade 5 Arpeggios',
     description: 'Starting Practising',
-    greeting: 'Now, moving on to the Arpeggios.',
-    exercises: [arpeggiosScaleExercise]
+    greetings: ['Now, moving on to the Arpeggios.'],
+    exercises: [arpeggiosScaleExercise],
+    valedictions: [
+      'We are finished.',
+      'Thank you and good bye.'
+    ]
   },
 ];
 

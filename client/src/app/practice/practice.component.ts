@@ -2,8 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { courses, Exercise, Course } from './course-definition';
 import { TextToSpeechService, MediaControl } from '../services/google/text-to-speech.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Subscription, Observable, from, concat } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Subscription, Observable, concat } from 'rxjs';
+import { tap, concatAll, concatMap } from 'rxjs/operators';
 import _ from 'lodash';
 
 export enum StateType {
@@ -68,6 +68,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   public play(): void {
     this.stop();
+
     this.state = StateType.playing;
       this._operation = this.playCourse(this.courseSelected)
         .subscribe(control => {
@@ -96,17 +97,18 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.state = StateType.stopped;
   }
   private playCourse(course: Course): Observable<MediaControl> {
-
-    const greeting = this.read(course.greeting);
+    const greetings = course.greetings.map(greeting => this.read(greeting));
     const scales = _.flatMap(course.exercises, exercise => {
       const count = exercise.scales.length = 4;
       const texts = PracticeComponent.shuffle(exercise.scales, count);
       return texts.map(text => this.read(text));
     });
+    const valedictions = course.valedictions
+      .map(valediction => this.read(valediction));
 
-    const fragments = concat(greeting, scales[0]);
-
-    return fragments;
+    const all = greetings.concat(scales, valedictions);
+    // return concat<MediaControl, MediaControl>(all);
+    return concat(all[0], all[1]);
   }
 
   private read(text: string): Observable<MediaControl> {
