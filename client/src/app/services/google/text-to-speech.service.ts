@@ -5,7 +5,8 @@ import { map, concatMap } from 'rxjs/operators';
 import {Howl} from 'howler';
 import { NGXLogger } from 'ngx-logger';
 
-import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender } from '../../../api/text-to-speech/contract';
+// tslint:disable-next-line:max-line-length
+import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender, VoiceSelectionParams } from '../../../api/text-to-speech/contract';
 
 export interface MediaControl {
   /**
@@ -26,24 +27,20 @@ export class TextToSpeechService {
     private _logger: NGXLogger,
     private _http: HttpClient) {
   }
-  public speak(text: string): Observable<MediaControl> {
+  public speak(voice: VoiceSelectionParams, text: string): Observable<MediaControl> {
     // tslint:disable-next-line:no-console
     console.info('Speaking: ' + text);
-    return this.requestSpeech(text)
+    return this.requestSpeech(voice, text)
       .pipe(concatMap(mp3 => {
         return this.play(mp3);
       }));
   }
-  requestSpeech(text: string): Observable<string> {
+  requestSpeech(voice: VoiceSelectionParams, text: string): Observable<string> {
     const request: SynthesizeRequest = {
       input: {
         ssml: `<speak>${text}</speak>`
       },
-      voice: {
-        languageCode: 'en-GB',
-        name: 'en-GB-Wavenet-C',
-        ssmlGender: SsmlVoiceGender.Female
-      },
+      voice: voice,
       audioConfig: {
         audioEncoding: AudioEncoding.MP3
       }

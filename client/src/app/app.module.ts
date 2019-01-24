@@ -37,7 +37,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     MatSlideToggleModule,
 
     LoggerModule.forRoot({
-      serverLoggingUrl: '/api/logs',
+      // serverLoggingUrl: '/api/logs',
       level: NgxLoggerLevel.DEBUG,
       serverLogLevel: NgxLoggerLevel.DEBUG
     }),

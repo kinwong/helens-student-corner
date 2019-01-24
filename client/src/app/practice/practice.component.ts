@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { courses, Exercise, Course } from './course-definition';
+import { courses, Exercise, Course, Speaker, speakers } from './course-definition';
 import { TextToSpeechService, MediaControl } from '../services/google/text-to-speech.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription, Observable, concat } from 'rxjs';
 import { tap, concatAll, concatMap } from 'rxjs/operators';
-import _ from 'lodash';
+import lodash from 'lodash';
+import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 
 export enum StateType {
   stopped,
@@ -28,23 +29,23 @@ export class PracticeComponent implements OnInit, OnDestroy {
   public get canPause(): boolean { return this.state === StateType.playing; }
   public get canStop(): boolean { return this.state === StateType.playing; }
 
+  public readonly courses: Course[] = courses;
+  public readonly speakers: Speaker[] = speakers;
+
   constructor(
     private _cookies: CookieService,
     private _speech: TextToSpeechService) {
 
     this.showSubtitle = false;
-    this.courses = courses;
     this.state = StateType.stopped;
   }
   private _operation: Subscription;
   private _control: MediaControl;
+  private _voice: VoiceSelectionParams;
 
-  @Input()
-  public running: boolean;
-  // public
-  public textToRead: string;
-  public courses: Course[];
   public courseSelected: Course;
+  public speakerSelected: Speaker = speakers[0];
+
   public state: StateType;
   public showSubtitle: boolean;
   public subtitle: string;
@@ -68,7 +69,10 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   public play(): void {
     this.stop();
-
+    this._voice = this.speakerSelected.voice;
+    if (this._voice === undefined) {
+      this._voice = speakers[Math.floor(Math.random() * 4.0)].voice;
+    }
     this.state = StateType.playing;
       this._operation = this.playCourse(this.courseSelected)
         .subscribe(control => {
@@ -98,7 +102,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   private playCourse(course: Course): Observable<MediaControl> {
     const greetings = course.greetings.map(greeting => this.read(greeting));
-    const scales = _.flatMap(course.exercises, exercise => {
+    const scales = lodash.flatMap(course.exercises, exercise => {
       const count = exercise.scales.length = 4;
       const texts = PracticeComponent.shuffle(exercise.scales, count);
       return texts.map(text => this.read(text));
@@ -110,9 +114,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
     // return concat<MediaControl, MediaControl>(all);
     return concat(all[0], all[1]);
   }
-
   private read(text: string): Observable<MediaControl> {
-    return this._speech.speak(text)
+    return this._speech.speak(this._voice, text)
       .pipe(tap(x => this.subtitle = text));
   }
 }
