@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
 
@@ -31,6 +32,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     BrowserModule,
     FlexLayoutModule,
     HttpClientModule,
+    FormsModule,
     MatDividerModule,
     MaterialModule,
     MatInputModule,

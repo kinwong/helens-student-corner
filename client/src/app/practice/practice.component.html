@@ -1,26 +1,28 @@
 <mat-card class="practice-card">
   <mat-card-header>
-    <mat-card-title>Practice</mat-card-title>
+    <mat-card-title>
+        <i class="fas fa-tachometer-alt"></i>
+      Practice</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div class="control-container">
       <mat-form-field>
-        <mat-select #selectedCourse name="Course" placeholder="Select Course" [disabled]="!canSelectOption" [(value)]="courseSelected">
+        <mat-select placeholder="Select Course" required [disabled]="!canSelectOption" [(value)]="courseSelected">
           <mat-option *ngFor="let course of courses; let i=index" [value]="course">
             {{i+1}}. {{course.name}}
           </mat-option>
         </mat-select>
         <mat-hint align="end">{{courseSelected?.description}}</mat-hint>
-      </mat-form-field>`
+      </mat-form-field>
 
       <mat-form-field>
-          <mat-select #selectedSpeaker name="Speaker" placeholder="Select Speaker" [disabled]="!canSelectOption" [(value)]="speakerSelected">
-            <mat-option *ngFor="let speaker of speakers;" [value]="speaker">
-              {{speaker.firstName}}
-            </mat-option>
-          </mat-select>
-          <mat-hint align="end">{{speakerSelected?.origin}}</mat-hint>
-        </mat-form-field>
+        <mat-select #selectedSpeaker placeholder="Select Speaker" [disabled]="!canSelectOption" [(value)]="speakerSelected">
+          <mat-option *ngFor="let speaker of speakers;" [value]="speaker">
+            {{speaker.firstName}}
+          </mat-option>
+        </mat-select>
+        <mat-hint align="end">{{speakerSelected?.origin}}</mat-hint>
+      </mat-form-field>
 
       <mat-slide-toggle color="primary" [disabled]="!canSelectOption" [(checked)]="showSubtitle">
         {{showSubtitle? 'Show': 'Hide'}} subtitle
@@ -40,6 +42,7 @@
     {{subtitle}}
     <mat-horizontal-stepper linear="true" #stepper>
       <mat-step>
+          <i class="fas fa-sync fa-spin"></i>
         <p>FIRST STEP</p>
       </mat-step>
       <mat-step>

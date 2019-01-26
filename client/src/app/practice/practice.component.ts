@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
 import { courses, Exercise, Course, Speaker, speakers } from './course-definition';
 import { TextToSpeechService, MediaControl } from '../services/google/text-to-speech.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,6 +20,7 @@ export enum StateType {
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit, OnDestroy {
+  public courseControl: FormControl = new FormControl(null, [Validators.required]);
 
   public get playButtonText() {
     if (this.state === StateType.paused) { return 'Resume'; }
@@ -36,7 +38,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     private _cookies: CookieService,
     private _speech: TextToSpeechService) {
 
-    this.showSubtitle = false;
+    this.showSubtitle = true;
     this.state = StateType.stopped;
   }
   private _operation: Subscription;
