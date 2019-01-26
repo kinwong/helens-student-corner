@@ -5,8 +5,8 @@ import { MediaControl } from '../services/google/text-to-speech.service';
 import { Subscription } from 'rxjs';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import { CoursePlayingService } from '../services/course-playing.service';
-import { Settings, speakers } from 'src/api';
-import { SettingsService } from '../services/settings.service';
+import { speakers } from 'src/api';
+import { Settings, SettingsService } from '../services/settings.service';
 
 export enum StateType {
   stopped,
@@ -37,8 +37,10 @@ export class PracticeComponent implements OnInit, OnDestroy {
   constructor(
     private _coursePlayer: CoursePlayingService,
     private _settingsService: SettingsService) {
+
     this.state = StateType.stopped;
     this._settings = this._settingsService.settings;
+    // this.courseSelected = this._settingsService.course;
   }
   private _operation: Subscription;
   private _control: MediaControl;

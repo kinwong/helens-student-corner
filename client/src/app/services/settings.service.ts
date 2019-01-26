@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CookieService } from 'ngx-cookie-service';
-import { Settings, speakers, Cookies } from 'src/api';
+import { speakers, Cookies, Speaker } from 'src/api';
 
+export interface Settings {
+  speaker: Speaker;
+  showSubtitle: boolean;
+}
 
 @Injectable({
   providedIn: 'root'

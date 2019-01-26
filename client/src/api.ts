@@ -10,11 +10,6 @@ export interface Speaker {
   voice?: VoiceSelectionParams;
 }
 
-export interface Settings {
-  speaker: Speaker;
-  showSubtitle: boolean;
-}
-
 /**
  * Represents a selection of speakers that use Google Wavenet voice.
  */

@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Settings, speakers, Speaker, Cookies } from 'src/api';
-import { NGXLogger } from 'ngx-logger';
-import { SettingsService } from '../services/settings.service';
+import { speakers, Speaker } from 'src/api';
+import { SettingsService, Settings } from '../services/settings.service';
 
 @Component({
   selector: 'app-settings',
