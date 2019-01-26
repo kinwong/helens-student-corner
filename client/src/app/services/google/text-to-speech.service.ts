@@ -6,7 +6,7 @@ import {Howl} from 'howler';
 import { NGXLogger } from 'ngx-logger';
 
 // tslint:disable-next-line:max-line-length
-import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, SsmlVoiceGender, VoiceSelectionParams } from '../../../api/text-to-speech/contract';
+import {SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams } from '../../../api/text-to-speech/contract';
 
 export interface MediaControl {
   /**

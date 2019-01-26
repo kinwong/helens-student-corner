@@ -40,7 +40,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
     this.state = StateType.stopped;
     this._settings = this._settingsService.settings;
-    // this.courseSelected = this._settingsService.course;
+    this.courseSelected = this._settingsService.course;
   }
   private _operation: Subscription;
   private _control: MediaControl;
@@ -58,6 +58,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
     this.stop();
+    this._settingsService.course = this.courseSelected;
+    this._settingsService.saveSettings();
   }
   public palyOrResume(): void {
     if (this.state === StateType.paused) {

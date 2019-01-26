@@ -1,9 +1,5 @@
 import { VoiceSelectionParams, SsmlVoiceGender } from './api/text-to-speech/contract';
 
-export enum Cookies {
-  Settings = 'settings'
-}
-
 export interface Speaker {
   firstName: string;
   origin?: string;

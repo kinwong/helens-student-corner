@@ -18,6 +18,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
   ngOnDestroy(): void {
-    this._settings.saveSettings(this.model);
+    this._settings.saveSettings();
   }
 }

@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CookieService } from 'ngx-cookie-service';
-import { speakers, Cookies, Speaker } from 'src/api';
+import { speakers, Speaker } from 'src/api';
+import { Course, courses } from '../course-definition';
+
+export enum Cookies {
+  Settings = 'settings',
+  CourseName = 'courseName'
+}
 
 export interface Settings {
   speaker: Speaker;
   showSubtitle: boolean;
 }
-
+export interface CourseSettings {
+  courseName: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +25,7 @@ export class SettingsService {
     showSubtitle: false
   };
   settings: Settings;
-  courseName: string;
+  course: Course;
 
   constructor(
     private _cookies: CookieService,
@@ -25,24 +33,40 @@ export class SettingsService {
     this.loadSettings();
   }
   public loadSettings(): void {
-    let settings = SettingsService.defaultSettings;
-    if (this._cookies.check(Cookies.Settings)) {
-      const textSetting = this._cookies.get(Cookies.Settings);
-      if (!textSetting) {
-        try {
+    this.settings = this.loadSetting(Cookies.Settings, SettingsService.defaultSettings);
+    this.course = this.loadCourse();
+  }
+  saveSettings(): void {
+    this.saveSetting(Cookies.Settings, this.settings);
+    this.saveSetting(Cookies.CourseName, <CourseSettings>{
+      courseName: this.course.name});
+  }
+  private loadCourse(): Course {
+    let finalCourse = courses[0];
+    const courseSettings = this.loadSetting(
+      Cookies.CourseName, <CourseSettings>{courseName: courses[0].name});
+      const courseFound = courses.find(course => course.name === courseSettings.courseName);
+      if (courseFound) { finalCourse = courseFound; }
+    return finalCourse;
+  }
+  private loadSetting<T>(name: string, defaultValue: T): T {
+    let value = defaultValue;
+    try {
+      if (this._cookies.check(name)) {
+        const textSetting = this._cookies.get(name);
+        if (!textSetting) {
           const settingsLoaded = JSON.parse(textSetting);
           if (!settingsLoaded) {
-            settings = settingsLoaded;
+            value = settingsLoaded;
           }
-        } catch (error) {
-          this._logger.error(error);
         }
       }
-      this.settings = settings;
+    } catch (error) {
+      this._logger.error(error);
     }
+    return value;
   }
-  saveSettings(settings: Settings): void {
-    this._cookies.set(Cookies.Settings, JSON.stringify(settings));
-    this.settings = settings;
+  private saveSetting(name: string, value: any): void {
+    this._cookies.set(name, JSON.stringify(value));
   }
 }
