@@ -1,11 +1,14 @@
-<mat-card class="practice-card">
+
+<h2><i class="fas fa-tachometer-alt"></i>
+  Practice</h2>
+<mat-card>
   <mat-card-header>
     <mat-card-title>
-        <i class="fas fa-tachometer-alt"></i>
-      Practice</mat-card-title>
+      Course</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div class="control-container">
+      <!-- Course Selection and Details -->
       <mat-form-field>
         <mat-select placeholder="Select Course" required [disabled]="!canSelectOption" [(value)]="courseSelected">
           <mat-option *ngFor="let course of courses; let i=index" [value]="course">
@@ -14,19 +17,6 @@
         </mat-select>
         <mat-hint align="end">{{courseSelected?.description}}</mat-hint>
       </mat-form-field>
-
-      <mat-form-field>
-        <mat-select #selectedSpeaker placeholder="Select Speaker" [disabled]="!canSelectOption" [(value)]="speakerSelected">
-          <mat-option *ngFor="let speaker of speakers;" [value]="speaker">
-            {{speaker.firstName}}
-          </mat-option>
-        </mat-select>
-        <mat-hint align="end">{{speakerSelected?.origin}}</mat-hint>
-      </mat-form-field>
-
-      <mat-slide-toggle color="primary" [disabled]="!canSelectOption" [(checked)]="showSubtitle">
-        {{showSubtitle? 'Show': 'Hide'}} subtitle
-      </mat-slide-toggle>
     </div>
     <div class="practice-control-panel">
       <button mat-raised-button color="primary" [disabled]="!canPlay" (click)="play()">
@@ -39,27 +29,13 @@
         Stop<mat-icon>stop</mat-icon>
       </button>
     </div>
-    {{subtitle}}
-    <mat-horizontal-stepper linear="true" #stepper>
-      <mat-step>
-          <i class="fas fa-sync fa-spin"></i>
-        <p>FIRST STEP</p>
-      </mat-step>
-      <mat-step>
-
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        You are now done.
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
-      </mat-step>
-    </mat-horizontal-stepper>
-
   </mat-card-content>
-  <mat-card-actions>
-
-  </mat-card-actions>
+</mat-card>
+<mat-card class="practice-card">
+  <mat-card-content>
+    <i class="fas fa-sync fa-spin"></i>
+    <p *ngFor="let exercise of courseSelected?.exercises; let i=index">
+      {{i+1}}. {{exercise.name}}
+    </p>
+  </mat-card-content>
 </mat-card>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TextToSpeechService, MediaControl } from './google/text-to-speech.service';
 import { Observable, concat } from 'rxjs';
-import { Course } from '../practice/course-definition';
+import { Course } from '../course-definition';
 import lodash from 'lodash';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import { tap } from 'rxjs/operators';

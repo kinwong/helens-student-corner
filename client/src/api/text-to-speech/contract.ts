@@ -20,16 +20,16 @@ export enum AudioEncoding {
 }
 
 /**
- * 
+ *
  *
  * @export
  * @interface Voice
  */
 export interface Voice {
-  languageCodes: string[],
-  name: string,
-  ssmlGender: SsmlVoiceGender,
-  naturalSampleRateHertz: number
+  languageCodes: string[];
+  name: string;
+  ssmlGender: SsmlVoiceGender;
+  naturalSampleRateHertz: number;
 }
 /**
  * Contains text input to be synthesized. Either text or ssml must be supplied. Supplying both or 
@@ -38,14 +38,14 @@ export interface Voice {
  * @interface SynthesisInput
  */
 export interface SynthesisInput {
-  text?: string,
-  ssml?: string
+  text?: string;
+  ssml?: string;
 }
 
 export interface VoiceSelectionParams {
   languageCode: string,
   name?: string,
-  ssmlGender?: SsmlVoiceGender
+  ssmlGender?: SsmlVoiceGender;
 }
 
 /**
@@ -55,19 +55,18 @@ export interface VoiceSelectionParams {
  */
 export interface AudioConfig {
   // Required. The format of the requested audio byte stream.
-  audioEncoding: AudioEncoding,
-  speakingRate?: number,
-  pitch?: number,
-  volumeGainDb?: number,
-  sampleRateHertz?: number
+  audioEncoding: AudioEncoding;
+  speakingRate?: number;
+  pitch?: number;
+  volumeGainDb?: number;
+  sampleRateHertz?: number;
 }
-
 
 export interface SynthesizeRequest {
-  input: SynthesisInput,
-  voice: VoiceSelectionParams,
-  audioConfig: AudioConfig
+  input: SynthesisInput;
+  voice: VoiceSelectionParams;
+  audioConfig: AudioConfig;
 }
 export interface SynthesizeResponse {
-  audioContent: string
+  audioContent: string;
 }
