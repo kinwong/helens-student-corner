@@ -20,6 +20,7 @@ export enum StateType {
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit, OnDestroy {
+  columnsToDisplay = ['name', 'description', 'scale'];
   public courseControl: FormControl = new FormControl(null, [Validators.required]);
 
   public get playButtonText() {

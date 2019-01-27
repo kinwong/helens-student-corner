@@ -1,10 +1,10 @@
-import { SsmlVoiceGender } from '../api/text-to-speech/contract';
-import { Speaker } from 'src/api';
-
 export interface Exercise {
   name: string;
   description: string;
   instruction: string;
+  included: boolean;
+  ratio: number;
+  delayInSeconds?: number;
   scales: string[];
 }
 
@@ -20,6 +20,8 @@ const majorScaleExercise: Exercise = {
   name: 'Major Scales',
   description: 'Major scales are the most important piano scales',
   instruction: 'Let\'s start with major scales.',
+  included: true,
+  ratio: 0.5,
   scales: [
     'C major left hand',
     'C major right hand',
@@ -62,7 +64,9 @@ const majorScaleExercise: Exercise = {
 const minorScaleExercise: Exercise = {
   name: 'Harmonic Minor Scales',
   description: '',
-  instruction: 'Now, let\'s move on to the Melodic Minor Scales.',
+  instruction: 'Now, let\'s move on to the Harmonic Minor Scales.',
+  included: true,
+  ratio: 0.5,
   scales: [
     'A harmonic minor left hand',
     'A harmonic minor right hand',
@@ -105,7 +109,9 @@ const minorScaleExercise: Exercise = {
 const melodicMinorScaleExercise: Exercise = {
   name: 'Melodic Minor Scales',
   description: '',
-  instruction: 'Now, let\'s move on to the Contrary Motion Scales Group 1.',
+  instruction: 'Now, let\'s move on to the melodic minor Scales.',
+  included: true,
+  ratio: 0.5,
   scales: [
     'A melodic minor left hand',
     'A melodic minor right hand',
@@ -148,7 +154,9 @@ const melodicMinorScaleExercise: Exercise = {
 const contraryMotionGroup1ScaleExercise: Exercise = {
   name: 'Contrary Motion Scales Group 1',
   description: 'F major, Db major, F harmonic minor, C# harmonic minor',
-  instruction: 'LISTEN and PLAY',
+  instruction: 'Now, let\'s move on to the contrary motion scales group 1.',
+  included: true,
+  ratio: 1.0,
   scales: [
     'Scale in Contrary motion, F major',
     'Scale in Contrary motion, F harmonic minor',
@@ -159,7 +167,9 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
 const contraryMotionGroup2ScaleExercise: Exercise = {
   name: 'Contrary Motion Scales Group 2',
   description: 'F# major, Bb major, F# harmonic minor, Bb harmonic minor',
-  instruction: 'LISTEN and PLAY',
+  instruction: 'Now, let\'s move on to the contrary motion scales group 2.',
+  included: true,
+  ratio: 1.0,
   scales: [
     'Scale in Contrary motion, F sharp major',
     'Scale in Contrary motion, B flat major',
@@ -170,7 +180,9 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
 const chromaticScaleExercise: Exercise = {
   name: 'Chromatic Scales',
   description: 'Grade 5 Chromatic Scales',
-  instruction: 'LISTEN and PLAY',
+  instruction: 'Let\'s move on to the chromatic scales.',
+  included: true,
+  ratio: 0.3,
   scales: [
     'Chromatic scale beginning on C right hand',
     'Chromatic scale beginning on C left hand',
@@ -214,6 +226,8 @@ const chromaticContraryMotionScaleExercise: Exercise = {
   name: 'Chromatic Contrary-Motion Scales',
   description: '',
   instruction: 'Let\'s move on to Chromatic Contrary-Motion Scales.',
+  included: true,
+  ratio: 1.0,
   scales: [
     'Scale in Chromatic Contrary-Motion beginning on D',
     'Scale in Chromatic Contrary-Motion beginning on A flat',
@@ -223,10 +237,10 @@ const arpeggiosScaleExercise: Exercise = {
   name: 'Arpeggios',
   description:
     'An arpeggio (Italian: [arˈpeddʒo]) is a type of broken chord, in which the notes that ' +
-    'compose a chord are played or sung in a rising or descending order. An arpeggio may also ' +
-    'span more than one octave. The word arpeggio comes from the Italian word arpeggiare, which ' +
-    'means to play on a harp.',
+    'compose a chord are played or sung in a rising or descending order.',
   instruction: 'Let\'s move on to arpeggios.',
+  included: true,
+  ratio: 0.3,
   scales: [
     'C major Arpeggio right hand',
     'C major Arpeggio left hand',

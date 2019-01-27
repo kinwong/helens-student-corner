@@ -1,25 +1,34 @@
-.practice-card {
-  margin: 10pt;
-}
-
-.control-container {
+.course-container {
   display: flex;
   flex-direction: column;
 }
-.control-container > * {
-  align-content: center;
+.course-container > * {
   width: 100%;
 }
 
-.practice-control-panel {
-  padding: 4pt;
+.transport-container {
   display: block;
-  text-align: center;
   flex-direction: column;
+  text-align: center;
+  //align-content: center;
 }
-.practice-control-panel > * {
+
+.transport-container > * {
   width: 20%;
   min-width: 70pt;
   vertical-align: middle;
-  margin: 2pt;
+  margin: 4pt;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10pt;
+}
+.content-container > * {
+  width: 100%;
+}
+
+.course-table {
+  width: 100%;
 }
