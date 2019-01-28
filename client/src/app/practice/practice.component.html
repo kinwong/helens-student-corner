@@ -14,7 +14,7 @@
     <mat-accordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>Course Details</mat-panel-title>
+          <mat-panel-title><i class="fas fa-info-circle"></i>Details</mat-panel-title>
         </mat-expansion-panel-header>
         <p>{{courseSelected.description}}</p>
         <table mat-table class="course-table" [dataSource]="courseSelected.exercises">
@@ -29,8 +29,8 @@
             <td mat-cell *matCellDef="let exercise"> {{exercise.description}} </td>
           </ng-container>
           <ng-container matColumnDef="scale">
-            <th mat-header-cell *matHeaderCellDef> Progress </th>
-            <td mat-cell *matCellDef="let exercise"> {{exercise.scales.length}} </td>
+            <th mat-header-cell *matHeaderCellDef> Details </th>
+            <td mat-cell *matCellDef="let exercise"> {{toScaleDetails(exercise)}} </td>
           </ng-container>
         </table>
       </mat-expansion-panel>

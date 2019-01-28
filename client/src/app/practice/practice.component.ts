@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { courses, Course } from '../course-definition';
+import { courses, Course, Exercise } from '../course-definition';
 import { MediaControl } from '../services/google/text-to-speech.service';
 import { Subscription } from 'rxjs';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import { CoursePlayingService } from '../services/course-playing.service';
 import { speakers } from 'src/api';
 import { Settings, SettingsService } from '../services/settings.service';
+import * as lodash from 'lodash';
 
 export enum StateType {
   stopped,
@@ -106,5 +107,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
       this._control = undefined;
     }
     this.state = StateType.stopped;
+  }
+  toScaleDetails(exercise: Exercise): string {
+    const count = lodash.floor(exercise.ratio * exercise.scales.length);
+    return count + '/' + exercise.scales.length;
   }
 }
