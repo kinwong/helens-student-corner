@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
+import {MatSliderModule} from '@angular/material/slider';
 
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
@@ -37,6 +38,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     MaterialModule,
     MatInputModule,
     MatSlideToggleModule,
+    MatSliderModule,
 
     LoggerModule.forRoot({
       // serverLoggingUrl: '/api/logs',

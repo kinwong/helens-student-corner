@@ -12,6 +12,7 @@ export enum Cookies {
 export interface Settings {
   speaker: Speaker;
   showSubtitle: boolean;
+  speed: number;
 }
 export interface CourseSettings {
   courseName: string;
@@ -22,7 +23,8 @@ export interface CourseSettings {
 export class SettingsService {
   static defaultSettings: Settings = {
     speaker: speakers[0],
-    showSubtitle: false
+    showSubtitle: false,
+    speed: 1
   };
   settings: Settings;
   course: Course;
