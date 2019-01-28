@@ -20,6 +20,7 @@ import { SettingsComponent } from './settings/settings.component';
 
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { CoursePlayerComponent } from './course-player/course-player.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     PracticeComponent,
     WelcomeComponent,
     SettingsComponent,
+    CoursePlayerComponent,
   ],
   imports: [
     BrowserAnimationsModule,
