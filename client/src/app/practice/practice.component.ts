@@ -1,20 +1,19 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { courses, Course, Exercise } from '../course-definition';
-import { MediaControl } from '../services/google/text-to-speech.service';
 import { Subscription } from 'rxjs';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import { CoursePlayingService } from '../services/course-playing.service';
 import { speakers } from 'src/api';
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
+import { MediaControl } from '../services/wave-player.service';
 
 export enum StateType {
   stopped,
   playing,
   paused
 }
-
 @Component({
   selector: 'app-practice',
   templateUrl: './practice.component.html',
@@ -81,7 +80,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this._operation = this._coursePlayer.play({
       course: this.courseSelected,
       voice: this._voice,
-      onSubtitle: (subtitle) => this.subtitle = subtitle
+      onstate: (s) => {},
+      ontext: (text) => this.subtitle = text
     })
       .subscribe(control => {
         this._control = control;

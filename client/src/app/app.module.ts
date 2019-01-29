@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SettingsComponent } from './settings/settings.component';
 
+import { HttpErrorInterceptor } from './http-error.interceptor';
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { CoursePlayerComponent } from './course-player/course-player.component';
@@ -50,7 +51,12 @@ import { CoursePlayerComponent } from './course-player/course-player.component';
     AppRouters
   ],
   providers: [
-    CookieService
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
