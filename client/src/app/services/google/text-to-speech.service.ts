@@ -30,9 +30,7 @@ export class TextToSpeechService {
   // }
   toSpeech(voice: VoiceSelectionParams, ssml: string): Observable<string> {
     const request: SynthesizeRequest = {
-      input: {
-        ssml: `<speak>${ssml}</speak>`
-      },
+      input: { ssml: ssml },
       voice: voice,
       audioConfig: {
         audioEncoding: AudioEncoding.MP3

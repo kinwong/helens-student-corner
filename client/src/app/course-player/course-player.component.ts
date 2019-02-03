@@ -3,7 +3,6 @@ import { Course } from '../course-definition';
 import { CoursePlayingService } from '../services/course-playing.service';
 import { SettingsService } from '../services/settings.service';
 import { Subscription } from 'rxjs';
-import { MediaControl } from '../services/google/text-to-speech.service';
 import { StateType } from '../practice/practice.component';
 
 @Component({
@@ -13,6 +12,7 @@ import { StateType } from '../practice/practice.component';
 })
 export class CoursePlayerComponent implements OnInit, OnDestroy {
   @Input() course: Course;
+  
   constructor(
     private _coursePlayer: CoursePlayingService,
     private _settingsService: SettingsService) {

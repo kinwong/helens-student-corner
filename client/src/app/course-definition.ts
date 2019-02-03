@@ -17,8 +17,8 @@ export interface Course {
 }
 
 const majorScaleExercise: Exercise = {
-  name: 'Major Scales',
-  description: 'Major scales are the most important piano scales',
+  name: 'G.5 Major Scales',
+  description: '3 octaves; crotchet = 126; C maj, G maj, D maj, A maj, E maj, B maj, F# maj, F maj, Bb maj, Eb maj, Ab maj, Db maj',
   instruction: 'Let\'s start with major scales.',
   included: true,
   ratio: 0.5,
@@ -62,8 +62,8 @@ const majorScaleExercise: Exercise = {
   ]
 };
 const minorScaleExercise: Exercise = {
-  name: 'Harmonic Minor Scales',
-  description: '',
+  name: 'G.5 Harmonic Minor Scales',
+  description: '3 octaves; crotchet = 126; A mn, E min, B min, F# min, C# min, G# min, D min, G min, C min, F min, Bb min, Eb min',
   instruction: 'Now, let\'s move on to the Harmonic Minor Scales.',
   included: true,
   ratio: 0.5,
@@ -107,8 +107,8 @@ const minorScaleExercise: Exercise = {
   ]
 };
 const melodicMinorScaleExercise: Exercise = {
-  name: 'Melodic Minor Scales',
-  description: '',
+  name: 'G.5 Melodic Minor Scales',
+  description: '3 octaves; crotchet = 126; A mn, E min, B min, F# min, C# min, G# min, D min, G min, C min, F min, Bb min, Eb min',
   instruction: 'Now, let\'s move on to the melodic minor Scales.',
   included: true,
   ratio: 0.5,
@@ -152,8 +152,8 @@ const melodicMinorScaleExercise: Exercise = {
   ]
 };
 const contraryMotionGroup1ScaleExercise: Exercise = {
-  name: 'Contrary Motion Scales Group 1',
-  description: 'F major, Db major, F harmonic minor, C# harmonic minor',
+  name: 'G.5 Group 1 Contrary Motion Scales',
+  description: '2 octaves; crotchet = 126; F major, Db major, F harmonic minor, C# harmonic minor',
   instruction: 'Now, let\'s move on to the contrary motion scales group 1.',
   included: true,
   ratio: 1.0,
@@ -165,8 +165,8 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
   ]
 };
 const contraryMotionGroup2ScaleExercise: Exercise = {
-  name: 'Contrary Motion Scales Group 2',
-  description: 'F# major, Bb major, F# harmonic minor, Bb harmonic minor',
+  name: 'G.5 Group 2 Contrary Motion Scales',
+  description: '2 octaves; crotchet = 126; F# major, Bb major, F# harmonic minor, Bb harmonic minor',
   instruction: 'Now, let\'s move on to the contrary motion scales group 2.',
   included: true,
   ratio: 1.0,
@@ -178,8 +178,8 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
   ]
 };
 const chromaticScaleExercise: Exercise = {
-  name: 'Chromatic Scales',
-  description: 'Grade 5 Chromatic Scales',
+  name: 'G.5 Chromatic Scales',
+  description: '3 octaves; crotchet = 126; beginning on any note named by the examiner; hands together/ hands separately',
   instruction: 'Let\'s move on to the chromatic scales.',
   included: true,
   ratio: 0.3,
@@ -224,7 +224,7 @@ const chromaticScaleExercise: Exercise = {
 };
 const chromaticContraryMotionScaleExercise: Exercise = {
   name: 'Chromatic Contrary-Motion Scales',
-  description: '',
+  description: '2 octaves; crotchet = 126; hands together beginning on the same note (unison)',
   instruction: 'Let\'s move on to Chromatic Contrary-Motion Scales.',
   included: true,
   ratio: 1.0,
@@ -236,8 +236,7 @@ const chromaticContraryMotionScaleExercise: Exercise = {
 const arpeggiosScaleExercise: Exercise = {
   name: 'Arpeggios',
   description:
-    'An arpeggio (Italian: [arˈpeddʒo]) is a type of broken chord, in which the notes that ' +
-    'compose a chord are played or sung in a rising or descending order.',
+    '3 octaves; crotchet = 88; hands together/ hands separately',
   instruction: 'Let\'s move on to arpeggios.',
   included: true,
   ratio: 0.3,
@@ -319,8 +318,8 @@ const arpeggiosScaleExercise: Exercise = {
 
 export const courses: Course[] = [
   {
-    name: 'ABRSM Exam Scales Practice - Grade 1',
-    description: 'It contains 3 sets of scale practices.',
+    name: 'Grade 1 Exam Scales Practice',
+    description: 'All requirements must be played from memory. The examiner will be looking for: 1) a positive sense of rhythm without undue accentuation, 2) even, firm tone and a musical curve, 3) good legato, 4) accurate and fluent realization of the different types of scales and arpeggios, 5) convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ' +
       'we will start when you\'re ready.'
@@ -331,13 +330,13 @@ export const courses: Course[] = [
       melodicMinorScaleExercise
     ],
     valedictions: [
-      'We are finished.',
-      'Thank you and good bye.'
+      'Thank you very much.',
+      'Let\'s listen to your three pieces.'
     ]
   },
   {
-    name: 'ABRSM Exam Scales Practice - Grade 5',
-    description: 'It contains 8 sets of scale practices.',
+    name: 'Grade 5 Exam Scales Practice',
+    description: ' All requirements must be played from memory. The examiner will be looking for: 1) a positive sense of rhythm without undue accentuation, 2) even, firm tone and a musical curve, 3) good legato, 4) accurate and fluent realization of the different types of scales and arpeggios, 5) convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ' +
       'we will start when you\'re ready.'],
@@ -352,8 +351,8 @@ export const courses: Course[] = [
       arpeggiosScaleExercise
     ],
     valedictions: [
-      'We are finished.',
-      'Thank you and good bye.'
+      ' Thank you very much.',
+      ' Let\'s listen to your three pieces.'
     ]
   }
 ];

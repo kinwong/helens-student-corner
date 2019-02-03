@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { courses, Course, Exercise } from '../course-definition';
 import { Subscription } from 'rxjs';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
-import { CoursePlayingService } from '../services/course-playing.service';
+import { CoursePlayingService, Playback } from '../services/course-playing.service';
 import { speakers } from 'src/api';
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
@@ -72,17 +72,13 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   public play(): void {
     this.stop();
-    this._voice = this._settings.speaker.voice;
-    if (this._voice === undefined) {
-      this._voice = speakers[Math.floor(Math.random() * 4.0)].voice;
-    }
     this.state = StateType.playing;
-    this._operation = this._coursePlayer.play({
-      course: this.courseSelected,
-      voice: this._voice,
-      onstate: (s) => {},
-      ontext: (text) => this.subtitle = text
-    })
+
+    const platBack: Playback = {
+      onstate: () =>{},
+      ontext: () => {},
+    };
+    this._operation = this._coursePlayer.play(platBack, this.courseSelected)
       .subscribe(control => {
         this._control = control;
       },
