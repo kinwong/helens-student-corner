@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Course } from '../course-definition';
-import { CoursePlayingService } from '../services/course-playing.service';
+import { SlidePlayerService } from '../services/slide-player.service';
 import { SettingsService } from '../services/settings.service';
 import { Subscription } from 'rxjs';
 import { StateType } from '../practice/practice.component';
@@ -14,8 +14,9 @@ export class CoursePlayerComponent implements OnInit, OnDestroy {
   @Input() course: Course;
   
   constructor(
-    private _coursePlayer: CoursePlayingService,
-    private _settingsService: SettingsService) {
+    private _settingsService: SettingsService,
+    private _coursePlayer: SlidePlayerService) {
+      
     }
 
   public state: StateType;

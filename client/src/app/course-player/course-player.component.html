@@ -1,3 +1,10 @@
 <p>
   {{course?.name}}
 </p>
+<mat-horizontal-stepper linear="false" #stepper>
+  <mat-step  *ngFor="let course of course; let i=index" >
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+  </mat-step>
+</mat-horizontal-stepper>

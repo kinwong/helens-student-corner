@@ -6,7 +6,7 @@ import { NGXLogger } from 'ngx-logger';
 
 // tslint:disable-next-line:max-line-length
 import {
-  SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams
+  SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams, AudioConfig
 } from '../../../api/text-to-speech/contract';
 
 @Injectable({
@@ -28,13 +28,16 @@ export class TextToSpeechService {
   //       return this.play(mp3);
   //     }));
   // }
-  toSpeech(voice: VoiceSelectionParams, ssml: string): Observable<string> {
+  toSpeech(voice: VoiceSelectionParams, config: AudioConfig = undefined, ssml: string): Observable<string> {
+    if(config == undefined) {
+      config = {
+        audioEncoding: AudioEncoding.MP3
+      }
+    }
     const request: SynthesizeRequest = {
       input: { ssml: ssml },
       voice: voice,
-      audioConfig: {
-        audioEncoding: AudioEncoding.MP3
-      }
+      audioConfig: config
     };
     return this.post('text:synthesize', request)
       .pipe(map(response => {

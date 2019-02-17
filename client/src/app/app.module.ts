@@ -22,6 +22,8 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { CoursePlayerComponent } from './course-player/course-player.component';
+import { NavbarComponent } from './nav/navbar/navbar.component';
+import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { CoursePlayerComponent } from './course-player/course-player.component';
     WelcomeComponent,
     SettingsComponent,
     CoursePlayerComponent,
+    NavbarComponent,
+    SlideShowPlayerComponent,
   ],
   imports: [
     BrowserAnimationsModule,

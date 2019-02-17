@@ -3,18 +3,12 @@ import { TextToSpeechService } from './google/text-to-speech.service';
 import { Observable, concat, BehaviorSubject, interval, empty, of } from 'rxjs';
 import { Course, Exercise } from '../course-definition';
 import lodash from 'lodash';
-import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
+import { VoiceSelectionParams, AudioConfig, AudioEncoding } from 'src/api/text-to-speech/contract';
 import { map, startWith, switchMap, scan, takeWhile, distinctUntilChanged, mapTo, concatMap } from 'rxjs/operators';
-import { WavePlayerService, MediaControl } from './wave-player.service';
+import { WavePlayerService } from './wave-player.service';
 import { SettingsService } from './settings.service';
 import { speakers } from 'src/api';
-
-export interface Frame {
-  title: string;
-  total: number;
-  index: number;
-  text: string;
-}
+import { SlideShowService, SlideShow, Slide } from './slide-show.service';
 
 export enum PlaybackState {
   speaking, waiting, paused
@@ -27,35 +21,39 @@ export interface Playback {
 @Injectable({
   providedIn: 'root'
 })
-export class CoursePlayingService {
+export class SlidePlayerService {
   constructor(
+    private _settings: SettingsService,
     private _speech: TextToSpeechService,
     private _player: WavePlayerService,
-    private _settings: SettingsService) {
+    ) {
   }
 
-  play(playBack: Playback, course: Course): Observable<MediaControl> {
-    let voice = this._settings.settings.speaker.voice;
-    if (voice === undefined) {
-      voice = speakers[Math.floor(Math.random() * 4.0)].voice;
-    }
-    const all = Array.from(this.compile(playBack, voice, course));
+  play(slideShow: SlideShow, playback: Playback): Observable<Slide> {
+    slideShow.
+    const all = Array.from(this.compile(playBack, voice, config, course));
     return concat(all[0], all[1]);
   }
 
-  private  * compile(playback: Playback, voice: VoiceSelectionParams, course: Course): IterableIterator<Observable<MediaControl>> {
+  private  * compile(
+    playback: Playback, voice: VoiceSelectionParams, config: 
+    AudioConfig, course: Course): IterableIterator<Observable<MediaControl>> {
+
     for(let greeting of course.greetings) {
-      yield this.say(playback, voice, greeting);
+      yield this.say(playback, voice, config, greeting);
     }
     for(let exercise of generateExercises(course)) {
-      yield this.say(playback, voice, exercise.text, 2.0);
+      yield this.say(playback, voice, config, exercise.text, 2.0);
     }
     for(let valediction of course.valedictions) {
-      yield this.say(playback, voice, valediction);
+      yield this.say(playback, voice, config, valediction);
     }
   }
-  private say(playback: Playback, voice: VoiceSelectionParams, text: string, pauseInSeconds: number = 0): Observable<MediaControl> {
-    const speech$ = this._speech.toSpeech(voice, `<speak>${text}</speak>`)
+  private say(
+    playback: Playback, voice: VoiceSelectionParams, 
+    config: AudioConfig, text: string, pauseInSeconds: number = 0): Observable<MediaControl> {
+
+    const speech$ = this._speech.toSpeech(voice, config, `<speak>${text}</speak>`)
       .pipe(concatMap(mp3 => this._player.play(mp3)));
     if (pauseInSeconds == 0) return speech$;
 

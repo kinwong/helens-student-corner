@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core';
 import {Howl} from 'howler';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
-
-export interface MediaControl {
-  /**
-   * Pauses a music.
-   */
-  pause: () => void;
-  resume: () => void;
-}
+import { MediaControl } from 'src/api/models';
 
 @Injectable({
   providedIn: 'root'

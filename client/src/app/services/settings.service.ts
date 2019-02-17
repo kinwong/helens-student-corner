@@ -13,6 +13,7 @@ export interface Settings {
   speaker: Speaker;
   showSubtitle: boolean;
   speed: number;
+  metronome: boolean;
 }
 export interface CourseSettings {
   courseName: string;
@@ -24,7 +25,8 @@ export class SettingsService {
   static defaultSettings: Settings = {
     speaker: speakers[0],
     showSubtitle: false,
-    speed: 1
+    speed: 1.5,
+    metronome: false
   };
   settings: Settings;
   course: Course;

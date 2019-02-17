@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { courses, Course, Exercise } from '../course-definition';
 import { Subscription } from 'rxjs';
 import { VoiceSelectionParams } from 'src/api/text-to-speech/contract';
-import { CoursePlayingService, Playback } from '../services/course-playing.service';
+import { SlidePlayerService, Playback } from '../services/slide-player.service';
 import { speakers } from 'src/api';
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
@@ -36,7 +36,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   private _settings: Settings;
 
   constructor(
-    private _coursePlayer: CoursePlayingService,
+    private _coursePlayer: SlidePlayerService,
     private _settingsService: SettingsService) {
 
     this.state = StateType.stopped;
