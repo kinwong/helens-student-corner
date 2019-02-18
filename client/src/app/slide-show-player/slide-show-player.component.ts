@@ -9,8 +9,6 @@ import { Course } from '../course-definition';
   styleUrls: ['./slide-show-player.component.scss']
 })
 export class SlideShowPlayerComponent implements OnInit {
-  course: Course;
-  slideShow: SlideShow;
   
   constructor(
     public player: SlideShowPlayerService

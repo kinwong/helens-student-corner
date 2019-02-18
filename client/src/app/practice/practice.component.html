@@ -40,7 +40,7 @@
     </mat-accordion>
 
     <mat-card-actions class="transport-container">
-      <button mat-raised-button color="primary" [disabled]="!player.canPlay" (click)="player.play()">
+      <button mat-raised-button color="primary" [disabled]="!player.canPlay && !player.canResume" (click)="player.play()">
         {{playButtonText}}<mat-icon>play_arrow</mat-icon>
       </button>
       <button mat-raised-button color="primary" [disabled]="!player.canPause" (click)="player.pause()">
@@ -54,7 +54,7 @@
 </mat-card>
 
 <mat-card class="content-container">
-  <mat-card-title>Content</mat-card-title>
+  <!-- <mat-card-title>Content</mat-card-title> -->
   <mat-card-content>
       <app-slide-show-player></app-slide-show-player>
   </mat-card-content>

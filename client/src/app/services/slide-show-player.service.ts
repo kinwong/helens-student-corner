@@ -5,6 +5,7 @@ import { VoiceSelectionParams, AudioConfig } from 'src/api/text-to-speech/contra
 import { map, startWith, switchMap, scan, takeWhile, distinctUntilChanged, mapTo, concatMap, tap } from 'rxjs/operators';
 import { WavePlayerService } from './wave-player.service';
 import { SlideShow, Slide } from './slide-show.service';
+import { NGXLogger } from 'ngx-logger';
 
 export enum StateType {
   stopped,
@@ -35,6 +36,7 @@ export class SlideShowPlayerService {
   text: string;
 
   constructor(
+    private _logger: NGXLogger,
     private _speech: TextToSpeechService,
     private _player: WavePlayerService) {
   }
@@ -43,9 +45,12 @@ export class SlideShowPlayerService {
     this.stop();
     this.state = StateType.playing;
     this._subscription = this.from(this.slideShow)
-      .subscribe(media => this._media = media, 
+      .subscribe(media => 
+        {
+          this._media = media;
+        }, 
         error => {
-          console.error(error);
+          this._logger.error(error);
           this.reset();
         },
         () => {
@@ -53,7 +58,7 @@ export class SlideShowPlayerService {
         });
   }
   stop() {
-    if (!this._subscription) {
+    if (this._subscription) {
       this._subscription.unsubscribe();
     }
     this.reset();
@@ -86,8 +91,9 @@ export class SlideShowPlayerService {
   private fromSlide(slideShow: SlideShow, slide: Slide): Observable<Media> {
     const media$ = from([slide]).pipe(
       tap(_ => {
-        if (slide.text)
+        if (slide.text) {
           this.text = slide.text;
+        }
       }),
       concatMap(slide => {
         if (slide.speech) {

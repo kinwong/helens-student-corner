@@ -26,7 +26,10 @@ export class SlideShowService {
   constructor(
     private _settings: SettingsService) {
   }
-
+  toSsml(text: string) {
+    return `<speak>${text}</speak>`;
+  }
+  
   toSlideShow(course: Course): SlideShow {
     let voice = this._settings.settings.speaker.voice;
     if (voice === undefined) {
@@ -37,7 +40,7 @@ export class SlideShowService {
       speakingRate: this._settings.settings.speed
     };
     const slides = Array.from(
-      this.generateSlides(voice, config, course));
+      this.generateSlides(course));
 
     return <SlideShow>{
       config,
@@ -47,14 +50,12 @@ export class SlideShowService {
     }
   }
   private * generateSlides(
-    voice: VoiceSelectionParams,
-    config: AudioConfig,
     course: Course): IterableIterator<Slide> {
 
     for (let greeting of course.greetings) {
       yield <Slide>{
         text: greeting,
-        speech: toSsml(greeting),
+        speech: this.toSsml(greeting),
       }
     }
     for (let exercise of generateExercises(course)) {
@@ -62,18 +63,17 @@ export class SlideShowService {
         total: exercise.total,
         index: exercise.index,
         text: exercise.text,
-
+        speech: this.toSsml(exercise.text)
       }
     }
     for (let valediction of course.valedictions) {
       yield <Slide>{
         text: valediction,
-        speech: toSsml(valediction),
+        speech: this.toSsml(valediction),
       }
     }
   }
 }
-
 function* generateExercises(course: Course)
   : IterableIterator<{ title: string, total: number, index: number, text: string }> {
 
@@ -99,7 +99,8 @@ function* generateScales(count: number, exercise: Exercise)
   for (let index = 0; index < count; ++index) {
     let selection: number;
     while (true) {
-      selection = Math.random() * total;
+      
+      selection = Math.floor(Math.random() * total);
       if (!selections.has(selection)) break;
     }
     selections.add(selection);
@@ -108,7 +109,4 @@ function* generateScales(count: number, exercise: Exercise)
       text: exercise.scales[selection]
     };
   }
-}
-function toSsml(text: string) {
-  return `<speak>${text}</speak>`;
 }
