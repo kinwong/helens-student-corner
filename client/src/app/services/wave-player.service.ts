@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Howl} from 'howler';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
-import { MediaControl } from 'src/api/models';
+import { Media } from './slide-show-player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class WavePlayerService {
   constructor(
     private _logger: NGXLogger) { }
 
-  play(mp3: string): Observable<MediaControl> {
+  play(mp3: string): Observable<Media> {
     const data = 'data:audio/mp3;base64,' + mp3;
     return Observable.create(
       observer => {

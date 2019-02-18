@@ -40,21 +40,22 @@
     </mat-accordion>
 
     <mat-card-actions class="transport-container">
-      <button mat-raised-button color="primary" [disabled]="!canPlay" (click)="play()">
+      <button mat-raised-button color="primary" [disabled]="!player.canPlay" (click)="player.play()">
         {{playButtonText}}<mat-icon>play_arrow</mat-icon>
       </button>
-      <button mat-raised-button color="primary" [disabled]="!canPause" (click)="pause()">
+      <button mat-raised-button color="primary" [disabled]="!player.canPause" (click)="player.pause()">
         Pause<mat-icon>pause_circle_online</mat-icon>
       </button>
-      <button mat-raised-button color="primary" [disabled]="!canStop" (click)="stop()">
+      <button mat-raised-button color="primary" [disabled]="!player.canStop" (click)="player.stop()">
         Stop<mat-icon>stop</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
+
 <mat-card class="content-container">
   <mat-card-title>Content</mat-card-title>
   <mat-card-content>
-      <app-course-player #player [course]="courseSelected"></app-course-player>
+      <app-slide-show-player></app-slide-show-player>
   </mat-card-content>
 </mat-card>

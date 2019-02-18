@@ -21,7 +21,6 @@ import { SettingsComponent } from './settings/settings.component';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { CoursePlayerComponent } from './course-player/course-player.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 
@@ -31,7 +30,6 @@ import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.
     PracticeComponent,
     WelcomeComponent,
     SettingsComponent,
-    CoursePlayerComponent,
     NavbarComponent,
     SlideShowPlayerComponent,
   ],

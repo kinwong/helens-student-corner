@@ -65,7 +65,6 @@ export class SlideShowService {
 
       }
     }
-
     for (let valediction of course.valedictions) {
       yield <Slide>{
         text: valediction,
@@ -91,6 +90,7 @@ function* generateExercises(course: Course)
     }
   }
 }
+
 function* generateScales(count: number, exercise: Exercise)
   : IterableIterator<{ index: number, text: string }> {
 

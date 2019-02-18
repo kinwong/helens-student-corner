@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SlidePlayerService } from './slide-player.service';
+import { SlideShowPlayerService } from './slide-show-player.service';
 
 describe('CoursePlayingService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: SlidePlayerService = TestBed.get(SlidePlayerService);
+    const service: SlideShowPlayerService = TestBed.get(SlideShowPlayerService);
     expect(service).toBeTruthy();
   });
 });
