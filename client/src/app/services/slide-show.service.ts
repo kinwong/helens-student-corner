@@ -63,6 +63,7 @@ export class SlideShowService {
         total: exercise.total,
         index: exercise.index,
         text: exercise.text,
+        delay: 3,
         speech: this.toSsml(exercise.text)
       }
     }

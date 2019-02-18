@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Howl} from 'howler';
-import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { Media } from './slide-show-player.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Media } from './slide-show-player.service';
 export class WavePlayerService {
 
   constructor(
-    private _logger: NGXLogger) { }
+    private _logger: LoggerService) { }
 
   play(mp3: string): Observable<Media> {
     const data = 'data:audio/mp3;base64,' + mp3;
@@ -19,8 +19,8 @@ export class WavePlayerService {
         const sound = new Howl({
           src: [data],
           volume: 1.0,
-          onplay: id => this._logger.debug(`play(${id})`),
-          onpause: id => this._logger.debug(`pause(${id})`),
+          onplay: id => this._logger.debug(`WavePlayerService.play(id=${id})`),
+          onpause: id => this._logger.debug(`WavePlayerService.pause(id=${id})`),
           onloaderror: (_, error) => {
             observer.error(error);
           },
@@ -33,7 +33,10 @@ export class WavePlayerService {
         });
         sound.play();
         observer.next({
-          pause: () => sound.pause(),
+          pause: () => {
+            sound.pause();
+            this._logger.debug('WavePlayerService.pause()');
+          },
           resume: () => sound.play()
         });
         return () => sound.stop();

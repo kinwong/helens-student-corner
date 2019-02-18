@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NGXLogger } from 'ngx-logger';
 
 // tslint:disable-next-line:max-line-length
 import {
   SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams, AudioConfig
 } from '../../../api/text-to-speech/contract';
+import { LoggerService } from '../logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TextToSpeechService {
   private static apiKey = 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk';
 
   constructor(
-    private _logger: NGXLogger,
+    private _logger: LoggerService,
     private _http: HttpClient) {
   }
   // speak(voice: VoiceSelectionParams, ssml: string): Observable<MediaControl> {

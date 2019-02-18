@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
@@ -20,9 +20,9 @@ import { SettingsComponent } from './settings/settings.component';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
 
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,12 +44,6 @@ import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.
     MatInputModule,
     MatSlideToggleModule,
     MatSliderModule,
-
-    LoggerModule.forRoot({
-      // serverLoggingUrl: '/api/logs',
-      level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: NgxLoggerLevel.DEBUG
-    }),
     AppRouters
   ],
   providers: [

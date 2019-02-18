@@ -30,7 +30,6 @@
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "ngx-cookie-service": "^2.1.0",
-    "ngx-logger": "^3.3.9",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.3.3",
     "speak-tts": "^2.0.6",

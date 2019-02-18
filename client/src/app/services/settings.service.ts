@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
 import { CookieService } from 'ngx-cookie-service';
 import { speakers, Speaker } from 'src/api';
 import { Course, courses } from '../course-definition';
+import { LoggerService } from './logger.service';
 
 export enum Cookies {
   Settings = 'settings',
@@ -25,7 +25,7 @@ export class SettingsService {
   static defaultSettings: Settings = {
     speaker: speakers[0],
     showSubtitle: false,
-    speed: 1.5,
+    speed: 1,
     metronome: false
   };
   settings: Settings;
@@ -33,7 +33,7 @@ export class SettingsService {
 
   constructor(
     private _cookies: CookieService,
-    private _logger: NGXLogger) {
+    private _logger: LoggerService) {
     this.loadSettings();
   }
   public loadSettings(): void {
