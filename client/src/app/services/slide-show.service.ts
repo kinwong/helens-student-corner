@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SettingsService } from './settings.service';
-import { Course, Exercise } from '../course-definition';
+import { Course, Exercise, Sentence } from '../course-definition';
 import { speakers } from 'src/api';
 import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import * as lodash from 'lodash';
@@ -26,10 +26,6 @@ export class SlideShowService {
   constructor(
     private _settings: SettingsService) {
   }
-  toSsml(text: string) {
-    return `<speak>${text}</speak>`;
-  }
-  
   toSlideShow(course: Course): SlideShow {
     let voice = this._settings.settings.speaker.voice;
     if (voice === undefined) {
@@ -40,7 +36,7 @@ export class SlideShowService {
       speakingRate: this._settings.settings.speed
     };
     const slides = Array.from(
-      this.generateSlides(course));
+      this.courseToSlides(course));
 
     return <SlideShow>{
       config,
@@ -49,65 +45,69 @@ export class SlideShowService {
       slides: slides,
     }
   }
-  private * generateSlides(
-    course: Course): IterableIterator<Slide> {
+  private * courseToSlides(course: Course): IterableIterator<Slide> {
 
     for (let greeting of course.greetings) {
       yield <Slide>{
         text: greeting,
-        speech: this.toSsml(greeting),
+        speech: toSsml(greeting),
       }
     }
-    for (let exercise of generateExercises(course)) {
-      yield <Slide>{
-        total: exercise.total,
-        index: exercise.index,
-        text: exercise.text,
-        delay: 3,
-        speech: this.toSsml(exercise.text)
-      }
+
+    for (let slide of exercisesToSlides(course.exercises)) {
+      slide.delay = 3;
+      yield slide;
     }
+
     for (let valediction of course.valedictions) {
       yield <Slide>{
         text: valediction,
-        speech: this.toSsml(valediction),
+        speech: toSsml(valediction),
       }
     }
   }
 }
-function* generateExercises(course: Course)
-  : IterableIterator<{ title: string, total: number, index: number, text: string }> {
 
-  for (let exercise of course.exercises) {
+function* exercisesToSlides(exercises: Exercise[]): IterableIterator<Slide> {
+
+  for (let exercise of exercises) {
     const total = exercise.scales.length;
     const count = lodash.floor(exercise.ratio * total);
-    for (let details of generateScales(count, exercise)) {
-      yield {
-        title: exercise.name,
-        total: count,
-        index: details.index,
-        text: details.text
-      }
+
+    for (let slide of exerciseToSlides(count, exercise)) {
+      yield slide;
     }
   }
 }
+function* exerciseToSlides(total: number, exercise: Exercise): IterableIterator<Slide> {
 
-function* generateScales(count: number, exercise: Exercise)
-  : IterableIterator<{ index: number, text: string }> {
+  yield sentenceToSlide(exercise.instruction);
 
-  const total = exercise.scales.length;
+  //const total = exercise.scales.length;
   const selections = new Set<number>();
-  for (let index = 0; index < count; ++index) {
+  for (let index = 0; index < total; ++index) {
     let selection: number;
     while (true) {
-      
       selection = Math.floor(Math.random() * total);
       if (!selections.has(selection)) break;
     }
     selections.add(selection);
-    yield {
-      index: index,
-      text: exercise.scales[selection]
-    };
-  }
+    yield sentenceToSlide(
+      exercise.scales[selection], total, index);
+  };
 }
+function sentenceToSlide(sentence: Sentence, total: number = undefined, index: number = undefined): Slide {
+  const speech = (sentence.speech) ? sentence.speech : toSsml(sentence.display);
+  return <Slide>{
+    index: index,
+    total: total,
+    text: sentence.display,
+    speech: speech,
+    delay: sentence.delay
+  };
+}
+
+function toSsml(text: string) {
+  return `<speak>${text}</speak>`;
+}
+
