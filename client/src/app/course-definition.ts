@@ -114,15 +114,19 @@ const majorScaleExercise: Exercise = {
     },
     {
       display: 'D♭ major left hand',
+      speech: '<speak>D flat major left hand</speak>'
     },
     {
       display: 'D♭ major right hand',
+      speech: '<speak>D flat major right hand</speak>'
     },
     {
       display: 'D♭ major hands together',
+      speech: '<speak>D flat major hands together</speak>'
     }
   ]
 };
+
 const minorScaleExercise: Exercise = {
   name: 'G.5 Harmonic Minor Scales',
   description: '3 octaves; crotchet = 126; A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min',

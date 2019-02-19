@@ -53,12 +53,10 @@ export class SlideShowService {
         speech: toSsml(greeting),
       }
     }
-
     for (let slide of exercisesToSlides(course.exercises)) {
       slide.delay = 3;
       yield slide;
     }
-
     for (let valediction of course.valedictions) {
       yield <Slide>{
         text: valediction,
@@ -83,14 +81,16 @@ function* exerciseToSlides(total: number, exercise: Exercise): IterableIterator<
 
   yield sentenceToSlide(exercise.instruction);
 
-  //const total = exercise.scales.length;
+  const totalScales = exercise.scales.length;
+
   const selections = new Set<number>();
   for (let index = 0; index < total; ++index) {
     let selection: number;
     while (true) {
-      selection = Math.floor(Math.random() * total);
+      selection = Math.floor(Math.random() * totalScales);
       if (!selections.has(selection)) break;
     }
+    
     selections.add(selection);
     yield sentenceToSlide(
       exercise.scales[selection], total, index);
