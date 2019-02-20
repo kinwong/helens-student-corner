@@ -1,4 +1,10 @@
-<p>
-  {{player.slideShow?.title}}
-</p>
-<h3>{{player.text}}</h3>
+<div>
+  <p>
+    {{heading}}
+  </p>
+  <h3>{{subtitle}}</h3>
+  <mat-progress-bar 
+    class="progress-bar" mode="determinate" 
+    [value]="progress">
+  </mat-progress-bar>
+</div>

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
@@ -46,6 +47,7 @@ import { environment } from 'src/environments/environment';
     MatInputModule,
     MatSlideToggleModule,
     MatSliderModule,
+    MatProgressBarModule,
     LoggerModule.forRoot(environment.logging),
     AppRouters
   ],

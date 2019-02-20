@@ -36,10 +36,19 @@ export class SlideShowPlayerService {
   set slideShow(value: SlideShow) {
     this.stop();
     this._slideShow = value;
+    this.total = value.slides.length;
+    this.current = 0;
   }
   state: StateType = StateType.stopped;
   text: string;
-
+  total: number;
+  current: number;
+  get progress(): number {
+    if(this.total) {
+      return this.current / this.total * 100.0;
+    }
+    return 0;
+  }
   constructor(
     private _logger: NGXLogger,
     private _speech: TextToSpeechService,
@@ -52,13 +61,16 @@ export class SlideShowPlayerService {
     this._subscription = this.from(this.slideShow)
       .subscribe(media => {
         this._media = media;
+        this.current++;
       },
         error => {
           this._logger.error(error);
           this.reset();
+          this.current = this.total;
         },
         () => {
           this.reset();
+          this.current = this.total;
         });
   }
   stop() {
@@ -88,7 +100,9 @@ export class SlideShowPlayerService {
   private from(slideShow: SlideShow): Observable<Media> {
     const slideShow$ = from(slideShow.slides)
       .pipe(
-        concatMap(slide => this.fromSlide(slideShow, slide)));
+        concatMap(slide => {
+          return this.fromSlide(slideShow, slide);
+        }));
     return slideShow$;
   }
   private fromSlide(slideShow: SlideShow, slide: Slide): Observable<Media> {

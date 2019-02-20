@@ -42,6 +42,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.player.stop();
     this._settingsService.course = this.courseSelected;
     this._settingsService.saveSettings();
   }
