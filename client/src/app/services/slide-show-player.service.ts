@@ -5,7 +5,7 @@ import { VoiceSelectionParams, AudioConfig } from 'src/api/text-to-speech/contra
 import { map, startWith, switchMap, scan, takeWhile, distinctUntilChanged, mapTo, concatMap, tap } from 'rxjs/operators';
 import { WavePlayerService } from './wave-player.service';
 import { SlideShow, Slide } from './slide-show.service';
-import { LoggerService } from './logger.service';
+import { NGXLogger } from 'ngx-logger';
 
 export enum StateType {
   stopped,
@@ -41,7 +41,7 @@ export class SlideShowPlayerService {
   text: string;
 
   constructor(
-    private _logger: LoggerService,
+    private _logger: NGXLogger,
     private _speech: TextToSpeechService,
     private _player: WavePlayerService) {
   }

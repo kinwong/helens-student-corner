@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { speakers, Speaker } from 'src/api';
 import { Course, courses } from '../course-definition';
-import { LoggerService } from './logger.service';
+import { NGXLogger } from 'ngx-logger';
 
 export enum Cookies {
   Settings = 'settings',
@@ -33,7 +33,7 @@ export class SettingsService {
 
   constructor(
     private _cookies: CookieService,
-    private _logger: LoggerService) {
+    private _logger: NGXLogger) {
     this.loadSettings();
   }
   public loadSettings(): void {

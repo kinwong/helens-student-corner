@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import {
   SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams, AudioConfig
 } from '../../../api/text-to-speech/contract';
-import { LoggerService } from '../logger.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TextToSpeechService {
   private static apiKey = 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk';
 
   constructor(
-    private _logger: LoggerService,
+    private _logger: NGXLogger,
     private _http: HttpClient) {
   }
   // speak(voice: VoiceSelectionParams, ssml: string): Observable<MediaControl> {

@@ -11,6 +11,7 @@ import { MatSliderModule } from '@angular/material/slider';
 
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
+import { LoggerModule } from 'ngx-logger';
 
 import { AppRouters } from './app.routes';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { environment } from 'src/environments/environment';
     MatInputModule,
     MatSlideToggleModule,
     MatSliderModule,
+    LoggerModule.forRoot(environment.logging),
     AppRouters
   ],
   providers: [
