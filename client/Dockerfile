@@ -5,7 +5,7 @@ RUN apk update && apk add --no-cache make git
 WORKDIR /app
 # Install app dependencies
 COPY package.json package-lock.json /app/
-RUN cd /app && npm set progress=false && npm install
+RUN cd /app && npm set progress=false && npm install && npm install -g @angular/cli@7.3.2
 # Copy project files into the docker image
 COPY .  /app
 RUN cd /app && ng build --prod
