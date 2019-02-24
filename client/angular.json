@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "abrsm-piano-practice": {
+    "helen-student-corner": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/helen-student-corner",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "abrsm-piano-practice:build"
+            "browserTarget": "helen-student-corner:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "abrsm-piano-practice:build:production"
+              "browserTarget": "helen-student-corner:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "abrsm-piano-practice:build"
+            "browserTarget": "helen-student-corner:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         }
       }
     },
-    "abrsm-piano-practice-e2e": {
+    "helen-student-corner-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -117,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "abrsm-piano-practice:serve"
+            "devServerTarget": "helen-student-corner:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "abrsm-piano-practice:serve:production"
+              "devServerTarget": "helen-student-corner:serve:production"
             }
           }
         },
@@ -137,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "abrsm-piano-practice"
+  "defaultProject": "helen-student-corner"
 }
