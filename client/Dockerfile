@@ -12,7 +12,7 @@ RUN cd /app && ng build --prod
 
 # STEP 2 build a small nginx image with static website
 FROM nginx:alpine
-COPY --from=builder /app/nginx.conf /usr/share/nginx
+## COPY --from=builder /app/nginx.conf /usr/share/nginx
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
