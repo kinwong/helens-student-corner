@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { courses, Course, Exercise } from '../course-definition';
-import { SlideShowPlayerService, StateType } from '../services/slide-show-player.service';
+import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
 import { SlideShowService } from '../services/slide-show.service';
@@ -14,6 +14,7 @@ import { SlideShowService } from '../services/slide-show.service';
 export class PracticeComponent implements OnInit, OnDestroy {
   private _course: Course;
   columnsToDisplay = ['name', 'description', 'scale'];
+  player: SlideShowPlayer;
 
   public get playButtonText() {
     if (this.player.state === StateType.paused) { return 'Resume'; }
@@ -25,7 +26,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   constructor(
     private _settingsService: SettingsService,
     private _slideShow: SlideShowService,
-    public player: SlideShowPlayerService) {
+    private _playerService: SlideShowPlayerService) {
 
     this.courseSelected = this._settingsService.course;
   }
@@ -34,7 +35,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   public set courseSelected(value: Course) {
     this._course = value;
-    this.player.slideShow = this._slideShow.toSlideShow(value);
+    this.player = this._playerService.create(this._slideShow.toSlideShow(value));
   }
   public showSubtitle: boolean;
 

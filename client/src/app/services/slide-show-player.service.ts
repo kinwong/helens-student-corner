@@ -14,47 +14,28 @@ export enum StateType {
   paused
 }
 
-export interface Media {
-  pause(): void;
-  resume(): void;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class SlideShowPlayerService {
+export class SlideShowPlayer {
   private _subscription: Subscription;
   private _media: Media;
-  private _slideShow: SlideShow;
+
+  state: StateType = StateType.stopped;
+  text: string;
+  total: number;
+  current: number;
 
   get canPlay(): boolean { return this.slideShow && this.state === StateType.stopped; }
   get canResume(): boolean { return this.state === StateType.paused; }
   get canPause(): boolean { return this.state === StateType.playing; }
   get canStop(): boolean { return this.state === StateType.playing || this.state === StateType.preparing; }
 
-  get slideShow(): SlideShow { return this._slideShow; }
-  set slideShow(value: SlideShow) {
-    this.stop();
-    this._slideShow = value;
-    this.total = value.slides.length;
-    this.current = 0;
-  }
-  state: StateType = StateType.stopped;
-  text: string;
-  total: number;
-  current: number;
-  get progress(): number {
-    if(this.total) {
-      return this.current / this.total * 100.0;
-    }
-    return 0;
-  }
   constructor(
+    public slideShow: SlideShow,
     private _logger: NGXLogger,
     private _speech: TextToSpeechService,
     private _player: WavePlayerService) {
+      this.total = slideShow.slides.length;
+      this.current = 0;
   }
-
   play() {
     this.stop();
     this.state = StateType.playing;
@@ -95,6 +76,7 @@ export class SlideShowPlayerService {
     this._subscription = undefined;
     this._media = undefined;
     this.state = StateType.stopped;
+    this.current = 0;
   }
 
   private from(slideShow: SlideShow): Observable<Media> {
@@ -168,5 +150,23 @@ export class SlideShowPlayerService {
         tap(i => this._logger.debug(`wait(${i})`)),
         takeWhile(v => v >= 0));
     return timer$;
+  }  
+}
+
+export interface Media {
+  pause(): void;
+  resume(): void;
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class SlideShowPlayerService {
+  constructor(
+    private _logger: NGXLogger,
+    private _speech: TextToSpeechService,
+    private _player: WavePlayerService) {
+  }
+  create(slideShow: SlideShow): SlideShowPlayer {
+    return new SlideShowPlayer(slideShow, this._logger, this._speech, this._player);
   }
 }
