@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SlideShow } from '../services/slide-show.service';
-import { SlideShowPlayerService, SlideShowPlayer } from '../services/slide-show-player.service';
-import { Course } from '../course-definition';
-import { PlayerIndex } from '@angular/core/src/render3/interfaces/player';
+import { SlideShowPlayer } from '../services/slide-show-player.service';
 
 @Component({
   selector: 'app-slide-show-player',

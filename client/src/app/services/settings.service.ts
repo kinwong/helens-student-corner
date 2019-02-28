@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { speakers, Speaker } from 'src/api';
-import { Course, courses } from '../course-definition';
+import { Course, courses } from '../../api/course-definition';
 import { NGXLogger } from 'ngx-logger';
 
 export enum Cookies {

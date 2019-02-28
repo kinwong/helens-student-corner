@@ -1,4 +1,4 @@
-# Helen Wong Music
+# Helen's Student Corner
 
 This starter can be used in two different ways:
 1. Separate Frontend and API server.

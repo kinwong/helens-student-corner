@@ -26,6 +26,7 @@ import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 import { environment } from 'src/environments/environment';
 
+import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { environment } from 'src/environments/environment';
     SettingsComponent,
     NavbarComponent,
     SlideShowPlayerComponent,
+
+    SanitizeHtmlPipe
   ],
   imports: [
     BrowserAnimationsModule,
@@ -49,7 +52,7 @@ import { environment } from 'src/environments/environment';
     MatSliderModule,
     MatProgressBarModule,
     LoggerModule.forRoot(environment.logging),
-    AppRouters
+    AppRouters,
   ],
   providers: [
     CookieService,

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SlideShowService } from './slide-show.service';
-import { courses } from '../course-definition';
+import { courses } from '../../api/course-definition';
 
 describe('SlideShowService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

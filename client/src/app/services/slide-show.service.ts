@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SettingsService } from './settings.service';
-import { Course, Exercise, Sentence } from '../course-definition';
+import { Course, Exercise, Sentence } from '../../api/course-definition';
 import { speakers } from 'src/api';
 import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import * as lodash from 'lodash';

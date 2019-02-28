@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { courses, Course, Exercise } from '../course-definition';
+import { courses, Course, Exercise } from '../../api/course-definition';
 import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
