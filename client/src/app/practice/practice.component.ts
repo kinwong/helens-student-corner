@@ -5,6 +5,8 @@ import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/
 import { Settings, SettingsService } from '../services/settings.service';
 import * as lodash from 'lodash';
 import { SlideShowService } from '../services/slide-show.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-practice',
@@ -13,9 +15,25 @@ import { SlideShowService } from '../services/slide-show.service';
 })
 export class PracticeComponent implements OnInit, OnDestroy {
   private _course: Course;
-  columnsToDisplay = ['name', 'description', 'scale'];
+  columnsToDisplay = ['selected', 'name', 'description', 'scale'];
+  
   player: SlideShowPlayer;
+  dataSource = new MatTableDataSource<Course>(courses);
+  selection = new SelectionModel<Course>(true, []);
 
+   /** Whether the number of selected elements matches the total number of rows. */
+   isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle(): void {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
   public get playButtonText() {
     if (this.player.state === StateType.paused) { return 'Resume'; }
     return 'Start';

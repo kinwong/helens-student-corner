@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
@@ -51,6 +52,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html';
     MatSlideToggleModule,
     MatSliderModule,
     MatProgressBarModule,
+    MatCheckboxModule,
     LoggerModule.forRoot(environment.logging),
     AppRouters,
   ],
