@@ -24,8 +24,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
     if (this.player.state === StateType.paused) { return 'Resume'; }
     return 'Start';
   }
-  public get canSelectOption(): boolean { return this.player.state === StateType.stopped; }
-
+  public get canSelectOption(): boolean {
+    return this.player.state === StateType.stopped; 
+  }
   constructor(
     private _settingsService: SettingsService,
     private _slideShow: SlideShowService,
@@ -63,11 +64,16 @@ export class PracticeComponent implements OnInit, OnDestroy {
     if (!this.courseSelected) return false;
     return this.courseSelected.exercises.every(exercise => exercise.active);
   }
-  someExerciseSelected(): boolean {
+  onlySomeExerciseSelected(): boolean {
     if (!this.courseSelected) return false;
     if (this.allExerciseSelected()) return false;
     return this.courseSelected.exercises.some(exercise => exercise.active);
   }
+  someExerciseSelected(): boolean {
+    if (!this.courseSelected) return false;
+    return this.courseSelected.exercises.some(exercise => exercise.active);
+  }
+
   allToggle(): void {
     if(!this.courseSelected) return;
     const target = !this.allExerciseSelected();
