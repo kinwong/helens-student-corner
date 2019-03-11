@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, timeout, tap } from 'rxjs/operators';
 
 // tslint:disable-next-line:max-line-length
 import {
@@ -13,6 +13,12 @@ import { NGXLogger } from 'ngx-logger';
   providedIn: 'root'
 })
 export class TextToSpeechService {
+  private static readonly timeoutInMilliseconds = 10.0 * 1000.0;
+  private static readonly httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
   private static apiBaseUrl = 'https://texttospeech.googleapis.com';
   private static apiVersion = 'v1';
   private static apiKey = 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk';
@@ -40,12 +46,16 @@ export class TextToSpeechService {
       audioConfig: config
     };
     return this.post('text:synthesize', request)
-      .pipe(map(response => {
-        return (response as SynthesizeResponse).audioContent;
-      }));
+      .pipe(
+        map(response => {
+          return (response as SynthesizeResponse).audioContent;
+        }),
+        timeout(TextToSpeechService.timeoutInMilliseconds),
+        tap(_=>{}, 
+          error => this._logger.error(error)));
   }
   private post(call: string, request: any): Observable<any> {
     const url = `${TextToSpeechService.apiBaseUrl}/${TextToSpeechService.apiVersion}/${call}?key=${TextToSpeechService.apiKey}`;
-    return this._http.post(url, request);
+    return this._http.post(url, request, TextToSpeechService.httpOptions);
   }
 }

@@ -73,6 +73,8 @@ export class SlideShowService {
 function* exercisesToSlides(exercises: Exercise[]): IterableIterator<Slide> {
 
   for (let exercise of exercises) {
+    if (!exercise.active) continue;
+
     const total = exercise.scales.length;
     const count = lodash.floor(exercise.ratio * total);
 
@@ -94,7 +96,7 @@ function* exerciseToSlides(total: number, exercise: Exercise): IterableIterator<
       selection = Math.floor(Math.random() * totalScales);
       if (!selections.has(selection)) break;
     }
-    
+
     selections.add(selection);
     yield sentenceToSlide(
       exercise.scales[selection], total, index);

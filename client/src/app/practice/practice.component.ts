@@ -11,14 +11,14 @@ import * as lodash from 'lodash';
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit, OnDestroy {
-  private _settings: Settings;
+  private _model: Settings;
   private _course: Course;
 
   columnsToDisplay = ['selected', 'name', 'description', 'scale']; 
   player: SlideShowPlayer;
-  get courses(): Course[] { return this._settings.courses; }
-  get contentExpanded(): boolean { return this._settings.showContent; }
-  set contentExpanded(value: boolean) { this._settings.showContent = value; }
+  get courses(): Course[] { return this._model.courses; }
+  get contentExpanded(): boolean { return this._model.showContent; }
+  set contentExpanded(value: boolean) { this._model.showContent = value; }
 
   public get playButtonText() {
     if (this.player.state === StateType.paused) { return 'Resume'; }
@@ -33,7 +33,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     private _playerService: SlideShowPlayerService) {
 
       const settings = this._settingsService.loadSettings();
-    this._settings = settings;
+    this._model = settings;
     this.courseSelected = settings.courses.find(course => course.name === settings.selectedCourseName);
   }
   get courseSelected(): Course {
@@ -41,16 +41,18 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   set courseSelected(value: Course) {
     this._course = value;
-    this._settings.selectedCourseName = value.name;
-    this.player = this._playerService.create(this._slideShow.toSlideShow(this._settings));
+    this._model.selectedCourseName = value.name;
+    this.compilePlayer();
   }
-
   ngOnInit(): void {
   }
-
   ngOnDestroy(): void {
     this.player.stop();
-    this._settingsService.saveSettings(this._settings);
+    this._settingsService.saveSettings(this._model);
+  }
+
+  compilePlayer() {
+    this.player = this._playerService.create(this._slideShow.toSlideShow(this._model));
   }
 
   toScaleDetails(exercise: Exercise): string {
@@ -59,6 +61,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
   toggleExercise(exercise: Exercise): void {
     exercise.active = !exercise.active;
+    this.compilePlayer();
   }
   allExerciseSelected(): boolean {
     if (!this.courseSelected) return false;
@@ -73,12 +76,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
     if (!this.courseSelected) return false;
     return this.courseSelected.exercises.some(exercise => exercise.active);
   }
-
   allToggle(): void {
     if(!this.courseSelected) return;
     const target = !this.allExerciseSelected();
     for(const exercise of this.courseSelected.exercises) {
       exercise.active = target;
     }
+    this.compilePlayer();
   }
 }
