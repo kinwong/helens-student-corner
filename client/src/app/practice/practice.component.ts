@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Course, Exercise } from 'src/api/models';
-import { MatTableDataSource } from '@angular/material';
 import { SettingsService, Settings } from '../services/settings.service';
 import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
 import { SlideShowService } from '../services/slide-show.service';
-import {SelectionModel} from '@angular/cdk/collections';
 import * as lodash from 'lodash';
 
 @Component({
@@ -18,7 +16,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
   columnsToDisplay = ['selected', 'name', 'description', 'scale']; 
   player: SlideShowPlayer;
-  get courses() { return this._settings.courses; }
+  get courses(): Course[] { return this._settings.courses; }
+  get contentExpanded(): boolean { return this._settings.showContent; }
+  set contentExpanded(value: boolean) { this._settings.showContent = value; }
 
   public get playButtonText() {
     if (this.player.state === StateType.paused) { return 'Resume'; }

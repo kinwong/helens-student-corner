@@ -6,13 +6,13 @@
     <mat-form-field>
       <mat-select placeholder="Select Course" required [disabled]="!canSelectOption" [(value)]="courseSelected">
         <mat-option *ngFor="let course of courses; let i=index" [value]="course">
-          {{i+1}}. {{course.name}}
+          {{course.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-accordion>
-      <mat-expansion-panel>
+      <mat-expansion-panel [(expanded)]="contentExpanded">
         <mat-expansion-panel-header>
           <mat-panel-title><i class="fas fa-info-circle"></i>&nbsp; Contents</mat-panel-title>
         </mat-expansion-panel-header>

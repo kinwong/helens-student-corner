@@ -11,6 +11,7 @@ export interface Settings {
   speed: number;
   metronome: boolean;
 
+  showContent: boolean;
   courses: Course[];
   selectedCourseName: string;
 }
@@ -21,12 +22,16 @@ export interface Settings {
 export class SettingsService {
   private static readonly CookiesSettings = 'settings';
 
+  private _settings: Settings;
+
   constructor(
     private _cookies: CookieService,
     private _logger: NGXLogger) {
   }
   loadSettings(): Settings {
-    return this.loadSetting(
+    if (this._settings) return this._settings;
+
+    const settings = this.loadSetting(
       SettingsService.CookiesSettings, () => {
         const courses = loadCourses();
         return <Settings> {
@@ -35,12 +40,18 @@ export class SettingsService {
           speed: 1.0,
           metronome: true,
 
+          showContent: false,
           courses: courses,
           selectedCourseName: courses[0].name
         }
     });
+
+    this._settings = settings;
+    return settings;
   }
   saveSettings(settings: Settings): void {
+    this._settings = settings;
+    
     this.saveSetting(
       SettingsService.CookiesSettings, settings);
   }
@@ -66,6 +77,7 @@ export class SettingsService {
     return value;
   }
   private saveSetting(name: string, value: any): void {
-    this._cookies.set(name, JSON.stringify(value));
+    const json = JSON.stringify(value);
+    this._cookies.set(name, json);
   }
 }
