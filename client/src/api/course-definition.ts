@@ -3,6 +3,7 @@ import { Exercise, Course } from './models';
 
 const majorScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Major Scales',
   description:
     '<p>3 octaves; crotchet = 126<br/>' +
@@ -108,6 +109,7 @@ const majorScaleExercise: Exercise = {
 };
 const minorScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Harmonic Minor Scales',
   description:
     '<p>3 octaves; crotchet = 126<br/>' +
@@ -264,6 +266,7 @@ const minorScaleExercise: Exercise = {
 
 const melodicMinorScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Melodic Minor Scales',
   description:
     '<p>3 octaves; crotchet = 126<br/>' +
@@ -414,6 +417,7 @@ const melodicMinorScaleExercise: Exercise = {
 };
 const contraryMotionGroup1ScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Group 1 Contrary Motion Scales',
   description:
     '<p>2 octaves; crotchet = 126<br/>' +
@@ -447,6 +451,7 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
 };
 const contraryMotionGroup2ScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Group 2 Contrary Motion Scales',
   description:
     '<p>2 octaves; crotchet = 126<br/>' +
@@ -481,6 +486,7 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
 };
 const chromaticScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Chromatic Scales',
   description:
     '<p>3 octaves; crotchet = 126<br/>' +
@@ -603,6 +609,7 @@ const chromaticScaleExercise: Exercise = {
 };
 const chromaticContraryMotionScaleExercise: Exercise = {
   active: true,
+  crotchet: 126,
   name: 'Chromatic Contrary-Motion Scales',
   description:
     '<p>2 octaves; crotchet = 126<br/>' +
@@ -625,6 +632,7 @@ const chromaticContraryMotionScaleExercise: Exercise = {
 };
 const arpeggiosScaleExercise: Exercise = {
   active: true,
+  crotchet: 88,
   name: 'Arpeggios',
   description:
     '<p>3 octaves; crotchet = 88<br/>' +
@@ -973,7 +981,37 @@ const courses: Course[] = [
       ' Thank you very much.',
       ' Now Let\'s listen to your three pieces.'
     ]
-  }
+  },
+  {
+    name: 'Grade 8 Exam Scales Practice',
+    description:
+      '<p>All items are to be played from memory. The examiner will be looking for: <br/>' +
+      '<ol>' +
+      '<li>a positive sense of rhythm without undue accentuation;</li>' +
+      '<li>even, firm tone and a musical curve;</li>' +
+      '<li>good legato;</li>' +
+      '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' +
+      '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' +
+      '</ol>' +
+      '</p>',
+    greetings: [
+      'Good afternoon, please be seated and get your stool adjusted, ',
+      'we will start when you\'re ready.'],
+    exercises: [
+      lodash.cloneDeep(majorScaleExercise),
+      lodash.cloneDeep(minorScaleExercise),
+      lodash.cloneDeep(melodicMinorScaleExercise),
+      lodash.cloneDeep(contraryMotionGroup1ScaleExercise),
+      lodash.cloneDeep(contraryMotionGroup2ScaleExercise),
+      lodash.cloneDeep(chromaticScaleExercise),
+      lodash.cloneDeep(chromaticContraryMotionScaleExercise),
+      lodash.cloneDeep(arpeggiosScaleExercise)
+    ],
+    valedictions: [
+      ' Thank you very much.',
+      ' Now Let\'s listen to your three pieces.'
+    ]
+  },
 ];
 
 export function loadCourses(): Course[] {

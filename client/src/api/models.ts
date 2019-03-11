@@ -18,11 +18,6 @@ export interface Exercise {
   instruction: Sentence;
   included: boolean;
   ratio: number;
-  delayInSeconds?: number;
+  crotchet: number;
   scales: Sentence[];
-}
-
-export interface CourseModel {
-  courses: Course[];
-  selectedCourse: Course;
 }
