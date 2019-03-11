@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { courses, Course, Exercise } from '../../api/course-definition';
+import { Course, Exercise } from 'src/api/models';
+import { MatTableDataSource } from '@angular/material';
+import { SettingsService, Settings } from '../services/settings.service';
 import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
-import { Settings, SettingsService } from '../services/settings.service';
-import * as lodash from 'lodash';
 import { SlideShowService } from '../services/slide-show.service';
 import {SelectionModel} from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material';
+import * as lodash from 'lodash';
 
 @Component({
   selector: 'app-practice',
@@ -14,59 +13,66 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit, OnDestroy {
+  private _settings: Settings;
   private _course: Course;
-  columnsToDisplay = ['selected', 'name', 'description', 'scale'];
-  
+
+  columnsToDisplay = ['selected', 'name', 'description', 'scale']; 
   player: SlideShowPlayer;
-  dataSource = new MatTableDataSource<Course>(courses);
-  selection = new SelectionModel<Course>(true, []);
+  get courses() { return this._settings.courses; }
 
-   /** Whether the number of selected elements matches the total number of rows. */
-   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle(): void {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
   public get playButtonText() {
     if (this.player.state === StateType.paused) { return 'Resume'; }
     return 'Start';
   }
   public get canSelectOption(): boolean { return this.player.state === StateType.stopped; }
-  public readonly courses: Course[] = courses;
 
   constructor(
     private _settingsService: SettingsService,
     private _slideShow: SlideShowService,
     private _playerService: SlideShowPlayerService) {
 
-    this.courseSelected = this._settingsService.course;
+      const settings = this._settingsService.loadSettings();
+    this._settings = settings;
+    this.courseSelected = settings.courses.find(course => course.name === settings.selectedCourseName);
   }
-  public get courseSelected(): Course {
+  get courseSelected(): Course {
     return this._course;
   }
-  public set courseSelected(value: Course) {
+  set courseSelected(value: Course) {
     this._course = value;
-    this.player = this._playerService.create(this._slideShow.toSlideShow(value));
+    this._settings.selectedCourseName = value.name;
+    this.player = this._playerService.create(this._slideShow.toSlideShow(this._settings));
   }
-  public showSubtitle: boolean;
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
     this.player.stop();
-    this._settingsService.course = this.courseSelected;
-    this._settingsService.saveSettings();
+    this._settingsService.saveSettings(this._settings);
   }
+
   toScaleDetails(exercise: Exercise): string {
     const count = lodash.floor(exercise.ratio * exercise.scales.length);
     return count + '/' + exercise.scales.length;
+  }
+  toggleExercise(exercise: Exercise): void {
+    exercise.active = !exercise.active;
+  }
+  allExerciseSelected(): boolean {
+    if (!this.courseSelected) return false;
+    return this.courseSelected.exercises.every(exercise => exercise.active);
+  }
+  someExerciseSelected(): boolean {
+    if (!this.courseSelected) return false;
+    if (this.allExerciseSelected()) return false;
+    return this.courseSelected.exercises.some(exercise => exercise.active);
+  }
+  allToggle(): void {
+    if(!this.courseSelected) return;
+    const target = !this.allExerciseSelected();
+    for(const exercise of this.courseSelected.exercises) {
+      exercise.active = target;
+    }
   }
 }

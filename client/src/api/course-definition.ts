@@ -1,32 +1,12 @@
+import * as lodash from 'lodash';
+import { Exercise, Course } from './models';
 
-export interface Course {
-  name: string;
-  description: string;
-  greetings: string[];
-  exercises: Exercise[];
-  valedictions: string[];
-}
-export interface Sentence {
-  display: string;
-  speech?: string;
-  delay?: number;
-}
-export interface Exercise {
-  active: boolean;
-  name: string;
-  description: string;
-  instruction: Sentence;
-  included: boolean;
-  ratio: number;
-  delayInSeconds?: number;
-  scales: Sentence[];
-}
 const majorScaleExercise: Exercise = {
   active: true,
   name: 'Major Scales',
-  description: 
-  '<p>3 octaves; crotchet = 126<br/>' + 
-  'C maj, G maj, D maj, A maj, E maj, B maj, F♯ maj, F maj, B♭ maj, E♭ maj, A♭ maj, D♭ maj</p>',
+  description:
+    '<p>3 octaves; crotchet = 126<br/>' +
+    'C maj, G maj, D maj, A maj, E maj, B maj, F♯ maj, F maj, B♭ maj, E♭ maj, A♭ maj, D♭ maj</p>',
   instruction: {
     display: 'Let\'s start with major scales.'
   },
@@ -129,8 +109,8 @@ const majorScaleExercise: Exercise = {
 const minorScaleExercise: Exercise = {
   active: true,
   name: 'Harmonic Minor Scales',
-  description: 
-    '<p>3 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>3 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
   instruction: {
     display: 'Now, let\'s move on to the Harmonic Minor Scales.',
@@ -285,8 +265,8 @@ const minorScaleExercise: Exercise = {
 const melodicMinorScaleExercise: Exercise = {
   active: true,
   name: 'Melodic Minor Scales',
-  description: 
-    '<p>3 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>3 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
   instruction: {
     display: 'Now, let\'s move on to the melodic minor Scales.'
@@ -435,8 +415,8 @@ const melodicMinorScaleExercise: Exercise = {
 const contraryMotionGroup1ScaleExercise: Exercise = {
   active: true,
   name: 'Group 1 Contrary Motion Scales',
-  description: 
-    '<p>2 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>2 octaves; crotchet = 126<br/>' +
     'F major, D♭ major, F harmonic minor, C♯ harmonic minor</p>',
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 1.',
@@ -468,8 +448,8 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
 const contraryMotionGroup2ScaleExercise: Exercise = {
   active: true,
   name: 'Group 2 Contrary Motion Scales',
-  description: 
-    '<p>2 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>2 octaves; crotchet = 126<br/>' +
     'F♯ major, B♭ major, F♯ harmonic minor, B♭ harmonic minor</p>',
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 2.',
@@ -502,8 +482,8 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
 const chromaticScaleExercise: Exercise = {
   active: true,
   name: 'Chromatic Scales',
-  description: 
-    '<p>3 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>3 octaves; crotchet = 126<br/>' +
     'beginning on any note named by the examiner; hands together/ hands separately</p>',
   instruction: {
     display: 'Let\'s move on to the chromatic scales.'
@@ -624,8 +604,8 @@ const chromaticScaleExercise: Exercise = {
 const chromaticContraryMotionScaleExercise: Exercise = {
   active: true,
   name: 'Chromatic Contrary-Motion Scales',
-  description: 
-    '<p>2 octaves; crotchet = 126<br/>' + 
+  description:
+    '<p>2 octaves; crotchet = 126<br/>' +
     'hands together beginning on the same note (unison)</p>',
   instruction: {
     display: 'Let\'s move on to Chromatic Contrary-Motion Scales.',
@@ -647,7 +627,7 @@ const arpeggiosScaleExercise: Exercise = {
   active: true,
   name: 'Arpeggios',
   description:
-    '<p>3 octaves; crotchet = 88<br/>' + 
+    '<p>3 octaves; crotchet = 88<br/>' +
     'hands together/ hands separately</p>',
   instruction: {
     display: 'Let\'s move on to arpeggios.'
@@ -937,27 +917,27 @@ const arpeggiosScaleExercise: Exercise = {
   ]
 };
 
-export const courses: Course[] = [
+const courses: Course[] = [
   {
     name: 'Grade 1 Exam Scales Practice',
-    description: 
-    '<p>All items are to be played from memory. The examiner will be looking for: <br/>' + 
-    '<ol>' + 
-    '<li>a positive sense of rhythm without undue accentuation;</li>' + 
-    '<li>even, firm tone and a musical curve;</li>' + 
-    '<li>good legato;</li>' + 
-    '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' + 
-    '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' + 
-    '</ol>' + 
-    '</p>',
+    description:
+      '<p>All items are to be played from memory. The examiner will be looking for: <br/>' +
+      '<ol>' +
+      '<li>a positive sense of rhythm without undue accentuation;</li>' +
+      '<li>even, firm tone and a musical curve;</li>' +
+      '<li>good legato;</li>' +
+      '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' +
+      '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' +
+      '</ol>' +
+      '</p>',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted,',
       'we will start when you\'re ready.'
     ],
     exercises: [
-      majorScaleExercise,
-      minorScaleExercise,
-      melodicMinorScaleExercise
+      lodash.cloneDeep(majorScaleExercise),
+      lodash.cloneDeep(minorScaleExercise),
+      lodash.cloneDeep(melodicMinorScaleExercise)
     ],
     valedictions: [
       'Thank you very much.',
@@ -967,27 +947,27 @@ export const courses: Course[] = [
   {
     name: 'Grade 5 Exam Scales Practice',
     description:
-      '<p>All items are to be played from memory. The examiner will be looking for: <br/>' + 
-      '<ol>' + 
-      '<li>a positive sense of rhythm without undue accentuation;</li>' + 
-      '<li>even, firm tone and a musical curve;</li>' + 
-      '<li>good legato;</li>' + 
-      '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' + 
-      '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' + 
-      '</ol>' + 
+      '<p>All items are to be played from memory. The examiner will be looking for: <br/>' +
+      '<ol>' +
+      '<li>a positive sense of rhythm without undue accentuation;</li>' +
+      '<li>even, firm tone and a musical curve;</li>' +
+      '<li>good legato;</li>' +
+      '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' +
+      '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' +
+      '</ol>' +
       '</p>',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ',
       'we will start when you\'re ready.'],
     exercises: [
-      majorScaleExercise,
-      minorScaleExercise,
-      melodicMinorScaleExercise,
-      contraryMotionGroup1ScaleExercise,
-      contraryMotionGroup2ScaleExercise,
-      chromaticScaleExercise,
-      chromaticContraryMotionScaleExercise,
-      arpeggiosScaleExercise
+      lodash.cloneDeep(majorScaleExercise),
+      lodash.cloneDeep(minorScaleExercise),
+      lodash.cloneDeep(melodicMinorScaleExercise),
+      lodash.cloneDeep(contraryMotionGroup1ScaleExercise),
+      lodash.cloneDeep(contraryMotionGroup2ScaleExercise),
+      lodash.cloneDeep(chromaticScaleExercise),
+      lodash.cloneDeep(chromaticContraryMotionScaleExercise),
+      lodash.cloneDeep(arpeggiosScaleExercise)
     ],
     valedictions: [
       ' Thank you very much.',
@@ -995,3 +975,7 @@ export const courses: Course[] = [
     ]
   }
 ];
+
+export function loadCourses(): Course[] {
+  return lodash.cloneDeep(courses);
+}

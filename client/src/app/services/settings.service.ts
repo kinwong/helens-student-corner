@@ -1,60 +1,52 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { speakers, Speaker } from 'src/api';
-import { Course, courses } from '../../api/course-definition';
 import { NGXLogger } from 'ngx-logger';
-
-export enum Cookies {
-  Settings = 'settings',
-  CourseName = 'courseName'
-}
+import { Course } from 'src/api/models';
+import { loadCourses } from 'src/api/course-definition';
 
 export interface Settings {
   speaker: Speaker;
   showSubtitle: boolean;
   speed: number;
   metronome: boolean;
+
+  courses: Course[];
+  selectedCourseName: string;
 }
-export interface CourseSettings {
-  courseName: string;
-}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  static defaultSettings: Settings = {
-    speaker: speakers[0],
-    showSubtitle: false,
-    speed: 1,
-    metronome: false
-  };
-  settings: Settings;
-  course: Course;
+  private static readonly CookiesSettings = 'settings';
 
   constructor(
     private _cookies: CookieService,
     private _logger: NGXLogger) {
-    this.loadSettings();
   }
-  public loadSettings(): void {
-    this.settings = this.loadSetting(Cookies.Settings, SettingsService.defaultSettings);
-    this.course = this.loadCourse();
+  loadSettings(): Settings {
+    return this.loadSetting(
+      SettingsService.CookiesSettings, () => {
+        const courses = loadCourses();
+        return <Settings> {
+          speaker: speakers[0],
+          showSubtitle: true,
+          speed: 1.0,
+          metronome: true,
+
+          courses: courses,
+          selectedCourseName: courses[0].name
+        }
+    });
   }
-  saveSettings(): void {
-    this.saveSetting(Cookies.Settings, this.settings);
-    this.saveSetting(Cookies.CourseName, <CourseSettings>{
-      courseName: this.course.name});
+  saveSettings(settings: Settings): void {
+    this.saveSetting(
+      SettingsService.CookiesSettings, settings);
   }
-  private loadCourse(): Course {
-    let finalCourse = courses[0];
-    const courseSettings = this.loadSetting(
-      Cookies.CourseName, <CourseSettings>{courseName: courses[0].name});
-      const courseFound = courses.find(course => course.name === courseSettings.courseName);
-      if (courseFound) { finalCourse = courseFound; }
-    return finalCourse;
-  }
-  private loadSetting<T>(name: string, defaultValue: T): T {
-    let value = defaultValue;
+  
+  private loadSetting<T>(name: string, defaultFactory: () => T): T {
+    let value = undefined;
     try {
       if (this._cookies.check(name)) {
         const textSetting = this._cookies.get(name);
@@ -67,6 +59,9 @@ export class SettingsService {
       }
     } catch (error) {
       this._logger.error(error);
+    }
+    if (!value) {
+      value = defaultFactory();
     }
     return value;
   }

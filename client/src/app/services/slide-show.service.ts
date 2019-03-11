@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SettingsService } from './settings.service';
-import { Course, Exercise, Sentence } from '../../api/course-definition';
+import { SettingsService, Settings } from './settings.service';
 import { speakers } from 'src/api';
 import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import * as lodash from 'lodash';
+import { Course, Exercise, Sentence } from 'src/api/models';
 
 export interface Slide {
   total: number;
@@ -26,15 +26,19 @@ export class SlideShowService {
   constructor(
     private _settings: SettingsService) {
   }
-  toSlideShow(course: Course): SlideShow {
-    let voice = this._settings.settings.speaker.voice;
-    if (voice === undefined) {
+  /**
+   * Compiles the model into a slide show.
+   */
+  toSlideShow(model: Settings): SlideShow {
+    let voice = model.speaker.voice;
+    if (!voice) {
       voice = speakers[Math.floor(Math.random() * 4.0)].voice;
     }
     const config: AudioConfig = {
       audioEncoding: AudioEncoding.MP3,
-      speakingRate: this._settings.settings.speed
+      speakingRate: model.speed
     };
+    const course = model.courses.find(course => course.name === model.selectedCourseName);
     const slides = Array.from(
       this.courseToSlides(course));
 

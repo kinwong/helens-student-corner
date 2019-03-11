@@ -13,11 +13,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _settings: SettingsService) {
-    this.model = _settings.settings;
+    this.model = _settings.loadSettings();
   }
   ngOnInit() {
   }
   ngOnDestroy(): void {
-    this._settings.saveSettings();
+    this._settings.saveSettings(this.model);
   }
 }
