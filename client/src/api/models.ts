@@ -11,6 +11,16 @@ export interface Sentence {
   speech?: string;
   delay?: number;
 }
+
+export interface Scale {
+  display: string;
+  speech?: string;
+
+  notes?: number;
+  octaves?: number;
+  delay?: number;
+}
+
 export interface Exercise {
   active: boolean;
   name: string;
@@ -19,5 +29,5 @@ export interface Exercise {
   included: boolean;
   ratio: number;
   crotchet: number;
-  scales: Sentence[];
+  scales: Scale[];
 }

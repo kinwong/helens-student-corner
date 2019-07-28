@@ -1,4 +1,4 @@
-import * as lodash from 'lodash';
+import lodash from 'lodash';
 import { Exercise, Course } from './models';
 
 const majorScaleExercise: Exercise = {
@@ -6,7 +6,7 @@ const majorScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Major Scales',
   description:
-    '<p>3 octaves; crotchet = 126<br/>' +
+    '<p>6 octaves; crotchet = 126<br/>' +
     'C maj, G maj, D maj, A maj, E maj, B maj, F♯ maj, F maj, B♭ maj, E♭ maj, A♭ maj, D♭ maj</p>',
   instruction: {
     display: 'Let\'s start with major scales.'
@@ -112,7 +112,7 @@ const minorScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Harmonic Minor Scales',
   description:
-    '<p>3 octaves; crotchet = 126<br/>' +
+    '<p>6 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
   instruction: {
     display: 'Now, let\'s move on to the Harmonic Minor Scales.',
@@ -269,7 +269,7 @@ const melodicMinorScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Melodic Minor Scales',
   description:
-    '<p>3 octaves; crotchet = 126<br/>' +
+    '<p>6 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
   instruction: {
     display: 'Now, let\'s move on to the melodic minor Scales.'
@@ -420,7 +420,7 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Group 1 Contrary Motion Scales',
   description:
-    '<p>2 octaves; crotchet = 126<br/>' +
+    '<p>4 octaves; crotchet = 126<br/>' +
     'F major, D♭ major, F harmonic minor, C♯ harmonic minor</p>',
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 1.',
@@ -454,7 +454,7 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Group 2 Contrary Motion Scales',
   description:
-    '<p>2 octaves; crotchet = 126<br/>' +
+    '<p>4 octaves; crotchet = 126<br/>' +
     'F♯ major, B♭ major, F♯ harmonic minor, B♭ harmonic minor</p>',
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 2.',
@@ -489,7 +489,7 @@ const chromaticScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Chromatic Scales',
   description:
-    '<p>3 octaves; crotchet = 126<br/>' +
+    '<p>6 octaves; crotchet = 126<br/>' +
     'beginning on any note named by the examiner; hands together/ hands separately</p>',
   instruction: {
     display: 'Let\'s move on to the chromatic scales.'
@@ -499,111 +499,255 @@ const chromaticScaleExercise: Exercise = {
   scales: [
     {
       display: 'Chromatic scale beginning on C, right hand',
+      speech: '<speak>Chromatic scale beginning on C, right hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on C, left hand',
+      speech: '<speak>Chromatic scale beginning on C, left hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on C, hands together',
+      speech: '<speak>Chromatic scale beginning on C, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D flat, right hand',
+      speech: '<speak>Chromatic scale beginning on D flat, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D flat, left hand',
+      speech: '<speak>Chromatic scale beginning on D flat, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D flat, hands together',
+      speech: '<speak>Chromatic scale beginning on D flat, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D, right hand',
+      speech: '<speak>Chromatic scale beginning on D, right hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D, left hand',
+      speech: '<speak>Chromatic scale beginning on D, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on D, hands together',
+      speech: '<speak>Chromatic scale beginning on D, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E, flat right hand',
+      speech: '<speak>Chromatic scale beginning on E, flat right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E flat, left hand',
+      speech: '<speak>Chromatic scale beginning on E flat, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E flat, hands together',
+      speech: '<speak>Chromatic scale beginning on E flat, hands together</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E, right hand',
+      speech: '<speak>Chromatic scale beginning on E, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E, left hand',
+      speech: '<speak>Chromatic scale beginning on E, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on E, hands together',
+      speech: '<speak>Chromatic scale beginning on E, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on F, right hand',
+      speech: '<speak>Chromatic scale beginning on F, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on F, left hand',
+      speech: '<speak>Chromatic scale beginning on F, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on F, hands together',
+      speech: '<speak>Chromatic scale beginning on F, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
-      display: 'Chromatic scale beginning on F, sharp right hand',
+      display: 'Chromatic scale beginning on F sharp, right hand',
+      speech: '<speak>Chromatic scale beginning on F sharp, right hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on F sharp left hand',
+      speech: '<speak>Chromatic scale beginning on F sharp, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on F sharp, hands together',
+      speech: '<speak>Chromatic scale beginning on F sharp, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on G, right hand',
+      speech: '<speak>Chromatic scale beginning on G, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on G, left hand',
+      speech: '<speak>Chromatic scale beginning on G, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on G, hands together',
+      speech: '<speak>Chromatic scale beginning on G, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A flat, right hand',
+      speech: '<speak>Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as> flat，right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A flat, left hand',
+      speech: '<speak>Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as> flat, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A flat, hands together',
+      speech: '<speak>Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as> flat, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A, right hand',
+      speech: '<speak> Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as>, right hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A, left hand',
+      speech: '<speak> Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as>, left hand</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on A, hands together',
+      speech: '<speak> Chromatic scale beginning on <say-as interpret-as=\"characters\">A</say-as>, hands together</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B flat, right hand',
+      speech: '<speak>Chromatic scale beginning on B flat, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B flat, left hand',
+      speech: '<speak>Chromatic scale beginning on B flat, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B flat, hands together',
+      speech: '<speak>Chromatic scale beginning on B flat, hands together</speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B, right hand',
+      speech: '<speak>Chromatic scale beginning on B, right hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B, left hand',
+      speech: '<speak>Chromatic scale beginning on B, left hand </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Chromatic scale beginning on B, hands together',
+      speech: '<speak>Chromatic scale beginning on B, hands together </speak>',
+      octaves: 6,
+      notes: 12,
+      delay: 2000
     }
   ]
 };
@@ -612,7 +756,7 @@ const chromaticContraryMotionScaleExercise: Exercise = {
   crotchet: 126,
   name: 'Chromatic Contrary-Motion Scales',
   description:
-    '<p>2 octaves; crotchet = 126<br/>' +
+    '<p>4 octaves; crotchet = 126<br/>' +
     'hands together beginning on the same note (unison)</p>',
   instruction: {
     display: 'Let\'s move on to Chromatic Contrary-Motion Scales.',
@@ -622,11 +766,17 @@ const chromaticContraryMotionScaleExercise: Exercise = {
   scales: [
     {
       display: 'Chromatic Scale Contrary-Motion, beginning on D',
-      speech: '<speak>Chromatic Scale in Contrary Motion, beginning on D</speak>'
+      speech: '<speak>Chromatic Scale in Contrary Motion, beginning on D</speak>',
+      octaves: 4,
+      notes: 12,
+      delay: 2000
     },
     {
       display: 'Scale in Chromatic Contrary-Motion beginning on A♭',
-      speech: '<speak>Chromatic Scale in Contrary Motion, beginning on <say-as interpret-as=\"characters\">A</say-as> flat </speak>'
+      speech: '<speak>Chromatic Scale in Contrary Motion, beginning on <say-as interpret-as=\"characters\">A</say-as> flat</speak>',
+      octaves: 4,
+      notes: 12,
+      delay: 2000
     },
   ]
 };
@@ -635,7 +785,7 @@ const arpeggiosScaleExercise: Exercise = {
   crotchet: 88,
   name: 'Arpeggios',
   description:
-    '<p>3 octaves; crotchet = 88<br/>' +
+    '<p>6 octaves; crotchet = 88<br/>' +
     'hands together/ hands separately</p>',
   instruction: {
     display: 'Let\'s move on to arpeggios.'
