@@ -1,6 +1,6 @@
 # Helen Wong Music Angular Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4 and upgraded to 8.
 
 ## Development server
 
