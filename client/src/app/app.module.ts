@@ -10,17 +10,14 @@ import { NgModule } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
 import { LoggerModule } from 'ngx-logger';
-
 import { AppRouters } from './app.routes';
 import { AppComponent } from './app.component';
 import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SettingsComponent } from './settings/settings.component';
-
 import { HttpErrorInterceptor } from './http-error.interceptor';
 
 import { NavbarComponent } from './nav/navbar/navbar.component';
