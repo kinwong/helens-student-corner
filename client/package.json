@@ -31,12 +31,12 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ngx-cookie-service": "^2.2.0",
-    "ngx-logger": "^3.4.6",
+    "ngx-logger": "^4.0.3",
     "rxjs": "~6.5.2",
     "rxjs-compat": "^6.5.2",
     "speak-tts": "^2.0.8",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.10.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.2",
