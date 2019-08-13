@@ -4,6 +4,8 @@ export interface MediaState {
    *  Indicates if there is any audio playing.
    */
   playing: boolean;
+
+  readableSubtitle: string;
   /**
    *  Returns a string which gives you the current time of playing audio in a human-readable form.
    */
@@ -23,7 +25,7 @@ export interface MediaState {
   /**
    * Indicate if you can play the selected audio or not.
    */
-  canplay: boolean;
+  canPlay: boolean;
   /**
    * a boolean to indicate if an error occurred while playing audio or not.
    */

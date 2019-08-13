@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PracticeComponent } from './practice.component';
+import { MaterialModule } from '../material.module';
+import { SanitizeHtmlPipe } from '../pipes/sanitize-html';
+import { SlideShowPlayerComponent } from '../slide-show-player/slide-show-player.component';
 
 describe('PracticeComponent', () => {
   let component: PracticeComponent;
@@ -8,7 +11,14 @@ describe('PracticeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PracticeComponent ]
+      declarations: [
+        PracticeComponent,
+        SlideShowPlayerComponent,
+        SanitizeHtmlPipe,
+      ],
+      imports: [
+        MaterialModule,
+      ]
     })
     .compileComponents();
   }));

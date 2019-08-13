@@ -13,11 +13,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatDividerModule,
     MatExpansionModule,
     MatGridListModule,
@@ -26,13 +31,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatProgressBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatStepperModule,
     MatTableModule,
     MatToolbarModule,
-    MatStepperModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatSliderModule,
   ],
   exports: [
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatDividerModule,
     MatExpansionModule,
     MatGridListModule,
@@ -41,9 +50,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatProgressBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatStepperModule,
     MatTableModule,
     MatToolbarModule,
-    MatStepperModule
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatSliderModule,
   ]
 })
 export class MaterialModule {}
