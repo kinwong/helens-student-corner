@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject, defer, interval } from "rxjs";
 import { takeUntil, withLatestFrom, filter, take, map, share, reduce } from "rxjs/operators";
 import * as moment from "moment";
+import { MediaState } from 'src/api/media-state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MediaService {
-  private _stop$ = new Subject();
+  private _stop$ = new Subject<MediaState>();
   public play(): void {
     //this.audioObj.play();
   }

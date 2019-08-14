@@ -13,45 +13,43 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MaterialModule } from './material.module';
 import { CookieService } from 'ngx-cookie-service';
 import { LoggerModule } from 'ngx-logger';
+
 import { AppRouters } from './app.routes';
 import { AppComponent } from './app.component';
 import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HttpErrorInterceptor } from './http-error.interceptor';
-
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 import { environment } from 'src/environments/environment';
-
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PracticeComponent,
-    WelcomeComponent,
-    SettingsComponent,
     NavbarComponent,
+    PracticeComponent,
+    SanitizeHtmlPipe,
+    SettingsComponent,
     SlideShowPlayerComponent,
-
-    SanitizeHtmlPipe
+    WelcomeComponent,
   ],
   imports: [
+    AppRouters,
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,
-    HttpClientModule,
     FormsModule,
+    HttpClientModule,
+    LoggerModule.forRoot(environment.logging),
+    MatCheckboxModule,
     MatDividerModule,
     MaterialModule,
     MatInputModule,
-    MatSlideToggleModule,
-    MatSliderModule,
     MatProgressBarModule,
-    MatCheckboxModule,
-    LoggerModule.forRoot(environment.logging),
-    AppRouters,
+    MatSliderModule,
+    MatSlideToggleModule,
   ],
   providers: [
     CookieService,

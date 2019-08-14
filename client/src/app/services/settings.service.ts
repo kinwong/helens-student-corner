@@ -5,6 +5,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Course } from 'src/api/models';
 import { loadCourses } from 'src/api/course-definition';
 
+
 export interface Settings {
   speaker: Speaker;
   showSubtitle: boolean;
