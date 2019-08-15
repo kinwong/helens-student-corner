@@ -1,21 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { speakers, Speaker } from 'src/api';
 import { NGXLogger } from 'ngx-logger';
-import { Course } from 'src/api/models';
 import { loadCourses } from 'src/api/course-definition';
+import { speakers } from 'src/api/speaker';
+import { Settings } from 'src/api/settings';
 
-
-export interface Settings {
-  speaker: Speaker;
-  showSubtitle: boolean;
-  speed: number;
-  metronome: boolean;
-
-  showContent: boolean;
-  courses: Course[];
-  selectedCourseName: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +19,9 @@ export class SettingsService {
     private _logger: NGXLogger) {
   }
   loadSettings(): Settings {
-    if (this._settings) return this._settings;
+    if (this._settings) {
+      return this._settings;
+    }
 
     const settings = this.loadSetting(
       SettingsService.CookiesSettings, () => {
@@ -44,7 +35,7 @@ export class SettingsService {
           showContent: false,
           courses: courses,
           selectedCourseName: courses[0].name
-        }
+        };
     });
 
     this._settings = settings;
@@ -52,13 +43,13 @@ export class SettingsService {
   }
   saveSettings(settings: Settings): void {
     this._settings = settings;
-    
+
     this.saveSetting(
       SettingsService.CookiesSettings, settings);
   }
-  
+
   private loadSetting<T>(name: string, defaultFactory: () => T): T {
-    let value = undefined;
+    let value;
     try {
       if (this._cookies.check(name)) {
         const textSetting = this._cookies.get(name);

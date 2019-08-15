@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { SettingsService, Settings } from './settings.service';
-import { speakers } from 'src/api';
+import { SettingsService } from './settings.service';
 import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/api/text-to-speech/contract';
 import * as lodash from 'lodash';
 import { Course, Exercise, Sentence } from 'src/api/models';
+import { Settings } from 'src/api/settings';
+import { speakers } from 'src/api/speaker';
 
 export interface Slide {
   total: number;

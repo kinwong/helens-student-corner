@@ -1,4 +1,4 @@
-import { VoiceSelectionParams, SsmlVoiceGender } from './api/text-to-speech/contract';
+import { VoiceSelectionParams, SsmlVoiceGender } from './text-to-speech/contract';
 
 export interface Speaker {
   firstName: string;

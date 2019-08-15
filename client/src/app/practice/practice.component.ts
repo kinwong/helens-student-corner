@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Course, Exercise } from 'src/api/models';
-import { SettingsService, Settings } from '../services/settings.service';
+import { SettingsService } from '../services/settings.service';
 import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
 import { SlideShowService } from '../services/slide-show.service';
 import * as lodash from 'lodash';
+import { Settings } from 'src/api/settings';
 
 @Component({
   selector: 'app-practice',

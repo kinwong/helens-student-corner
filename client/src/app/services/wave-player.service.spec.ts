@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { WavePlayerService } from './wave-player.service';
 import { NGXLogger } from 'ngx-logger';
-import { NGXLoggerMock } from './ngx-logger.mock';
+import { NGXLoggerMock } from '../mocks/ngx-logger.mock';
 
 describe('WavePlayerService', () => {
   beforeEach(() =>

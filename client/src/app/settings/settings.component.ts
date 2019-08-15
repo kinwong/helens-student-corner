@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { speakers, Speaker } from 'src/api';
-import { SettingsService, Settings } from '../services/settings.service';
+import { SettingsService } from '../services/settings.service';
+import { Settings } from 'src/api/settings';
+import { Speaker, speakers } from 'src/api/speaker';
 
 @Component({
   selector: 'app-settings',

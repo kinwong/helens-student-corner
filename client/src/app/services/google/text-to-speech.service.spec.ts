@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TextToSpeechService } from './text-to-speech.service';
 import { NGXLogger } from 'ngx-logger';
-import { NGXLoggerMock } from '../ngx-logger.mock';
+import { NGXLoggerMock } from '../../mocks/ngx-logger.mock';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('TextToSpeechService', () => {
