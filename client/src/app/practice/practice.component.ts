@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Course, Exercise } from 'src/api/models';
-import { SettingsService } from '../services/settings.service';
 import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
 import { SlideShowService } from '../services/slide-show.service';
 import * as lodash from 'lodash';
 import { Settings } from 'src/api/settings';
+import { SettingsService } from '../services/settings.service';
 
 @Component({
   selector: 'app-practice',
@@ -15,8 +15,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
   private _model: Settings;
   private _course: Course;
 
-  columnsToDisplay = ['selected', 'name', 'description', 'scale']; 
+  columnsToDisplay = ['selected', 'name', 'description', 'scale'];
   player: SlideShowPlayer;
+
   get courses(): Course[] { return this._model.courses; }
   get contentExpanded(): boolean { return this._model.showContent; }
   set contentExpanded(value: boolean) { this._model.showContent = value; }

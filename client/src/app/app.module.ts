@@ -15,7 +15,6 @@ import { AppRouters } from './app.routes';
 import { AppComponent } from './app.component';
 import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { SettingsComponent } from './settings/settings.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 
@@ -31,7 +30,6 @@ import { PreferencesComponent } from './preferences/preferences.component';
     NavbarComponent,
     PracticeComponent,
     SanitizeHtmlPipe,
-    SettingsComponent,
     SlideShowPlayerComponent,
     WelcomeComponent,
     PreferencesComponent,
