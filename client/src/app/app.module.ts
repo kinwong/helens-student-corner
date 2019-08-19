@@ -23,6 +23,7 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 import { reducers, metaReducers } from './reducers';
 import { environment } from 'src/environments/environment';
+import { PreferencesComponent } from './preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { environment } from 'src/environments/environment';
     SettingsComponent,
     SlideShowPlayerComponent,
     WelcomeComponent,
+    PreferencesComponent,
   ],
   imports: [
     AppRouters,
@@ -42,12 +44,14 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     HttpClientModule,
     MaterialModule,
+
     LoggerModule.forRoot(environment.logging),
-    StoreModule.forRoot(reducers, {
+    StoreModule.forRoot(
+      reducers, {
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true
+        strictActionImmutability: true,
       }
     }),
   ],

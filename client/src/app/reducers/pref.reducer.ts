@@ -1,4 +1,4 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action, createSelector, createFeatureSelector } from '@ngrx/store';
 import { Speaker, speakers } from 'src/api/speaker';
 import * as PrefActions from './pref.actions';
 
@@ -24,7 +24,7 @@ const prefReducer = createReducer(
     ...state, speaker: speaker
   })),
   on(
-    PrefActions.setSubtitle,
+    PrefActions.showSubtitle,
     (state, {subtitle}) => ({
     ...state, showSubtitle: subtitle
   })),

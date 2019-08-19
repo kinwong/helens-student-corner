@@ -1,4 +1,4 @@
-import { ActionReducerMap, createFeatureSelector, MetaReducer } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector, MetaReducer, ActionReducer, createSelector } from '@ngrx/store';
 import * as fromPref from './pref.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromMedia from './media.reducer';
@@ -16,10 +16,34 @@ export const reducers: ActionReducerMap<State> = {
   media: fromMedia.reducer,
 };
 
-export const getPrefState = createFeatureSelector<fromPref.State>('course');
-export const getMediaState = createFeatureSelector<fromMedia.State>('media');
-export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
-
+// console.log all actions
+export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+  return (state, action) => {
+    const result = reducer(state, action);
+    console.groupCollapsed(action.type);
+    console.log('prev state', state);
+    console.log('action', action);
+    console.log('next state', result);
+    console.groupEnd();
+    return result;
+  };
+}
 
 export const metaReducers: MetaReducer<State>[] =
-  !environment.production ? [] : [];
+  !environment.production ? [logger] : [];
+
+export const selectPref = createFeatureSelector<fromPref.State>('pref');
+export const selectAuth = createFeatureSelector<fromAuth.State>('auth');
+export const selectMedia = createFeatureSelector<fromMedia.State>('media');
+
+export const selectPrefSpeaker = createSelector(
+  selectPref, state => state.speaker);
+
+export const selectPrefSubtitle = createSelector(
+  selectPref, state => state.showSubtitle);
+
+export const selectPrefSpeed = createSelector(
+  selectPref, state => state.speed);
+
+export const selectPrefMetronome = createSelector(
+  selectPref, state => state.metronome);

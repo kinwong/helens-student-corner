@@ -4,8 +4,8 @@ import { Speaker } from 'src/api/speaker';
 export const setSpeaker = createAction(
   '[Pref] Set Speaker',
   props<{speaker: Speaker }>());
-export const setSubtitle = createAction(
-  '[Pref] Set Subtitle',
+export const showSubtitle = createAction(
+  '[Pref] Show Subtitle',
   props<{subtitle: boolean}>());
 export const setSpeed = createAction(
   '[Pref] Set Speed',
