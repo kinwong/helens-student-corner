@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SlideShowService } from './slide-show.service';
-import { loadCourses } from '../../api/course-definition';
 import { NGXLogger } from 'ngx-logger';
 import { CookieService } from 'ngx-cookie-service';
 import { CookieServiceMock } from '../mocks/cookie.service.mock';

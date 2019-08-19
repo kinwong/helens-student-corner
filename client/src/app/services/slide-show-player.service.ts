@@ -13,7 +13,6 @@ export enum StateType {
   playing,
   paused
 }
-
 export class SlideShowPlayer {
   private _subscription: Subscription;
   private _media: Media;
@@ -110,7 +109,9 @@ export class SlideShowPlayer {
 
     const speech$ = this._speech.toSpeech(voice, config, ssml)
       .pipe(concatMap(mp3 => this._player.play(mp3)));
-    if (!pauseInSeconds) return speech$;
+    if (!pauseInSeconds) {
+      return speech$;
+    }
 
     const playing = new BehaviorSubject<boolean>(true);
     const wait$ = this.wait(pauseInSeconds, playing).pipe(map(_ => <Media>{
@@ -150,7 +151,7 @@ export class SlideShowPlayer {
         tap(i => this._logger.debug(`wait(${i})`)),
         takeWhile(v => v >= 0));
     return timer$;
-  }  
+  }
 }
 
 export interface Media {

@@ -9,4 +9,8 @@ describe('MediaService', () => {
     const service: MediaService = TestBed.get(MediaService);
     expect(service).toBeTruthy();
   });
+
+  it('can pause and resume', () => {
+
+  });
 });
