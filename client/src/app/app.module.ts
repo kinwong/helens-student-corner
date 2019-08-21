@@ -4,9 +4,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 
-import { CookieService } from 'ngx-cookie-service';
+import { StoreModule } from '@ngrx/store';
+import { EntityDataModule } from '@ngrx/data';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { LoggerModule } from 'ngx-logger';
 
 import { MaterialModule } from './material.module';
@@ -17,12 +20,15 @@ import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
+import { PreferencesComponent } from './preferences/preferences.component';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 import { reducers, metaReducers } from './reducers';
+
+import { entityConfig } from './entity-metadata';
+
 import { environment } from 'src/environments/environment';
-import { PreferencesComponent } from './preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -52,9 +58,14 @@ import { PreferencesComponent } from './preferences/preferences.component';
         strictActionImmutability: true,
       }
     }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig)
   ],
   providers: [
-    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

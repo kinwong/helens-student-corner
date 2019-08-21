@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Speaker } from 'src/api/speaker';
+import { Speaker } from 'src/app/models/speaker';
 
 export const setSpeaker = createAction(
   '[Pref] Set Speaker',

@@ -1,6 +1,6 @@
 import { createReducer, on, Action, createSelector, createFeatureSelector } from '@ngrx/store';
-import { Speaker, speakers } from 'src/api/speaker';
-import * as PrefActions from './pref.actions';
+import { Speaker, speakers } from 'src/app/models/speaker';
+import * as PrefActions from '../actions/pref.actions';
 
 export interface State {
   speaker: Speaker;
@@ -42,7 +42,6 @@ const prefReducer = createReducer(
     PrefActions.reset,
     _ => (initialState))
 );
-
 export function reducer(state: State | undefined, action: Action) {
   return prefReducer(state, action);
 }

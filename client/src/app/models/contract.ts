@@ -1,4 +1,3 @@
-
 export enum SsmlVoiceGender {
   Unspecified = 'SSML_VOICE_GENDER_UNSPECIFIED',
   Male = 'MALE',

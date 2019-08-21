@@ -6,7 +6,7 @@ import { map, timeout, tap } from 'rxjs/operators';
 // tslint:disable-next-line:max-line-length
 import {
   SynthesizeRequest, SynthesizeResponse, AudioEncoding, VoiceSelectionParams, AudioConfig
-} from '../../../api/text-to-speech/contract';
+} from '../../models/contract';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
@@ -34,11 +34,11 @@ export class TextToSpeechService {
   //       return this.play(mp3);
   //     }));
   // }
-  toSpeech(voice: VoiceSelectionParams, config: AudioConfig = undefined, ssml: string): Observable<string> {
-    if(config == undefined) {
+  toSpeech(voice: VoiceSelectionParams, config: AudioConfig, ssml: string): Observable<string> {
+    if (config === undefined) {
       config = {
         audioEncoding: AudioEncoding.MP3
-      }
+      };
     }
     const request: SynthesizeRequest = {
       input: { ssml: ssml },
@@ -51,7 +51,7 @@ export class TextToSpeechService {
           return (response as SynthesizeResponse).audioContent;
         }),
         timeout(TextToSpeechService.timeoutInMilliseconds),
-        tap(_=>{}, 
+        tap(_ => {},
           error => this._logger.error(error)));
   }
   private post(call: string, request: any): Observable<any> {

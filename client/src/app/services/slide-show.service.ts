@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { SettingsService } from './settings.service';
-import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/api/text-to-speech/contract';
+import { AudioConfig, AudioEncoding, VoiceSelectionParams } from 'src/app/models/contract';
 import * as lodash from 'lodash';
-import { Course, Exercise, Sentence } from 'src/api/models';
-import { Settings } from 'src/api/settings';
-import { speakers } from 'src/api/speaker';
+import { Course, Exercise, Sentence } from 'src/app/models/models';
+import { speakers } from 'src/app/models/speaker';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
+import { CourseService } from './course.service';
+import { ExerciseService } from './exercise.service';
 
 export interface Slide {
   total: number;
@@ -25,20 +27,25 @@ export interface SlideShow {
 })
 export class SlideShowService {
   constructor(
-    private _settings: SettingsService) {
+    private _store: Store<State>,
+    private _courses: CourseService,
+    private _exercises: ExerciseService) {
   }
   /**
    * Compiles the model into a slide show.
    */
-  toSlideShow(model: Settings): SlideShow {
-    let voice = model.speaker.voice;
+  toSlideShow(model: State): Observable<SlideShow> {
+    let voice = model.pref.speaker.voice;
     if (!voice) {
       voice = speakers[Math.floor(Math.random() * 4.0)].voice;
     }
     const config: AudioConfig = {
       audioEncoding: AudioEncoding.MP3,
-      speakingRate: model.speed
+      speakingRate: model.pref.speed
     };
+
+    this._courses.selectors.selectCollection
+    this._courses
     const course = model.courses.find(course => course.name === model.selectedCourseName);
     const slides = Array.from(
       this.courseToSlides(course));

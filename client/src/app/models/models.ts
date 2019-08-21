@@ -3,9 +3,20 @@ export interface Course {
   name: string;
   description: string;
   greetings: string[];
-  exercises: Exercise[];
+  exerciseNames: string[];
   valedictions: string[];
 }
+
+export interface Exercise {
+  name: string;
+  description: string;
+  instruction: Sentence;
+  included: boolean;
+  ratio: number;
+  crotchet: number;
+  scales: Scale[];
+}
+
 export interface Sentence {
   display: string;
   speech?: string;
@@ -19,15 +30,4 @@ export interface Scale {
   notes?: number;
   octaves?: number;
   delay?: number;
-}
-
-export interface Exercise {
-  active: boolean;
-  name: string;
-  description: string;
-  instruction: Sentence;
-  included: boolean;
-  ratio: number;
-  crotchet: number;
-  scales: Scale[];
 }

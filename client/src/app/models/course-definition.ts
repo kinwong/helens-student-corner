@@ -2,9 +2,8 @@ import lodash from 'lodash';
 import { Exercise, Course } from './models';
 
 const majorScaleExercise: Exercise = {
-  active: true,
-  crotchet: 126,
   name: 'Major Scales',
+  crotchet: 126,
   description:
     '<p>6 octaves; crotchet = 126<br/>' +
     'C maj, G maj, D maj, A maj, E maj, B maj, F♯ maj, F maj, B♭ maj, E♭ maj, A♭ maj, D♭ maj</p>',
@@ -108,9 +107,8 @@ const majorScaleExercise: Exercise = {
   ]
 };
 const minorScaleExercise: Exercise = {
-  active: true,
-  crotchet: 126,
   name: 'Harmonic Minor Scales',
+  crotchet: 126,
   description:
     '<p>6 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
@@ -265,9 +263,8 @@ const minorScaleExercise: Exercise = {
 };
 
 const melodicMinorScaleExercise: Exercise = {
-  active: true,
-  crotchet: 126,
   name: 'Melodic Minor Scales',
+  crotchet: 126,
   description:
     '<p>6 octaves; crotchet = 126<br/>' +
     'A min, E min, B min, F♯ min, C♯ min, G♯ min, D min, G min, C min, F min, B♭ min, E♭ min</p>',
@@ -416,7 +413,6 @@ const melodicMinorScaleExercise: Exercise = {
   ]
 };
 const contraryMotionGroup1ScaleExercise: Exercise = {
-  active: true,
   crotchet: 126,
   name: 'Group 1 Contrary Motion Scales',
   description:
@@ -450,7 +446,6 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
   ]
 };
 const contraryMotionGroup2ScaleExercise: Exercise = {
-  active: true,
   crotchet: 126,
   name: 'Group 2 Contrary Motion Scales',
   description:
@@ -485,7 +480,6 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
   ]
 };
 const chromaticScaleExercise: Exercise = {
-  active: true,
   crotchet: 126,
   name: 'Chromatic Scales',
   description:
@@ -752,7 +746,6 @@ const chromaticScaleExercise: Exercise = {
   ]
 };
 const chromaticContraryMotionScaleExercise: Exercise = {
-  active: true,
   crotchet: 126,
   name: 'Chromatic Contrary-Motion Scales',
   description:
@@ -781,7 +774,6 @@ const chromaticContraryMotionScaleExercise: Exercise = {
   ]
 };
 const arpeggiosScaleExercise: Exercise = {
-  active: true,
   crotchet: 88,
   name: 'Arpeggios',
   description:
@@ -1075,7 +1067,7 @@ const arpeggiosScaleExercise: Exercise = {
   ]
 };
 
-const courses: Course[] = [
+export const courses: Course[] = [
   {
     name: 'Grade 1 Exam Scales Practice',
     description:
@@ -1092,10 +1084,10 @@ const courses: Course[] = [
       'Good afternoon, please be seated and get your stool adjusted,',
       'we will start when you\'re ready.'
     ],
-    exercises: [
-      lodash.cloneDeep(majorScaleExercise),
-      lodash.cloneDeep(minorScaleExercise),
-      lodash.cloneDeep(melodicMinorScaleExercise)
+    exerciseNames: [
+      majorScaleExercise.name,
+      minorScaleExercise.name,
+      melodicMinorScaleExercise.name
     ],
     valedictions: [
       'Thank you very much.',
@@ -1117,15 +1109,15 @@ const courses: Course[] = [
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ',
       'we will start when you\'re ready.'],
-    exercises: [
-      lodash.cloneDeep(majorScaleExercise),
-      lodash.cloneDeep(minorScaleExercise),
-      lodash.cloneDeep(melodicMinorScaleExercise),
-      lodash.cloneDeep(contraryMotionGroup1ScaleExercise),
-      lodash.cloneDeep(contraryMotionGroup2ScaleExercise),
-      lodash.cloneDeep(chromaticScaleExercise),
-      lodash.cloneDeep(chromaticContraryMotionScaleExercise),
-      lodash.cloneDeep(arpeggiosScaleExercise)
+    exerciseNames: [
+      majorScaleExercise.name,
+      minorScaleExercise.name,
+      melodicMinorScaleExercise.name,
+      contraryMotionGroup1ScaleExercise.name,
+      contraryMotionGroup2ScaleExercise.name,
+      chromaticScaleExercise.name,
+      chromaticContraryMotionScaleExercise.name,
+      arpeggiosScaleExercise.name
     ],
     valedictions: [
       ' Thank you very much.',
@@ -1147,15 +1139,15 @@ const courses: Course[] = [
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ',
       'we will start when you\'re ready.'],
-    exercises: [
-      lodash.cloneDeep(majorScaleExercise),
-      lodash.cloneDeep(minorScaleExercise),
-      lodash.cloneDeep(melodicMinorScaleExercise),
-      lodash.cloneDeep(contraryMotionGroup1ScaleExercise),
-      lodash.cloneDeep(contraryMotionGroup2ScaleExercise),
-      lodash.cloneDeep(chromaticScaleExercise),
-      lodash.cloneDeep(chromaticContraryMotionScaleExercise),
-      lodash.cloneDeep(arpeggiosScaleExercise)
+    exerciseNames: [
+      majorScaleExercise.name,
+      minorScaleExercise.name,
+      melodicMinorScaleExercise.name,
+      contraryMotionGroup1ScaleExercise.name,
+      contraryMotionGroup2ScaleExercise.name,
+      chromaticScaleExercise.name,
+      chromaticContraryMotionScaleExercise.name,
+      arpeggiosScaleExercise.name
     ],
     valedictions: [
       ' Thank you very much.',
@@ -1164,6 +1156,13 @@ const courses: Course[] = [
   },
 ];
 
-export function loadCourses(): Course[] {
-  return lodash.cloneDeep(courses);
-}
+export const exercises: Exercise[] = [
+  majorScaleExercise,
+  minorScaleExercise,
+  melodicMinorScaleExercise,
+  contraryMotionGroup1ScaleExercise,
+  contraryMotionGroup2ScaleExercise,
+  chromaticScaleExercise,
+  chromaticContraryMotionScaleExercise,
+  arpeggiosScaleExercise
+];

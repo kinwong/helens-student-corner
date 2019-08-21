@@ -137,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "helen-student-corner"
+  "defaultProject": "helen-student-corner",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

@@ -2,18 +2,22 @@ import { ActionReducerMap, createFeatureSelector, MetaReducer, ActionReducer, cr
 import * as fromPref from './pref.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromMedia from './media.reducer';
+import * as fromPractice from './practice.reducer';
+
 import { environment } from '../../environments/environment';
 
 export interface State {
   pref: fromPref.State;
   auth: fromAuth.State;
   media: fromMedia.State;
+  practice: fromPractice.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
   pref: fromPref.reducer,
   auth: fromAuth.reducer,
   media: fromMedia.reducer,
+  practice: fromPractice.reducer,
 };
 
 // console.log all actions
@@ -35,6 +39,8 @@ export const metaReducers: MetaReducer<State>[] =
 export const selectPref = createFeatureSelector<fromPref.State>('pref');
 export const selectAuth = createFeatureSelector<fromAuth.State>('auth');
 export const selectMedia = createFeatureSelector<fromMedia.State>('media');
+export const selectPractice = createFeatureSelector<fromPractice.State>('practice');
+
 
 export const selectPrefSpeaker = createSelector(
   selectPref, state => state.speaker);
@@ -47,3 +53,13 @@ export const selectPrefSpeed = createSelector(
 
 export const selectPrefMetronome = createSelector(
   selectPref, state => state.metronome);
+
+export const selectPracticeSelectedCourseName =  createSelector(
+  selectPractice, state => state.selectedCourseName);
+
+export const selectPracticeShowTableOfContent =  createSelector(
+  selectPractice, state => state.showTableOfContent);
+
+export const selectPracticeExerciseSet =  createSelector(
+    selectPractice, state => state.exerciseSets);
+  

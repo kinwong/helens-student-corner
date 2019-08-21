@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { State, selectPrefSpeaker, selectPrefSubtitle, selectPrefSpeed, selectPrefMetronome } from '../reducers';
 import { Store, select } from '@ngrx/store';
-import { Speaker, speakers } from 'src/api/speaker';
 import { Observable } from 'rxjs';
-import * as fromPref from '../reducers/pref.actions';
+
+import { Speaker, speakers } from 'src/app/models/speaker';
+import { State, selectPrefSpeaker, selectPrefSubtitle, selectPrefSpeed, selectPrefMetronome } from '../reducers';
+import * as fromPref from '../actions/pref.actions';
 
 @Component({
   selector: 'app-preferences',
@@ -11,10 +12,10 @@ import * as fromPref from '../reducers/pref.actions';
   styleUrls: ['./preferences.component.scss']
 })
 export class PreferencesComponent implements OnInit {
-  speaker$: Observable<Speaker>;
-  showSubtitle$: Observable<boolean>;
-  speed$: Observable<number>;
-  metronome$: Observable<boolean>;
+  private speaker$: Observable<Speaker>;
+  private showSubtitle$: Observable<boolean>;
+  private speed$: Observable<number>;
+  private metronome$: Observable<boolean>;
 
   readonly speakers: Speaker[] = speakers;
 

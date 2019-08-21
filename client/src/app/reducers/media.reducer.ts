@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import * as MediaActions from './media.actions';
+import * as MediaActions from '../actions/media.actions';
 
 export interface State {
   /**
@@ -83,7 +83,7 @@ const mediaReducer = createReducer(
         ...state,
         playing: false,
         paused: false
-      }
+      };
     }
     return state;
   }),

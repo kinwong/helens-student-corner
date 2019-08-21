@@ -1,7 +1,7 @@
 import {
   VoiceSelectionParams,
   SsmlVoiceGender
-} from './text-to-speech/contract';
+} from './contract';
 
 export interface Speaker {
   firstName: string;

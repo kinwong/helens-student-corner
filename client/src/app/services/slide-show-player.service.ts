@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TextToSpeechService } from './google/text-to-speech.service';
 import { Observable, concat, BehaviorSubject, interval, empty, Subscription, from } from 'rxjs';
-import { VoiceSelectionParams, AudioConfig } from 'src/api/text-to-speech/contract';
+import { VoiceSelectionParams, AudioConfig } from 'src/app/models/contract';
 import { map, startWith, switchMap, scan, takeWhile, distinctUntilChanged, mapTo, concatMap, tap } from 'rxjs/operators';
 import { WavePlayerService } from './wave-player.service';
 import { SlideShow, Slide } from './slide-show.service';
