@@ -125,7 +125,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.store.dispatch(PracticeActions.showTableOfContent({show: show}));
   }
   setCourse(course: Course): void {
-    this.store.dispatch(PracticeActions.selectCourse({course: course}));
+    this.store.dispatch(PracticeActions.selectCourse({courseName: course.name }));
   }
   allToggle(): void {
     // if(!this.courseSelected) return;

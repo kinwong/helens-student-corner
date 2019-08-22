@@ -7,7 +7,7 @@
       <mat-select placeholder="Select Course" required 
         [disabled]="!(ready$ | async)" 
         [value]="selectedCourse$ | async"
-        (valueChange)="setCourse($event.target)">
+        (valueChange)="setCourse($event)">
         <mat-option *ngFor="let course of courses$ | async; let i=index" [value]="course">
           {{course.name}}
         </mat-option>

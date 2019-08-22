@@ -3,15 +3,15 @@ import { courses } from 'src/app/models/course-definition';
 import * as PracticeActions from '../actions/practice.actions';
 import * as lodash from 'lodash';
 
-export interface ExerciseSet {
-  courseName: string;
-  selectedExercises: Set<string>;
-}
-
 export interface State {
   selectedCourseName: string;
   showTableOfContent: boolean;
   exerciseSets: ExerciseSet[];
+}
+
+export interface ExerciseSet {
+  courseName: string;
+  selectedExercises: Set<string>;
 }
 
 const initialState: State = {
@@ -29,8 +29,8 @@ const prefReducer = createReducer(
   initialState,
   on(
     PracticeActions.selectCourse,
-    (state, {course}) => ({
-    ...state, selectedCourse: course.name
+    (state, {courseName}) => ({
+    ...state, selectedCourseName: courseName
   })),
 
   on(
