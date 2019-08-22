@@ -8,10 +8,6 @@ export interface State {
   playing: boolean;
   paused: boolean;
   /**
-   * Indicate if media can be played (started).
-   */
-  canPlay: boolean;
-  /**
    * Indicates if there is
    */
   error: string | undefined;
@@ -28,7 +24,6 @@ export interface State {
 const initialState: State = {
   playing: false,
   paused: false,
-  canPlay: true,
 
   error: undefined,
   subtitle: undefined,
@@ -46,10 +41,10 @@ const mediaReducer = createReducer(
         // Resumes media.
         return {
           ...state,
-          paused: false
+          playing: true,
+          paused: false,
         };
       } else {
-
         return {
           ...state,
           playing: true,
@@ -60,59 +55,54 @@ const mediaReducer = createReducer(
 
   on(MediaActions.pause,
     state => {
-    if (!state.paused) {
-      // Pauses playing media.
-      return {
-        ...state,
-        paused: true
-      };
-    }
-    return state;
-  }),
+      if (!state.paused) {
+        // Pauses playing media.
+        return {
+          ...state,
+          paused: true,
+          playing: false,
+        };
+      }
+      return state;
+    }),
 
   on(MediaActions.stop,
     state => {
-
-    if (state.playing) {
       return {
-        ...state,
-        playing: false,
-        paused: false
+        ...initialState
       };
-    }
-    return state;
-  }),
+    }),
 
   on(MediaActions.setSubtitle,
-    (state, {subtitle}) => ({
+    (state, { subtitle }) => ({
       ...state,
       subtitle: subtitle
     })),
 
   on(MediaActions.setTotalChapter,
-    (state, {totalChapter}) => ({
+    (state, { totalChapter }) => ({
       ...state,
       totalChapter: totalChapter
     })),
 
   on(MediaActions.setCurrentChapter,
-    (state, {currentChapter}) => ({
+    (state, { currentChapter }) => ({
       ...state,
       currentChapter: currentChapter
     })),
 
-    on(MediaActions.setTotalTime,
-      (state, {totalTime}) => ({
-        ...state,
-        totalTime: totalTime
-      })),
+  on(MediaActions.setTotalTime,
+    (state, { totalTime }) => ({
+      ...state,
+      totalTime: totalTime
+    })),
 
-      on(MediaActions.setCurrentTime,
-        (state, {currentTime}) => ({
-          ...state,
-          currentTime: currentTime
-        })),
-  );
+  on(MediaActions.setCurrentTime,
+    (state, { currentTime }) => ({
+      ...state,
+      currentTime: currentTime
+    })),
+);
 
 export function reducer(state: State | undefined, action: Action) {
   return mediaReducer(state, action);
@@ -123,8 +113,8 @@ const selectFeature = createFeatureSelector<State>(featureName);
 
 export const selectPlaying = createSelector(selectFeature, state => state.playing);
 export const selectPaused = createSelector(selectFeature, state => state.paused);
-export const selectCanPlay = createSelector(selectFeature, state => state.canPlay);
 export const selectError = createSelector(selectFeature, state => state.error);
+export const selectRunning = createSelector(selectFeature, state => state.playing || state.paused);
 
 export const selectSubtitle = createSelector(selectFeature, state => state.subtitle);
 export const selectTotalChapter = createSelector(selectFeature, state => state.totalChapter);

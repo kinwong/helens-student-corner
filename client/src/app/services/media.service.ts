@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject, defer, interval } from 'rxjs';
 import { takeUntil, withLatestFrom, filter, take, map, share, reduce } from 'rxjs/operators';
 import * as moment from 'moment';
-import { MediaState } from 'src/api/media-state';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 
@@ -10,19 +9,17 @@ import { State } from '../reducers';
   providedIn: 'root'
 })
 export class MediaService {
-  private _stop$ = new Subject<MediaState>();
   public play(): void {
     // this.audioObj.play();
   }
+
   public pause(): void {
     // this.audioObj.pause();
   }
   public stop(): void {
-    this._stop$.next();
   }
 
   constructor(private store: Store<State>) { }
-
   /**
    * Creates a waiter that can be paused.
    * @param duration The duration in milliseconds.

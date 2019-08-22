@@ -37,7 +37,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   selectedCourse$: Observable<Course>;
   selectedCourseExercise$: Observable<Exercise[]>;
   showTableOfContent$: Observable<boolean>;
-  playing$: Observable<boolean>;
+  running$: Observable<boolean>;
   allExerciseSelected$: Observable<boolean>;
   onlySomeExerciseSelected$: Observable<boolean>;
 
@@ -74,7 +74,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
             .filter(exercise => exercise)))));
 
     this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
-    this.playing$ = store.pipe(select(FromMedia.selectPlaying));
+    this.running$ = store.pipe(select(FromMedia.selectRunning));
 
     this.allExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseAllActive));
     this.onlySomeExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseSomeActive));
