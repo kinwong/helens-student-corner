@@ -39,6 +39,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
   selectedCourseExercise$: Observable<Exercise[]>;
   showTableOfContent$: Observable<boolean>;
   playing$: Observable<boolean>;
+  allExerciseSelected$: Observable<boolean>;
+  onlySomeExerciseSelected$: Observable<boolean>;
 
   constructor(
     private store: Store<State>,
@@ -76,6 +78,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
     this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
     this.playing$ = store.pipe(select(FromMedia.selectPlaying));
+
+    this.allExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseAllActive));
+    this.onlySomeExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseSomeActive));
   }
 
   ngOnInit(): void {
@@ -93,19 +98,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       PracticeActions.toggleExerciseActivation({ exerciseName: exercise.name }));
   }
-  allExerciseSelected$(): Observable<boolean> {
-    return this.store.pipe(select(
-      FromPractice.selectSelectedCourseExerciseAllActive));
-  }
-  onlySomeExerciseSelected$(): Observable<boolean> {
-    return this.store.pipe(select(
-      FromPractice.selectSelectedCourseExerciseSomeActive));
-  }
-  someExerciseSelected(): boolean {
-    // if (!this.courseSelected) return false;
-    // return this.courseSelected.exercises.some(exercise => exercise.active);
-    return false;
-  }
   setShowTableOfContent(show: boolean): void {
     this.store.dispatch(PracticeActions.showTableOfContent({ show: show }));
   }
@@ -113,14 +105,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.store.dispatch(PracticeActions.selectCourse({ courseName: course.name }));
   }
   exerciseSelected(exercise: Exercise): Observable<boolean> {
-    // return this.store.pipe(
-    //   select(FromPractice.selectSelectedCourseExerciseActive, {course : course}),
-    //   map(set => set.selectedExercises[exercise.name]));
     return this.store.pipe(select(
       FromPractice.selectSelectedCourseExerciseActive,
       { exerciseName: exercise.name }));
   }
   allToggle(): void {
+
     // if(!this.courseSelected) return;
     // const target = !this.allExerciseSelected();
     // for(const exercise of this.courseSelected.exercises) {
