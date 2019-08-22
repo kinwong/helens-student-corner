@@ -1,4 +1,4 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
 import { courses } from 'src/app/models/course-definition';
 import * as PracticeActions from '../actions/practice.actions';
 import * as lodash from 'lodash';
@@ -58,3 +58,10 @@ const prefReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return prefReducer(state, action);
 }
+export const featureName = 'practice';
+export const selectFeature = createFeatureSelector<State>(featureName);
+
+// === Practice ===
+export const selectSelectedCourseName =  createSelector(selectFeature, state => state.selectedCourseName);
+export const selectShowTableOfContent =  createSelector(selectFeature, state => state.showTableOfContent);
+export const selectExerciseSet =  createSelector(selectFeature, state => state.exerciseSets);

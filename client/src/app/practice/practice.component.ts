@@ -1,18 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Course, Exercise } from 'src/app/models/models';
-import { SlideShowPlayerService, StateType, SlideShowPlayer } from '../services/slide-show-player.service';
-import { SlideShowService } from '../services/slide-show.service';
 import * as lodash from 'lodash';
-// tslint:disable-next-line: max-line-length
-import { State, selectPref, selectPrefSpeaker, selectPrefSubtitle, selectPrefSpeed, selectPrefMetronome, selectPracticeSelectedCourseName, selectPracticeShowTableOfContent } from '../reducers';
-import { Store, select } from '@ngrx/store';
-import * as FromPref from '../reducers/pref.reducer';
 import { Observable, combineLatest } from 'rxjs';
-import { Speaker } from 'src/app/models/speaker';
-import { EntityCollectionServiceFactory, EntityCollectionService } from '@ngrx/data';
+import { map, flatMap, distinctUntilChanged, tap, filter } from 'rxjs/operators';
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+
 import { CourseService } from '../services/course.service';
 import { ExerciseService } from '../services/exercise.service';
-import { combineAll, map } from 'rxjs/operators';
+import { SlideShowPlayerService } from '../services/slide-show-player.service';
+import { SlideShowService } from '../services/slide-show.service';
+
+import { Speaker } from '../models/speaker';
+import { Course, Exercise } from '../models/models';
+import { State,  } from '../reducers';
+import * as FromPref from '../reducers/pref.reducer';
+import * as FromMedia from '../reducers/media.reducer';
+import * as FromPractice from '../reducers/practice.reducer';
+import * as MediaActions from '../actions/media.actions';
+import * as PracticeActions from '../actions/practice.actions';
 
 @Component({
   selector: 'app-practice',
@@ -20,30 +25,22 @@ import { combineAll, map } from 'rxjs/operators';
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit, OnDestroy {
-  private loaded$: Observable<boolean>;
-  private speaker$: Observable<Speaker>;
-  private showSubtitle$: Observable<boolean>;
-  private speed$: Observable<number>;
-  private metronome$: Observable<boolean>;
+  readonly columnsToDisplay = ['selected', 'name', 'description', 'scale'];
 
-  columnsToDisplay = ['selected', 'name', 'description', 'scale'];
-  player: SlideShowPlayer;
+  ready$: Observable<boolean>;
+  speaker$: Observable<Speaker>;
+  showSubtitle$: Observable<boolean>;
+  speed$: Observable<number>;
+  metronome$: Observable<boolean>;
 
-  private courses$: Observable<Course[]>;
-  private exercises$: Observable<Exercise[]>;
-  private selectedCourseName$: Observable<string>;
-  private showTableOfContent$: Observable<boolean>;
-  // private exerciseSets: Observable<
+  courses$: Observable<Course[]>;
+  exercises$: Observable<Exercise[]>;
+  selectedCourse$: Observable<Course>;
+  selectedCourseExercise$: Observable<Exercise[]>;
+  showTableOfContent$: Observable<boolean>;
 
-  public get playButtonText() {
-    if (this.player.state === StateType.paused) { return 'Resume'; }
-    return 'Start';
-  }
-  public get canSelectOption(): boolean {
-    return this.player.state === StateType.stopped;
-  }
   constructor(
-    private _store: Store<State>,
+    private store: Store<State>,
     private _courseService: CourseService,
     private _exerciseService: ExerciseService,
     private _slideShow: SlideShowService,
@@ -51,17 +48,34 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
     this.courses$ = _courseService.entities$;
     this.exercises$ = _exerciseService.entities$;
-    this.loaded$ = combineLatest(
+    this.ready$ = combineLatest(
       [_courseService.loaded$, _exerciseService.loaded$])
-        .pipe(map(results => results[0] && results[1]));
+        .pipe(
+          map(results => results[0] && results[1],
+          distinctUntilChanged()));
 
-    this.speaker$ = _store.pipe(select(selectPrefSpeaker));
-    this.showSubtitle$ = _store.pipe(select(selectPrefSubtitle));
-    this.speed$ = _store.pipe(select(selectPrefSpeed));
-    this.metronome$ = _store.pipe(select(selectPrefMetronome));
+    this.speaker$ = store.pipe(select(FromPref.selectSpeaker));
+    this.showSubtitle$ = store.pipe(select(FromPref.selectSubtitle));
+    this.speed$ = store.pipe(select(FromPref.selectSpeed));
+    this.metronome$ = store.pipe(select(FromPref.selectMetronome));
 
-    this.selectedCourseName$ = _store.pipe(select(selectPracticeSelectedCourseName));
-    this.showTableOfContent$ = _store.pipe(select(selectPracticeShowTableOfContent));
+    const selectedCourseName$ = store.pipe(select(FromPractice.selectSelectedCourseName));
+    this.selectedCourse$ = selectedCourseName$.pipe(
+        flatMap(name => _courseService.entities$.pipe(
+          map(courses => courses.find(course => course.name === name)),
+          tap(course => console.log(course))
+        )));
+
+    this.selectedCourseExercise$ = this.selectedCourse$.pipe(
+      flatMap(course => _exerciseService.entities$.pipe(
+        map(exercises =>
+          course.exerciseNames
+            .map(name => exercises.find(exercise => name === exercise.name))
+            .filter(exercise => exercise)))));
+
+    this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
+
+    // Player
   }
   // get courseSelected(): Course {
   //   return this._course;
@@ -74,7 +88,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
-    this.player.stop();
+    // this.player.stop();
+    this.store.dispatch(MediaActions.stop());
   }
 
   compilePlayer() {
@@ -82,6 +97,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   }
 
   toScaleDetails(exercise: Exercise): string {
+    if (!exercise) { return; }
     const count = lodash.floor(exercise.ratio * exercise.scales.length);
     return count + '/' + exercise.scales.length;
   }
@@ -104,6 +120,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
     // if (!this.courseSelected) return false;
     // return this.courseSelected.exercises.some(exercise => exercise.active);
     return false;
+  }
+  setShowTableOfContent(show: boolean): void {
+    this.store.dispatch(PracticeActions.showTableOfContent({show: show}));
+  }
+  setCourse(course: Course): void {
+    this.store.dispatch(PracticeActions.selectCourse({course: course}));
   }
   allToggle(): void {
     // if(!this.courseSelected) return;

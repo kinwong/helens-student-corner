@@ -4,9 +4,7 @@ import { MaterialModule } from './material.module';
 import { AppRouters } from './app.routes';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PracticeComponent } from './practice/practice.component';
-import { SettingsComponent } from './settings/settings.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
-import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,9 +16,7 @@ describe('AppComponent', () => {
         AppComponent,
         PracticeComponent,
         WelcomeComponent,
-        SettingsComponent,
         NavbarComponent,
-        SlideShowPlayerComponent,
         SanitizeHtmlPipe
           ],
       imports: [

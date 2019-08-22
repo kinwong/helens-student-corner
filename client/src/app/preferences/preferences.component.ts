@@ -3,8 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Speaker, speakers } from 'src/app/models/speaker';
-import { State, selectPrefSpeaker, selectPrefSubtitle, selectPrefSpeed, selectPrefMetronome } from '../reducers';
-import * as fromPref from '../actions/pref.actions';
+import * as FromPref from '../reducers/pref.reducer';
+import * as PrefActions from '../actions/pref.actions';
+import { State } from '../reducers';
 
 @Component({
   selector: 'app-preferences',
@@ -12,28 +13,28 @@ import * as fromPref from '../actions/pref.actions';
   styleUrls: ['./preferences.component.scss']
 })
 export class PreferencesComponent implements OnInit {
-  private speaker$: Observable<Speaker>;
-  private showSubtitle$: Observable<boolean>;
-  private speed$: Observable<number>;
-  private metronome$: Observable<boolean>;
+  speaker$: Observable<Speaker>;
+  showSubtitle$: Observable<boolean>;
+  speed$: Observable<number>;
+  metronome$: Observable<boolean>;
 
   readonly speakers: Speaker[] = speakers;
 
   constructor(private store: Store<State>) {
-    this.speaker$ = store.pipe(select(selectPrefSpeaker));
-    this.showSubtitle$ = store.pipe(select(selectPrefSubtitle));
-    this.speed$ = store.pipe(select(selectPrefSpeed));
-    this.metronome$ = store.pipe(select(selectPrefMetronome));
+    this.speaker$ = store.pipe(select(FromPref.selectSpeaker));
+    this.showSubtitle$ = store.pipe(select(FromPref.selectSubtitle));
+    this.speed$ = store.pipe(select(FromPref.selectSpeed));
+    this.metronome$ = store.pipe(select(FromPref.selectMetronome));
   }
   ngOnInit() {
   }
   onSpeakerChange(speaker: Speaker): void {
-    this.store.dispatch(fromPref.setSpeaker({speaker: speaker}));
+    this.store.dispatch(PrefActions.setSpeaker({speaker: speaker}));
   }
   onSubtitleChange(subtitle: boolean): void {
-    this.store.dispatch(fromPref.showSubtitle({subtitle: subtitle}));
+    this.store.dispatch(PrefActions.showSubtitle({subtitle: subtitle}));
   }
   onSpeedChange(speed: number): void {
-    this.store.dispatch(fromPref.setSpeed({speed: speed}));
+    this.store.dispatch(PrefActions.setSpeed({speed: speed}));
   }
 }

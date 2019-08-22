@@ -3,8 +3,8 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory
 } from '@ngrx/data';
-import { Course } from 'src/app/models/models';
-import { courses } from 'src/app/models/course-definition';
+import { courses } from '../models/course-definition';
+import { Course } from '../models/models';
 
 @Injectable({
   providedIn: 'root'

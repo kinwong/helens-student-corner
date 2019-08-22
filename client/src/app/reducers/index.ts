@@ -36,30 +36,3 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] =
   !environment.production ? [logger] : [];
 
-export const selectPref = createFeatureSelector<fromPref.State>('pref');
-export const selectAuth = createFeatureSelector<fromAuth.State>('auth');
-export const selectMedia = createFeatureSelector<fromMedia.State>('media');
-export const selectPractice = createFeatureSelector<fromPractice.State>('practice');
-
-
-export const selectPrefSpeaker = createSelector(
-  selectPref, state => state.speaker);
-
-export const selectPrefSubtitle = createSelector(
-  selectPref, state => state.showSubtitle);
-
-export const selectPrefSpeed = createSelector(
-  selectPref, state => state.speed);
-
-export const selectPrefMetronome = createSelector(
-  selectPref, state => state.metronome);
-
-export const selectPracticeSelectedCourseName =  createSelector(
-  selectPractice, state => state.selectedCourseName);
-
-export const selectPracticeShowTableOfContent =  createSelector(
-  selectPractice, state => state.showTableOfContent);
-
-export const selectPracticeExerciseSet =  createSelector(
-    selectPractice, state => state.exerciseSets);
-  

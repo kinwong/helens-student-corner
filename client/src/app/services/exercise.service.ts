@@ -3,8 +3,8 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory
 } from '@ngrx/data';
-import { Exercise } from 'src/app/models/models';
-import { exercises } from 'src/app/models/course-definition';
+import { Exercise } from '../models/models';
+import { exercises } from '../models/course-definition';
 
 @Injectable({
   providedIn: 'root'
@@ -15,3 +15,6 @@ export class ExerciseService extends EntityCollectionServiceBase<Exercise> {
     this.addAllToCache(exercises);
   }
 }
+
+
+

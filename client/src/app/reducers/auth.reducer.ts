@@ -1,4 +1,4 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action, createFeatureSelector } from '@ngrx/store';
 import * as AuthActions from '../actions/auth.actions';
 
 export interface State {
@@ -22,3 +22,6 @@ const authReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return authReducer(state, action);
 }
+
+export const featureName = 'auth';
+export const selectAuth = createFeatureSelector<State>(featureName);

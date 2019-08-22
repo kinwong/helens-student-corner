@@ -19,7 +19,6 @@ import { AppComponent } from './app.component';
 import { PracticeComponent } from './practice/practice.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NavbarComponent } from './nav/navbar/navbar.component';
-import { SlideShowPlayerComponent } from './slide-show-player/slide-show-player.component';
 import { PreferencesComponent } from './preferences/preferences.component';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
@@ -27,8 +26,10 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 import { reducers, metaReducers } from './reducers';
 
 import { entityConfig } from './entity-metadata';
-
 import { environment } from 'src/environments/environment';
+import { PlayerComponent } from './player/player.component';
+import { ProgressComponent } from './progress/progress.component';
+
 
 @NgModule({
   declarations: [
@@ -36,9 +37,10 @@ import { environment } from 'src/environments/environment';
     NavbarComponent,
     PracticeComponent,
     SanitizeHtmlPipe,
-    SlideShowPlayerComponent,
     WelcomeComponent,
     PreferencesComponent,
+    PlayerComponent,
+    ProgressComponent,
   ],
   imports: [
     AppRouters,

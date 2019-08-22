@@ -1,6 +1,6 @@
 import { createReducer, on, Action, createSelector, createFeatureSelector } from '@ngrx/store';
-import { Speaker, speakers } from 'src/app/models/speaker';
 import * as PrefActions from '../actions/pref.actions';
+import { Speaker, speakers } from '../models/speaker';
 
 export interface State {
   speaker: Speaker;
@@ -45,3 +45,10 @@ const prefReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return prefReducer(state, action);
 }
+export const featureName = 'pref';
+const selectFeature = createFeatureSelector<State>(featureName);
+export const selectSpeaker = createSelector(selectFeature, state => state.speaker);
+export const selectSubtitle = createSelector(selectFeature, state => state.showSubtitle);
+export const selectSpeed = createSelector(selectFeature, state => state.speed);
+export const selectMetronome = createSelector(selectFeature, state => state.metronome);
+

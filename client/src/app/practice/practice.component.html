@@ -4,22 +4,30 @@
   <mat-card-content class="course-container">
     <!-- Course Selection and Details -->
     <mat-form-field>
-      <mat-select placeholder="Select Course" required [disabled]="!canSelectOption" [(value)]="courseSelected">
-        <mat-option *ngFor="let course of courses; let i=index" [value]="course">
+      <mat-select placeholder="Select Course" required 
+        [disabled]="!(ready$ | async)" 
+        [value]="selectedCourse$ | async"
+        (valueChange)="setCourse($event.target)">
+        <mat-option *ngFor="let course of courses$ | async; let i=index" [value]="course">
           {{course.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-accordion>
-      <mat-expansion-panel [(expanded)]="contentExpanded">
+      <mat-expansion-panel
+      [expanded]="showTableOfContent$ | async"
+      (opened)='setShowTableOfContent(true)'
+      (closed)= "setShowTableOfContent(false)">
         <mat-expansion-panel-header>
-          <mat-panel-title><i class="fas fa-info-circle"></i>&nbsp; Contents</mat-panel-title>
+          <mat-panel-title><i class="fas fa-info-circle"></i>
+            &nbsp; Contents</mat-panel-title>
         </mat-expansion-panel-header>
 
         <section class="mat-typography">
-          <div [innerHTML]="courseSelected.description | sanitizeHtml"></div>
-          <table mat-table class="course-table" [dataSource]="courseSelected.exercises">
+          <div [innerHTML]="(selectedCourse$ | async).description | sanitizeHtml"></div>
+          <table mat-table class="course-table" 
+            [dataSource]="(selectedCourseExercise$ | async)">
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let exercise; columns: columnsToDisplay"></tr>
             <!-- Selection -->
@@ -33,7 +41,7 @@
               </th>
               <td mat-cell *matCellDef="let exercise">
                 <mat-checkbox (click)="$event.stopPropagation()"
-                  [disabled]="!canSelectOption"
+                  [disabled]="!(ready$ | async)"
                   (change)="$event ? toggleExercise(exercise) : null"
                   [checked]="exercise.active">
                 </mat-checkbox>
@@ -58,25 +66,13 @@
         </section>
       </mat-expansion-panel>
     </mat-accordion>
-
-    <mat-card-actions class="transport-container">
-      <button mat-raised-button color="primary" [disabled]=" !someExerciseSelected() || !player.canPlay && !player.canResume"
-        (click)="player.play()">
-        {{playButtonText}}<mat-icon>play_arrow</mat-icon>
-      </button>
-      <button mat-raised-button color="primary" [disabled]="!player.canPause" (click)="player.pause()">
-        Pause<mat-icon>pause_circle_online</mat-icon>
-      </button>
-      <button mat-raised-button color="primary" [disabled]="!player.canStop" (click)="player.stop()">
-        Stop<mat-icon>stop</mat-icon>
-      </button>
-    </mat-card-actions>
+    <app-player></app-player>
   </mat-card-content>
 </mat-card>
 
 <mat-card class="content-container">
   <!-- <mat-card-title>Content</mat-card-title> -->
   <mat-card-content>
-    <app-slide-show-player [player]="player"></app-slide-show-player>
+    <app-progress></app-progress>
   </mat-card-content>
 </mat-card>

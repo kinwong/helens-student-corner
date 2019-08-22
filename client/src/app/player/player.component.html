@@ -1,0 +1,14 @@
+<mat-card-actions class="transport-container">
+    <button mat-raised-button color="primary"
+        [disabled]=" !(canPlay$ | async)" (click)="play()">
+        {{playButtonText$ | async}}<mat-icon>play_arrow</mat-icon>
+    </button>
+    <button mat-raised-button color="primary" 
+        [disabled]="!(canPause$ | async)" (click)="pause()">
+        Pause<mat-icon>pause_circle_online</mat-icon>
+    </button>
+    <button mat-raised-button color="primary" 
+        [disabled]="!(playing$ | async)" (click)="stop()">
+        Stop<mat-icon>stop</mat-icon>
+    </button>
+</mat-card-actions>

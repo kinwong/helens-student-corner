@@ -1,4 +1,4 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as MediaActions from '../actions/media.actions';
 
 export interface State {
@@ -8,13 +8,9 @@ export interface State {
   playing: boolean;
   paused: boolean;
   /**
-   * Indicate if media can be plaued.
+   * Indicate if media can be played (started).
    */
   canPlay: boolean;
-  /**
-   * Indicate if the media can be paused.
-   */
-  canPause: boolean;
   /**
    * Indicates if there is
    */
@@ -33,7 +29,6 @@ const initialState: State = {
   playing: false,
   paused: false,
   canPlay: true,
-  canPause: false,
 
   error: undefined,
   subtitle: undefined,
@@ -122,3 +117,15 @@ const mediaReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return mediaReducer(state, action);
 }
+
+export const featureName = 'media';
+const selectFeature = createFeatureSelector<State>(featureName);
+
+export const selectPlaying = createSelector(selectFeature, state => state.playing);
+export const selectPaused = createSelector(selectFeature, state => state.paused);
+export const selectCanPlay = createSelector(selectFeature, state => state.canPlay);
+export const selectError = createSelector(selectFeature, state => state.error);
+
+export const selectSubtitle = createSelector(selectFeature, state => state.subtitle);
+export const selectTotalChapter = createSelector(selectFeature, state => state.totalChapter);
+export const selectCurrentChapter = createSelector(selectFeature, state => state.currentChapter);

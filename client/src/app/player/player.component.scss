@@ -1,0 +1,13 @@
+.transport-container {
+  display: block;
+  flex-direction: column;
+  text-align: center;
+}
+
+.transport-container > * {
+  width: 20%;
+  min-width: 70pt;
+  vertical-align: middle;
+  margin: 4px;
+}
+
