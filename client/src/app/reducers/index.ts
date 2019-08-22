@@ -9,25 +9,25 @@ import { environment } from '../../environments/environment';
 export interface State {
   pref: fromPref.State;
   auth: fromAuth.State;
-  media: fromMedia.State;
   practice: fromPractice.State;
+  media: fromMedia.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
   pref: fromPref.reducer,
   auth: fromAuth.reducer,
-  media: fromMedia.reducer,
   practice: fromPractice.reducer,
+  media: fromMedia.reducer,
 };
 
 // console.log all actions
-export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return (state, action) => {
     const result = reducer(state, action);
     console.groupCollapsed(action.type);
-    console.log('prev state', state);
+    console.log('prev', state);
     console.log('action', action);
-    console.log('next state', result);
+    console.log('next', result);
     console.groupEnd();
     return result;
   };
@@ -36,3 +36,5 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] =
   !environment.production ? [logger] : [];
 
+// export const metaReducers: MetaReducer<State>[] =
+//   !environment.production ? [] : [];

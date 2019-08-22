@@ -7,15 +7,14 @@ import { Store, select } from '@ngrx/store';
 
 import { CourseService } from '../services/course.service';
 import { ExerciseService } from '../services/exercise.service';
-import { SlideShowPlayerService } from '../services/slide-show-player.service';
-import { SlideShowService } from '../services/slide-show.service';
 
 import { Speaker } from '../models/speaker';
 import { Course, Exercise } from '../models/models';
-import { State, } from '../reducers';
+import { State } from '../reducers';
 import * as FromPref from '../reducers/pref.reducer';
 import * as FromMedia from '../reducers/media.reducer';
 import * as FromPractice from '../reducers/practice.reducer';
+
 import * as MediaActions from '../actions/media.actions';
 import * as PracticeActions from '../actions/practice.actions';
 
@@ -45,9 +44,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     courseService: CourseService,
-    exerciseService: ExerciseService,
-    private _slideShow: SlideShowService,
-    private _playerService: SlideShowPlayerService) {
+    exerciseService: ExerciseService) {
 
     this.courses$ = courseService.entities$;
     this.exercises$ = exerciseService.entities$;
@@ -86,20 +83,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
-    // this.player.stop();
     this.store.dispatch(MediaActions.stop());
   }
   toScaleDetails(exercise: Exercise): string {
     if (!exercise) { return; }
     const count = lodash.floor(exercise.ratio * exercise.scales.length);
     return count + '/' + exercise.scales.length;
-  }
-  toggleExercise(exercise: Exercise): void {
-    this.store.dispatch(
-      PracticeActions.toggleExerciseActivation({ exerciseName: exercise.name }));
-  }
-  toggleAllExercises(): void {
-    this.store.dispatch(PracticeActions.toggleAllExerciseActivations());
   }
   setShowTableOfContent(show: boolean): void {
     this.store.dispatch(PracticeActions.showTableOfContent({ show: show }));
@@ -111,5 +100,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
     return this.store.pipe(select(
       FromPractice.selectSelectedCourseExerciseActive,
       { exerciseName: exercise.name }));
+  }
+  toggleExercise(exercise: Exercise): void {
+    this.store.dispatch(
+      PracticeActions.toggleExerciseActivation({ exerciseName: exercise.name }));
+  }
+  toggleAllExercises(): void {
+    this.store.dispatch(PracticeActions.toggleAllExerciseActivations());
   }
 }

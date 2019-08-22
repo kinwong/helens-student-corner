@@ -3,6 +3,8 @@ import { Observable, BehaviorSubject, Subject, defer, interval } from 'rxjs';
 import { takeUntil, withLatestFrom, filter, take, map, share, reduce } from 'rxjs/operators';
 import * as moment from 'moment';
 import { MediaState } from 'src/api/media-state';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class MediaService {
     this._stop$.next();
   }
 
-  constructor() { }
+  constructor(private store: Store<State>) { }
 
   /**
    * Creates a waiter that can be paused.

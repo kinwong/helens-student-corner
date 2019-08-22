@@ -3,8 +3,8 @@
     {{heading$ | async}}
   </p>
   <h3>{{subtitle$ | async}}</h3>
-  <mat-progress-bar
-    class="progress-bar" mode="determinate" 
+  <mat-progress-bar class="progress-bar" 
+    mode="determinate" 
     [bufferValue]="totalChapter$ | async" 
     [value]="currentChapter$ | async">
   </mat-progress-bar>

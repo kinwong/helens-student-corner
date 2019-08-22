@@ -1,5 +1,5 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
-import { Course, Exercise } from './models/models';
+import { Course, Exercise } from './models';
 
 const entityMetadata: EntityMetadataMap = {
   Course: {
@@ -9,7 +9,6 @@ const entityMetadata: EntityMetadataMap = {
     selectId: (exercise: Exercise) => exercise.name
   }
 };
-
 export const entityConfig: EntityDataModuleConfig = {
   entityMetadata
 };

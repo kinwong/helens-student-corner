@@ -2,14 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { SlideShowService } from './slide-show.service';
 import { NGXLogger } from 'ngx-logger';
-import { CookieService } from 'ngx-cookie-service';
-import { CookieServiceMock } from '../mocks/cookie.service.mock';
 import { NGXLoggerMock } from '../mocks/ngx-logger.mock';
 
 describe('SlideShowService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
-      { provide: CookieService, useClass: CookieServiceMock },
       { provide: NGXLogger, useClass: NGXLoggerMock }
     ]
   }));
