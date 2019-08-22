@@ -6,12 +6,16 @@ export const selectCourse = createAction(
   props<{ courseName: string }>());
 
 export const selectExercise = createAction(
-  '[Practice] Select Exercise', props<{course: Course, exercise: Exercise, selected: boolean }>());
+  '[Practice] Select Exercise', props<{ course: Course, exercise: Exercise, selected: boolean }>());
 
 export const showTableOfContent = createAction(
   '[Practice] Show Table of Content',
-  props<{show: boolean}>());
+  props<{ show: boolean }>());
+
+export const toggleAllExerciseActivations = createAction(
+  '[Practice] Toggle All Exercise Activations');
 
 export const toggleExerciseActivation = createAction(
-    '[Practice] Toggle Exercise Activation',
-    props<{exerciseName: string}>());
+  '[Practice] Toggle Exercise Activation',
+  props<{ exerciseName: string }>());
+

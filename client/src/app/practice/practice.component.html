@@ -36,7 +36,7 @@
                 <mat-checkbox 
                   [disabled]="playing$ | async"
                   [checked]="allExerciseSelected$ | async"
-                  (change)="$event ? allToggle() : null"
+                  (change)="toggleAllExercises()"
                   [indeterminate]="onlySomeExerciseSelected$ | async">
                 </mat-checkbox>
               </th>

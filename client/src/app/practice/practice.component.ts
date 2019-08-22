@@ -98,6 +98,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       PracticeActions.toggleExerciseActivation({ exerciseName: exercise.name }));
   }
+  toggleAllExercises(): void {
+    this.store.dispatch(PracticeActions.toggleAllExerciseActivations());
+  }
   setShowTableOfContent(show: boolean): void {
     this.store.dispatch(PracticeActions.showTableOfContent({ show: show }));
   }
@@ -108,14 +111,5 @@ export class PracticeComponent implements OnInit, OnDestroy {
     return this.store.pipe(select(
       FromPractice.selectSelectedCourseExerciseActive,
       { exerciseName: exercise.name }));
-  }
-  allToggle(): void {
-
-    // if(!this.courseSelected) return;
-    // const target = !this.allExerciseSelected();
-    // for(const exercise of this.courseSelected.exercises) {
-    //   exercise.active = target;
-    // }
-    // this.compilePlayer();
   }
 }

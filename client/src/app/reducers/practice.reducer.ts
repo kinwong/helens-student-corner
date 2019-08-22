@@ -1,8 +1,34 @@
-import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
-import { courses } from 'src/app/models/course-definition';
-import * as PracticeActions from '../actions/practice.actions';
 import * as lodash from 'lodash';
-import { Course } from '../models/models';
+import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
+
+import * as PracticeActions from '../actions/practice.actions';
+import { courses } from '../models/course-definition';
+
+enum GroupState { All, Some, None }
+function checkSetState(set: ExerciseSet): GroupState {
+  if (!set) { return GroupState.None; }
+  const activations = set.exerciseActivations;
+  let all = true;
+  let none = true;
+  for (const exerciseName in activations) {
+    if (!activations[exerciseName]) {
+      all = false;
+    } else {
+      none = false;
+    }
+  }
+  if (all) { return GroupState.All; }
+  if (none) { return GroupState.None; }
+  return GroupState.Some;
+}
+
+function activateAllExercises(set: ExerciseSet, state: boolean): void {
+  const activations = set.exerciseActivations;
+  // tslint:disable-next-line: forin
+  for (const exerciseName in activations) {
+    activations[exerciseName] = state;
+  }
+}
 
 export interface State {
   selectedCourseName: string;
@@ -22,6 +48,7 @@ function toSelectedExercise(names: string[]): any {
   }
   return result;
 }
+
 const initialState: State = {
   selectedCourseName: courses[0].name,
   showTableOfContent: false,
@@ -56,7 +83,32 @@ const prefReducer = createReducer(
     (state, { show }) => ({
       ...state, showTableOfContent: show
     })),
+  on(
+    PracticeActions.toggleAllExerciseActivations,
+    state => {
+      const newState: State = lodash.cloneDeep(state);
+      const selectedSet = newState.exerciseSets.find(set => set.courseName === newState.selectedCourseName);
+      if (selectedSet) {
+        const groupState = checkSetState(selectedSet);
+        switch (groupState) {
+          case GroupState.All:
+              activateAllExercises(selectedSet, false);
+          break;
 
+          case GroupState.None:
+              activateAllExercises(selectedSet, true);
+            break;
+
+          case GroupState.Some:
+              activateAllExercises(selectedSet, true);
+            break;
+          default:
+              activateAllExercises(selectedSet, true);
+            break;
+        }
+      }
+      return newState;
+    }),
   on(
     PracticeActions.toggleExerciseActivation,
     (state, { exerciseName }) => {
@@ -93,32 +145,13 @@ export const selectSelectedCourseExerciseActive =
       if (!set) { return false; }
       return set.exerciseActivations[props.exerciseName];
     });
+
 export const selectSelectedCourseExerciseAllActive =
   createSelector(
     selectSelectedCourseExerciseSet,
-    (set: ExerciseSet) => {
-      if (!set) { return false; }
-      for (const exerciseName in set.exerciseActivations) {
-        // check if the property/key is defined in the object itself, not in parent
-        if (!set.exerciseActivations[exerciseName]) { return false; }
-      }
-      return true;
-    });
+    (set: ExerciseSet) => checkSetState(set) === GroupState.All);
 
 export const selectSelectedCourseExerciseSomeActive =
   createSelector(
     selectSelectedCourseExerciseSet,
-    (set: ExerciseSet) => {
-      if (!set) { return false; }
-      let all = true;
-      let none = false;
-      for (const exerciseName in set.exerciseActivations) {
-        // check if the property/key is defined in the object itself, not in parent
-        if (!set.exerciseActivations[exerciseName]) {
-          all = false;
-        } else {
-          none = true;
-        }
-      }
-      return !all && !none;
-    });
+    (set: ExerciseSet) => checkSetState(set) === GroupState.Some);
