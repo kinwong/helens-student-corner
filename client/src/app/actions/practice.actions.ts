@@ -12,3 +12,6 @@ export const showTableOfContent = createAction(
   '[Practice] Show Table of Content',
   props<{show: boolean}>());
 
+export const toggleExerciseActivation = createAction(
+    '[Practice] Toggle Exercise Activation',
+    props<{exerciseName: string}>());

@@ -30,20 +30,21 @@
             [dataSource]="(selectedCourseExercise$ | async)">
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let exercise; columns: columnsToDisplay"></tr>
-            <!-- Selection -->
+            <!-- Selection checkbox -->
             <ng-container matColumnDef="selected">
               <th class="course-table-heading" mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? allToggle() : null"
-                  [disabled]="!canSelectOption"
-                  [checked]="allExerciseSelected()"
-                  [indeterminate]="onlySomeExerciseSelected()">
+                <mat-checkbox 
+                  [disabled]="playing$ | async"
+                  [checked]="allExerciseSelected$() | async"
+                  (change)="$event ? allToggle() : null"
+                  [indeterminate]="onlySomeExerciseSelected$() | async">
                 </mat-checkbox>
               </th>
               <td mat-cell *matCellDef="let exercise">
                 <mat-checkbox (click)="$event.stopPropagation()"
-                  [disabled]="!(ready$ | async)"
-                  (change)="$event ? toggleExercise(exercise) : null"
-                  [checked]="exercise.active">
+                  [disabled]="playing$ | async"
+                  [checked]="exerciseSelected(exercise) | async"
+                  (change)="$event ? toggleExercise(exercise) : null">
                 </mat-checkbox>
               </td>
             </ng-container>

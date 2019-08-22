@@ -12,7 +12,7 @@ import { SlideShowService } from '../services/slide-show.service';
 
 import { Speaker } from '../models/speaker';
 import { Course, Exercise } from '../models/models';
-import { State,  } from '../reducers';
+import { State, } from '../reducers';
 import * as FromPref from '../reducers/pref.reducer';
 import * as FromMedia from '../reducers/media.reducer';
 import * as FromPractice from '../reducers/practice.reducer';
@@ -38,20 +38,21 @@ export class PracticeComponent implements OnInit, OnDestroy {
   selectedCourse$: Observable<Course>;
   selectedCourseExercise$: Observable<Exercise[]>;
   showTableOfContent$: Observable<boolean>;
+  playing$: Observable<boolean>;
 
   constructor(
     private store: Store<State>,
-    private _courseService: CourseService,
-    private _exerciseService: ExerciseService,
+    courseService: CourseService,
+    exerciseService: ExerciseService,
     private _slideShow: SlideShowService,
     private _playerService: SlideShowPlayerService) {
 
-    this.courses$ = _courseService.entities$;
-    this.exercises$ = _exerciseService.entities$;
+    this.courses$ = courseService.entities$;
+    this.exercises$ = exerciseService.entities$;
     this.ready$ = combineLatest(
-      [_courseService.loaded$, _exerciseService.loaded$])
-        .pipe(
-          map(results => results[0] && results[1],
+      [courseService.loaded$, exerciseService.loaded$])
+      .pipe(
+        map(results => results[0] && results[1],
           distinctUntilChanged()));
 
     this.speaker$ = store.pipe(select(FromPref.selectSpeaker));
@@ -61,60 +62,44 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
     const selectedCourseName$ = store.pipe(select(FromPractice.selectSelectedCourseName));
     this.selectedCourse$ = selectedCourseName$.pipe(
-        flatMap(name => _courseService.entities$.pipe(
-          map(courses => courses.find(course => course.name === name)),
-          tap(course => console.log(course))
-        )));
+      flatMap(name => courseService.entities$.pipe(
+        map(courses => courses.find(course => course.name === name)),
+        tap(course => console.log(course))
+      )));
 
     this.selectedCourseExercise$ = this.selectedCourse$.pipe(
-      flatMap(course => _exerciseService.entities$.pipe(
+      flatMap(course => exerciseService.entities$.pipe(
         map(exercises =>
           course.exerciseNames
             .map(name => exercises.find(exercise => name === exercise.name))
             .filter(exercise => exercise)))));
 
     this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
-
-    // Player
+    this.playing$ = store.pipe(select(FromMedia.selectPlaying));
   }
-  // get courseSelected(): Course {
-  //   return this._course;
-  // }
-  // set courseSelected(value: Course) {
-  //   this._course = value;
-  //   this._model.selectedCourseName = value.name;
-  //   this.compilePlayer();
-  // }
+
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
     // this.player.stop();
     this.store.dispatch(MediaActions.stop());
   }
-
-  compilePlayer() {
-    // this.player = this._playerService.create(this._slideShow.toSlideShow(this._model));
-  }
-
   toScaleDetails(exercise: Exercise): string {
     if (!exercise) { return; }
     const count = lodash.floor(exercise.ratio * exercise.scales.length);
     return count + '/' + exercise.scales.length;
   }
   toggleExercise(exercise: Exercise): void {
-    // exercise.active = !exercise.active;
-    // this.compilePlayer();
+    this.store.dispatch(
+      PracticeActions.toggleExerciseActivation({ exerciseName: exercise.name }));
   }
-  allExerciseSelected(): boolean {
-    // if (!this.courseSelected) return false;
-    // return this.courseSelected.exercises.every(exercise => exercise.active);
-    return false;
+  allExerciseSelected$(): Observable<boolean> {
+    return this.store.pipe(select(
+      FromPractice.selectSelectedCourseExerciseAllActive));
   }
-  onlySomeExerciseSelected(): boolean {
-    // if (!this.courseSelected) return false;
-    // if (this.allExerciseSelected()) return false;
-    // return this.courseSelected.exercises.some(exercise => exercise.active);
-    return false;
+  onlySomeExerciseSelected$(): Observable<boolean> {
+    return this.store.pipe(select(
+      FromPractice.selectSelectedCourseExerciseSomeActive));
   }
   someExerciseSelected(): boolean {
     // if (!this.courseSelected) return false;
@@ -122,10 +107,18 @@ export class PracticeComponent implements OnInit, OnDestroy {
     return false;
   }
   setShowTableOfContent(show: boolean): void {
-    this.store.dispatch(PracticeActions.showTableOfContent({show: show}));
+    this.store.dispatch(PracticeActions.showTableOfContent({ show: show }));
   }
   setCourse(course: Course): void {
-    this.store.dispatch(PracticeActions.selectCourse({courseName: course.name }));
+    this.store.dispatch(PracticeActions.selectCourse({ courseName: course.name }));
+  }
+  exerciseSelected(exercise: Exercise): Observable<boolean> {
+    // return this.store.pipe(
+    //   select(FromPractice.selectSelectedCourseExerciseActive, {course : course}),
+    //   map(set => set.selectedExercises[exercise.name]));
+    return this.store.pipe(select(
+      FromPractice.selectSelectedCourseExerciseActive,
+      { exerciseName: exercise.name }));
   }
   allToggle(): void {
     // if(!this.courseSelected) return;
@@ -133,6 +126,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
     // for(const exercise of this.courseSelected.exercises) {
     //   exercise.active = target;
     // }
-    this.compilePlayer();
+    // this.compilePlayer();
   }
 }
