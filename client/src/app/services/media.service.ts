@@ -8,21 +8,10 @@ export interface MediaProgress {
   duration: number;
   current: number;
 }
-
 @Injectable({
   providedIn: 'root'
 })
 export class MediaService {
-  public play(): void {
-    // this.audioObj.play();
-  }
-
-  public pause(): void {
-    // this.audioObj.pause();
-  }
-  public stop(): void {
-  }
-
   constructor(private logger: NGXLogger) {
   }
   /**
@@ -98,17 +87,21 @@ export class MediaService {
    * @returns stepTimer and completeTimer.
    */
   public createWaiter(
-    duration: number, pause$: Observable<boolean>): { stepTimer: Observable<any>, completeTimer: Observable<any> } {
+    duration: number, pause$: Observable<boolean>): Observable<MediaProgress> {
+    const pulseInterval = 100; // milliseconds;
+    const totalInterval = duration / pulseInterval;
+    let progress = 0;
     const pausableTimer$ = defer(() => {
-      let milliseconds = 1;
-      return interval(1).pipe(
+      return interval(pulseInterval).pipe(
         withLatestFrom(pause$),
         filter(([_, paused]) => !paused),
-        take(duration),
-        map(() => milliseconds++)
-      );
+        take(totalInterval),
+        map(() => <MediaProgress>{
+          duration: duration,
+          current: progress += pulseInterval
+        }));
     });
-    return { stepTimer: pausableTimer$, completeTimer: pausableTimer$.pipe(reduce((x, y) => y)) };
+    return pausableTimer$;
   }
   createTimer(pulseInterval: number, pause$: Observable<boolean>): Observable<number> {
     const source = interval(pulseInterval);
