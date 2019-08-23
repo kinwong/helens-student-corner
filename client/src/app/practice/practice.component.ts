@@ -1,6 +1,6 @@
 import * as lodash from 'lodash';
 import { Observable, combineLatest } from 'rxjs';
-import { map, flatMap, distinctUntilChanged, tap, filter } from 'rxjs/operators';
+import { map, flatMap, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
@@ -8,12 +8,10 @@ import { Store, select } from '@ngrx/store';
 import { CourseService } from '../services/course.service';
 import { ExerciseService } from '../services/exercise.service';
 
-import { Speaker } from '../models/speaker';
 import { Course, Exercise } from '../models/models';
 import { State } from '../reducers';
-import * as FromPref from '../reducers/pref.reducer';
-import * as FromMedia from '../reducers/media.reducer';
 import * as FromPractice from '../reducers/practice.reducer';
+import * as FromMedia from '../reducers/media.reducer';
 
 import * as MediaActions from '../actions/media.actions';
 import * as PracticeActions from '../actions/practice.actions';
@@ -27,11 +25,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
   readonly columnsToDisplay = ['selected', 'name', 'description', 'scale'];
 
   ready$: Observable<boolean>;
-  speaker$: Observable<Speaker>;
-  showSubtitle$: Observable<boolean>;
-  speed$: Observable<number>;
-  metronome$: Observable<boolean>;
-
   courses$: Observable<Course[]>;
   exercises$: Observable<Exercise[]>;
   selectedCourse$: Observable<Course>;
@@ -48,24 +41,19 @@ export class PracticeComponent implements OnInit, OnDestroy {
 
     this.courses$ = courseService.entities$;
     this.exercises$ = exerciseService.entities$;
-    this.ready$ = combineLatest(
-      [courseService.loaded$, exerciseService.loaded$])
-      .pipe(
-        map(results => results[0] && results[1],
-          distinctUntilChanged()));
+    this.running$ = store.pipe(select(FromMedia.selectRunning));
 
-    this.speaker$ = store.pipe(select(FromPref.selectSpeaker));
-    this.showSubtitle$ = store.pipe(select(FromPref.selectSubtitle));
-    this.speed$ = store.pipe(select(FromPref.selectSpeed));
-    this.metronome$ = store.pipe(select(FromPref.selectMetronome));
+    this.ready$ = combineLatest(
+      [courseService.loaded$, exerciseService.loaded$, this.running$])
+      .pipe(
+        map(results => results[0] && results[1] && !results[2],
+          distinctUntilChanged()));
 
     const selectedCourseName$ = store.pipe(select(FromPractice.selectSelectedCourseName));
     this.selectedCourse$ = selectedCourseName$.pipe(
       flatMap(name => courseService.entities$.pipe(
         map(courses => courses.find(course => course.name === name)),
-        tap(course => console.log(course))
       )));
-
     this.selectedCourseExercise$ = this.selectedCourse$.pipe(
       flatMap(course => exerciseService.entities$.pipe(
         map(exercises =>
@@ -73,13 +61,10 @@ export class PracticeComponent implements OnInit, OnDestroy {
             .map(name => exercises.find(exercise => name === exercise.name))
             .filter(exercise => exercise)))));
 
-    this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
-    this.running$ = store.pipe(select(FromMedia.selectRunning));
-
+    this.showTableOfContent$ = this.store.pipe(select(FromPractice.selectShowTableOfContent));
     this.allExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseAllActive));
     this.onlySomeExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseSomeActive));
   }
-
   ngOnInit(): void {
   }
   ngOnDestroy(): void {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, timeout, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 // tslint:disable-next-line:max-line-length
 import {
@@ -9,33 +10,25 @@ import {
 } from '../../models/contract';
 import { NGXLogger } from 'ngx-logger';
 
-@Injectable({
-  providedIn: 'root'
-})
+const defaultTimeoutInMilliseconds = 3 * 1000.0;
+
+@Injectable({ providedIn: 'root'})
 export class TextToSpeechService {
-  private static readonly timeoutInMilliseconds = 10.0 * 1000.0;
   private static readonly httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
-  private static apiBaseUrl = 'https://texttospeech.googleapis.com';
-  private static apiVersion = 'v1';
-  private static apiKey = 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk';
-
   constructor(
     private _logger: NGXLogger,
     private _http: HttpClient) {
   }
-  // speak(voice: VoiceSelectionParams, ssml: string): Observable<MediaControl> {
-  //   // tslint:disable-next-line:no-console
-  //   return this.toSpeech(voice, ssml)
-  //     .pipe(concatMap(mp3 => {
-  //       return this.play(mp3);
-  //     }));
-  // }
-  toSpeech(voice: VoiceSelectionParams, config: AudioConfig, ssml: string): Observable<string> {
-    if (config === undefined) {
+  public toSpeech(
+    voice: VoiceSelectionParams,
+    config: AudioConfig,
+    ssml: string,
+    timeoutInMilliseconds: number = defaultTimeoutInMilliseconds): Observable<string> {
+    if (!config) {
       config = {
         audioEncoding: AudioEncoding.MP3
       };
@@ -50,12 +43,12 @@ export class TextToSpeechService {
         map(response => {
           return (response as SynthesizeResponse).audioContent;
         }),
-        timeout(TextToSpeechService.timeoutInMilliseconds),
+        timeout(timeoutInMilliseconds),
         tap(_ => {},
           error => this._logger.error(error)));
   }
   private post(call: string, request: any): Observable<any> {
-    const url = `${TextToSpeechService.apiBaseUrl}/${TextToSpeechService.apiVersion}/${call}?key=${TextToSpeechService.apiKey}`;
+    const url = `${environment.apis.google.textToSspeech.baseUrl}/${environment.apis.google.textToSspeech.version}/${call}?key=${environment.apis.google.textToSspeech.key}`;
     return this._http.post(url, request, TextToSpeechService.httpOptions);
   }
 }

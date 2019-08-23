@@ -107,7 +107,7 @@ export class SlideShowPlayer {
     voice: VoiceSelectionParams,
     config: AudioConfig, ssml: string, pauseInSeconds: number): Observable<Media> {
 
-    const speech$ = this._speech.toSpeech(voice, config, ssml)
+    const speech$ = this._speech.toSpeech({ voice, config, ssml })
       .pipe(concatMap(mp3 => this._player.play(mp3)));
     if (!pauseInSeconds) {
       return speech$;
