@@ -1,7 +1,7 @@
 import { Observable, defer, interval, NEVER, Subscription } from 'rxjs';
 import { withLatestFrom, filter, switchMap, take, map, reduce, distinctUntilChanged } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import {Howl} from 'howler';
+import { Howl } from 'howler';
 import { NGXLogger } from 'ngx-logger';
 
 const defaultInterval = 100; // Reports every milliseconds
@@ -37,11 +37,13 @@ export class MediaService {
           },
           onload: () => {
             this.logger.debug(`Sound[${soundId})] is loaded.`);
-            const duration = sound.duration();
-            observer.next({ duration: duration, current: 0 });
+            const duration = Math.floor(sound.duration() * 1000);
+            // Initial time.
+            observer.next({ duration, current: 0 });
             subscriptionTimer = this.createTimer(defaultInterval, pause$)
               .subscribe(_ => observer.next({
-                duration: sound.duration(), current: <number>sound.seek()
+                duration: Math.floor(sound.duration() * 1000),
+                current: Math.floor(<number>sound.seek() * 1000)
               }),
                 error => observer.error(error));
           },

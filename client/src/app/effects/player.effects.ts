@@ -50,7 +50,6 @@ export class PlayerEffects {
       concatMap(content => this.playContent$(content)),
       catchError(error => of(MediaActions.reportError({ error }), MediaActions.stop())));
   }
-
   private playContent$(content: PracticeContent): Observable<Action> {
     const actions = [...this.buildContent(content)];
     const total = actions.length;
@@ -58,7 +57,6 @@ export class PlayerEffects {
     const withChapters = actions.map((action, index) =>
       [of(MediaActions.setCurrentChapter({currentChapter : index})), action])
       .reduce((all, value) => all.concat(value), []);
-
     withChapters.unshift(of(MediaActions.setTotalChapter({ totalChapter: total })));
     return concat(...withChapters);
   }

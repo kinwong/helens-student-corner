@@ -1074,7 +1074,7 @@ export const courses: Course[] = [
       '</p>',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted,',
-      'we will start when you\'re ready.'
+      'We will start when you\'re ready.'
     ],
     exerciseNames: [
       majorScaleExercise.name,
@@ -1100,7 +1100,7 @@ export const courses: Course[] = [
       '</p>',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ',
-      'we will start when you\'re ready.'],
+      'We will start when you\'re ready.'],
     exerciseNames: [
       majorScaleExercise.name,
       minorScaleExercise.name,
@@ -1130,7 +1130,7 @@ export const courses: Course[] = [
       '</p>',
     greetings: [
       'Good afternoon, please be seated and get your stool adjusted, ',
-      'we will start when you\'re ready.'],
+      'We will start when you\'re ready.'],
     exerciseNames: [
       majorScaleExercise.name,
       minorScaleExercise.name,

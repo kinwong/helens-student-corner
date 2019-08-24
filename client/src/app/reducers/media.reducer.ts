@@ -1,5 +1,6 @@
 import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as MediaActions from '../actions/media.actions';
+import { stat } from 'fs';
 
 export interface State {
   /**
@@ -11,7 +12,6 @@ export interface State {
   message: string | undefined;
   error: any | undefined;
 
-  content: any | undefined;
   subtitle: string | undefined;
   totalChapter: number | undefined;
   currentChapter: number | undefined;
@@ -26,7 +26,6 @@ const initialState: State = {
   message: undefined,
   error: undefined,
 
-  content: undefined,
   subtitle: undefined,
   totalChapter: undefined,
   currentChapter: undefined,
@@ -73,7 +72,7 @@ const mediaReducer = createReducer(
       return state;
     }),
   on(MediaActions.stop,
-    state => ({ ...initialState, content: state.content })),
+    _ => ({ ...initialState })),
 
   on(MediaActions.setProgress,
     (state, { totalTime, currentTime }) => ({
@@ -143,3 +142,6 @@ export const selectLoading = createSelector(selectFeature, state => state.loadin
 export const selectSubtitle = createSelector(selectFeature, state => state.subtitle);
 export const selectTotalChapter = createSelector(selectFeature, state => state.totalChapter);
 export const selectCurrentChapter = createSelector(selectFeature, state => state.currentChapter);
+export const selectTotalTime = createSelector(selectFeature, state => state.totalTime);
+export const selectCurrentTime = createSelector(selectFeature, state => state.currentTime);
+
