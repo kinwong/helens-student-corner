@@ -29,6 +29,9 @@ import { reducers, metaReducers } from './reducers';
 
 import { entityConfig } from './models/entity-metadata';
 import { environment } from 'src/environments/environment';
+import { AppEffects } from './app.effects';
+import { PlayerEffects } from './effects/player.effects';
+import { PracticeContentEffects } from './effects/practice-content.effects';
 
 
 @NgModule({
@@ -64,8 +67,9 @@ import { environment } from 'src/environments/environment';
       maxAge: 30, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([]),
-    EntityDataModule.forRoot(entityConfig)
+    EffectsModule.forRoot([AppEffects]),
+    EntityDataModule.forRoot(entityConfig),
+    EffectsModule.forFeature([PracticeContentEffects, PlayerEffects])
   ],
   providers: [
     {

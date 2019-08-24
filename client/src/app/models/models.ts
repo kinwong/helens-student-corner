@@ -11,7 +11,6 @@ export interface Exercise {
   name: string;
   description: string;
   instruction: Sentence;
-  included: boolean;
   ratio: number;
   crotchet: number;
   scales: Scale[];

@@ -46,7 +46,7 @@ export function reducer(state: State | undefined, action: Action) {
   return prefReducer(state, action);
 }
 export const featureName = 'pref';
-const selectFeature = createFeatureSelector<State>(featureName);
+export const selectFeature = createFeatureSelector<State>(featureName);
 export const selectSpeaker = createSelector(selectFeature, state => state.speaker);
 export const selectSubtitle = createSelector(selectFeature, state => state.showSubtitle);
 export const selectSpeed = createSelector(selectFeature, state => state.speed);

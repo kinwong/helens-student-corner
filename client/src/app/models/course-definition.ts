@@ -10,7 +10,6 @@ const majorScaleExercise: Exercise = {
   instruction: {
     display: 'Let\'s start with major scales.'
   },
-  included: true,
   ratio: 0.5,
   scales: [
     { display: 'C major, left hand' },
@@ -115,7 +114,6 @@ const minorScaleExercise: Exercise = {
   instruction: {
     display: 'Now, let\'s move on to the Harmonic Minor Scales.',
   },
-  included: true,
   ratio: 0.5,
   scales: [
     {
@@ -271,7 +269,6 @@ const melodicMinorScaleExercise: Exercise = {
   instruction: {
     display: 'Now, let\'s move on to the melodic minor Scales.'
   },
-  included: true,
   ratio: 0.5,
   scales: [
     {
@@ -421,7 +418,6 @@ const contraryMotionGroup1ScaleExercise: Exercise = {
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 1.',
   },
-  included: true,
   ratio: 1.0,
   scales: [
     {
@@ -454,7 +450,6 @@ const contraryMotionGroup2ScaleExercise: Exercise = {
   instruction: {
     display: 'Now, let\'s move on to the contrary motion scales group 2.',
   },
-  included: true,
   ratio: 1.0,
   scales: [
     {
@@ -488,7 +483,6 @@ const chromaticScaleExercise: Exercise = {
   instruction: {
     display: 'Let\'s move on to the chromatic scales.'
   },
-  included: true,
   ratio: 0.3,
   scales: [
     {
@@ -754,7 +748,6 @@ const chromaticContraryMotionScaleExercise: Exercise = {
   instruction: {
     display: 'Let\'s move on to Chromatic Contrary-Motion Scales.',
   },
-  included: true,
   ratio: 1.0,
   scales: [
     {
@@ -782,7 +775,6 @@ const arpeggiosScaleExercise: Exercise = {
   instruction: {
     display: 'Let\'s move on to arpeggios.'
   },
-  included: true,
   ratio: 0.3,
   scales: [
     {

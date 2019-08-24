@@ -1,0 +1,1 @@
+https://github.com/ngrx/platform/tree/master/docs/schematics

@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Course, Exercise } from '../models/models';
+import { PracticeContent } from '../models/practice-content';
 
 export const selectCourse = createAction(
   '[Practice] Select Course',
@@ -19,3 +20,6 @@ export const toggleExerciseActivation = createAction(
   '[Practice] Toggle Exercise Activation',
   props<{ exerciseName: string }>());
 
+  export const loadContent = createAction(
+  '[Practice] Load Content',
+  props<{ content: PracticeContent }>());

@@ -3,7 +3,6 @@ import { createAction, props } from '@ngrx/store';
 export const play = createAction('[Media] Play');
 export const pause = createAction('[Media] Pause');
 export const stop  = createAction('[Media] Stop');
-export const setCanPlay  = createAction('[Media] Set Can Play');
 
 export const setSubtitle = createAction(
   '[Media] Set Subtitle',
@@ -25,4 +24,13 @@ export const setCurrentTime = createAction(
   '[Media] Set Current Time',
   props<{ currentTime: number}>());
 
+  export const reportMessage = createAction('[Media] Report Message', props<{ message: string }>());
+  export const reportError = createAction('[Media] Report Error', props<{ error: any}>());
+  export const clearError = createAction( '[Media] Clear Error');
 
+  export const startLoading = createAction('[Media] Start Loading');
+  export const stopLoading = createAction('[Media] Stop Loading');
+
+  export const setProgress = createAction(
+    '[Media] Set Chapter Progress',
+    props<{totalTime: number, currentTime: number}>());

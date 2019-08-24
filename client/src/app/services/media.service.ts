@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import {Howl} from 'howler';
 import { NGXLogger } from 'ngx-logger';
 
+const defaultInterval = 100; // Reports every milliseconds
+
 export interface MediaProgress {
   duration: number;
   current: number;
@@ -37,7 +39,7 @@ export class MediaService {
             this.logger.debug(`Sound[${soundId})] is loaded.`);
             const duration = sound.duration();
             observer.next({ duration: duration, current: 0 });
-            subscriptionTimer = this.createTimer(1000, pause$)
+            subscriptionTimer = this.createTimer(defaultInterval, pause$)
               .subscribe(_ => observer.next({
                 duration: sound.duration(), current: <number>sound.seek()
               }),
@@ -88,22 +90,21 @@ export class MediaService {
    */
   public createWaiter(
     duration: number, pause$: Observable<boolean>): Observable<MediaProgress> {
-    const pulseInterval = 100; // milliseconds;
-    const totalInterval = duration / pulseInterval;
+    const totalInterval = duration / defaultInterval;
     let progress = 0;
-    const pausableTimer$ = defer(() => {
-      return interval(pulseInterval).pipe(
+    const waiter$ = defer(() => {
+      return interval(defaultInterval).pipe(
         withLatestFrom(pause$),
         filter(([_, paused]) => !paused),
         take(totalInterval),
         map(() => <MediaProgress>{
           duration: duration,
-          current: progress += pulseInterval
+          current: progress += defaultInterval
         }));
     });
-    return pausableTimer$;
+    return waiter$;
   }
-  createTimer(pulseInterval: number, pause$: Observable<boolean>): Observable<number> {
+  private createTimer(pulseInterval: number, pause$: Observable<boolean>): Observable<number> {
     const source = interval(pulseInterval);
     let total = 0;
     return pause$.pipe(
