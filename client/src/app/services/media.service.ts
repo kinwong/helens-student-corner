@@ -1,5 +1,5 @@
 import { Observable, defer, interval, NEVER, Subscription } from 'rxjs';
-import { withLatestFrom, filter, switchMap, take, map, reduce, distinctUntilChanged } from 'rxjs/operators';
+import { withLatestFrom, filter, switchMap, take, map, reduce, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
 import { NGXLogger } from 'ngx-logger';
@@ -21,7 +21,7 @@ export class MediaService {
    */
   public createSound(mp3: string, pause$: Observable<boolean>): Observable<MediaProgress> {
     const data = 'data:audio/mp3;base64,' + mp3;
-    let soundId = 0;
+    let soundId: number;
     let subscriptionTimer: Subscription;
     const wave = new Observable<MediaProgress>(
       observer => {
@@ -66,20 +66,22 @@ export class MediaService {
             if (paused) {
               if (sound.playing()) {
                 this.logger.debug(`sound[${soundId}] is being paused...`);
-                sound.pause();
+                sound.pause(soundId);
               }
             } else {
               if (!sound.playing()) {
                 this.logger.debug(`sound[${soundId}] is being resumed...`);
-                sound.play();
+                sound.play(soundId);
               }
             }
           });
+
+        // Initial play is called.
         soundId = sound.play();
         return () => {
           if (subscriptionTimer) { subscriptionTimer.unsubscribe(); }
           if (subscription) { subscription.unsubscribe(); }
-          sound.stop();
+          sound.stop(soundId);
         };
       });
     return wave;
@@ -92,10 +94,10 @@ export class MediaService {
    */
   public createWaiter(
     duration: number, pause$: Observable<boolean>): Observable<MediaProgress> {
-    const totalInterval = duration / defaultInterval;
+    const totalInterval = Math.floor(duration / defaultInterval);
     let progress = 0;
-    const waiter$ = defer(() => {
-      return interval(defaultInterval).pipe(
+    const waiter$ = interval(defaultInterval)
+    .pipe(
         withLatestFrom(pause$),
         filter(([_, paused]) => !paused),
         take(totalInterval),
@@ -103,7 +105,6 @@ export class MediaService {
           duration: duration,
           current: progress += defaultInterval
         }));
-    });
     return waiter$;
   }
   private createTimer(pulseInterval: number, pause$: Observable<boolean>): Observable<number> {

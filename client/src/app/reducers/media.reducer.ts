@@ -1,6 +1,5 @@
 import { createReducer, on, Action, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as MediaActions from '../actions/media.actions';
-import { stat } from 'fs';
 
 export interface State {
   /**
