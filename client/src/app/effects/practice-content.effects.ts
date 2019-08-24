@@ -24,7 +24,8 @@ export class PracticeContentEffects {
   play$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MediaActions.play),
-      exhaustMap(_ => this.onMediaPlay$())));
+      exhaustMap(_ =>
+        this.onMediaPlay$())));
 
   constructor(
     private actions$: Actions,
@@ -35,6 +36,7 @@ export class PracticeContentEffects {
 
     }
     private onMediaPlay$(): Observable<Action> {
+      
       const actions$ = concat(
         of(MediaActions.startLoading()),
         this.loadContent$().pipe(map(content => PracticeActions.loadContent({ content })),

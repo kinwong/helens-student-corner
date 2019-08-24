@@ -64,7 +64,14 @@ const mediaReducer = createReducer(
       }
       return state;
     }),
-
+  on(MediaActions.resume,
+    state => {
+      if (state.paused) {
+        // Resumes media.
+        return { ...state, playing: true, paused: false };
+      }
+      return state;
+    }),
   on(MediaActions.stop,
     state => ({ ...initialState, content: state.content })),
 

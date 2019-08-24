@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 export const play = createAction('[Media] Play');
+export const resume = createAction('[Media] Resume');
 export const pause = createAction('[Media] Pause');
 export const stop  = createAction('[Media] Stop');
 

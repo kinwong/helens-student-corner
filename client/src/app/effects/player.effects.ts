@@ -1,5 +1,5 @@
 import { Observable, of, concat, EMPTY, BehaviorSubject } from 'rxjs';
-import { exhaustMap, catchError, map, take, concatMap } from 'rxjs/operators';
+import { exhaustMap, catchError, map, take, concatMap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
 import { Store, Action, select } from '@ngrx/store';
@@ -7,7 +7,6 @@ import { NGXLogger } from 'ngx-logger';
 
 import { State } from '../reducers';
 
-import * as FromPref from '../reducers/pref.reducer';
 import * as FromPractice from '../reducers/practice.reducer';
 import * as FromMedia from '../reducers/media.reducer';
 
@@ -17,7 +16,7 @@ import * as PracticeActions from '../actions/practice.actions';
 import { Speaker } from '../models/speaker';
 import { PracticeContent } from '../models/practice-content';
 import { TextToSpeechService } from '../services/google/text-to-speech.service';
-import { MediaService, MediaProgress } from '../services/media.service';
+import { MediaService } from '../services/media.service';
 import { AudioConfig, AudioEncoding } from '../models/contract';
 import { Sentence, Scale } from '../models/models';
 
@@ -40,10 +39,10 @@ export class PlayerEffects {
       .subscribe(paused => this.paused$.next(paused));
   }
   practiceContentLoad$ = createEffect(() =>
-    this.actions$.pipe(ofType(PracticeActions.loadContent), exhaustMap(_ => this.onLoad$())));
-
-  // mediaStop$ = createEffect(() =>
-  //   this.actions$.pipe(ofType(MediaActions.stop), exhaustMap(_ => this.onStop$())));
+    this.actions$.pipe(
+      ofType(PracticeActions.loadContent, MediaActions.stop),
+      switchMap(action => action.type === MediaActions.stop.type ?
+        EMPTY : this.onLoad$())));
 
   onLoad$(): Observable<Action> {
     const content$ = this.store.pipe(select(FromPractice.selectContent));
@@ -151,7 +150,6 @@ export class PlayerEffects {
         })));
     return speech$;
   }
-
   // onPause$(): Observable {
   // }
   // onStop$(): Observable {
