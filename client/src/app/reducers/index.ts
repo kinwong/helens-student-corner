@@ -21,20 +21,6 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 // console.log all actions
-function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-  return (state, action) => {
-    const result = reducer(state, action);
-    console.groupCollapsed(action.type);
-    console.log('prev', state);
-    console.log('action', action);
-    console.log('next', result);
-    console.groupEnd();
-    return result;
-  };
-}
-
-export const metaReducers: MetaReducer<State>[] =
-  !environment.production ? [logger] : [];
 
 // export const metaReducers: MetaReducer<State>[] =
 //   !environment.production ? [] : [];

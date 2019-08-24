@@ -1,14 +1,17 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
 import { Course, Exercise } from './models';
 
-const entityMetadata: EntityMetadataMap = {
-  Course: {
-    selectId: (course: Course) => course.name
-  },
-  Exercise: {
-    selectId: (exercise: Exercise) => exercise.name
+export function selectCourseId(course: Course) { return course.name; }
+export function selectExerciseId(exercise: Exercise) { return exercise.name; }
+export const entityConfig: EntityDataModuleConfig = {
+  entityMetadata: {
+    Course: {
+      selectId: selectCourseId
+    },
+    Exercise: {
+      selectId: selectExerciseId
+    }
   }
 };
-export const entityConfig: EntityDataModuleConfig = {
-  entityMetadata
-};
+
+
