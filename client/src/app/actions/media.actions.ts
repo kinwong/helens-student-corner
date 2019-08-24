@@ -5,6 +5,10 @@ export const resume = createAction('[Media] Resume');
 export const pause = createAction('[Media] Pause');
 export const stop  = createAction('[Media] Stop');
 
+export const setTitle = createAction(
+  '[Media] Set Title',
+  props<{title: string | undefined}>());
+
 export const setSubtitle = createAction(
   '[Media] Set Subtitle',
   props<{subtitle: string | undefined}>());

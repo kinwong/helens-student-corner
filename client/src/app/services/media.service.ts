@@ -69,16 +69,16 @@ export class MediaService {
                 sound.pause(soundId);
               }
             } else {
-              if (!sound.playing()) {
+              if (!sound.playing() && (soundId !== undefined)) {
                 this.logger.debug(`sound[${soundId}] is being resumed...`);
                 sound.play(soundId);
               }
             }
           });
-
         // Initial play is called.
         soundId = sound.play();
         return () => {
+          this.logger.info(`Sound[${soundId}] is being disposed.`);
           if (subscriptionTimer) { subscriptionTimer.unsubscribe(); }
           if (subscription) { subscription.unsubscribe(); }
           sound.stop(soundId);

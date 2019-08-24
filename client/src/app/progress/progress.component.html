@@ -1,19 +1,16 @@
 <div>
-  <p>
-    {{heading$ | async}}
-  </p>
+  <p>{{title$ | async}}</p>
   <h3>{{subtitle$ | async}}</h3>
 
   <div *ngIf="showChapter$ | async">
-    <mat-progress-bar color="primary" mode="determinate" 
+    <mat-progress-bar color="warn" mode="determinate" 
       [bufferValue]="(chapter$ | async).total"
       [value]="(chapter$ | async).current">
     </mat-progress-bar>
   </div>
   <!-- <p>chapter =  {{chapter$ | async | json}}</p> -->
-  <hr>
   <div *ngIf="showTime$ | async">
-    <mat-progress-bar color="warn" mode="determinate" 
+    <mat-progress-bar color="primary" mode="determinate" 
       [bufferValue]="(time$ | async).total"
       [value]="(time$ | async).current">
     </mat-progress-bar>

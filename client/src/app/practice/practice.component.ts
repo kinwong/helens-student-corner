@@ -42,12 +42,15 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.courses$ = courseService.entities$;
     this.exercises$ = exerciseService.entities$;
     this.running$ = store.pipe(select(FromMedia.selectRunning));
+    this.showTableOfContent$ = store.pipe(select(FromPractice.selectShowTableOfContent));
+    this.allExerciseSelected$ = store.pipe(select(FromPractice.selectSelectedCourseExerciseAllActive));
+    this.onlySomeExerciseSelected$ = store.pipe(select(FromPractice.selectSelectedCourseExerciseSomeActive));
 
     this.ready$ = combineLatest(
       [courseService.loaded$, exerciseService.loaded$, this.running$])
       .pipe(
-        map(results => results[0] && results[1] && !results[2],
-          distinctUntilChanged()));
+        map(([courseReady, exerciseReady, running, ]) => courseReady && exerciseReady && !running),
+        distinctUntilChanged());
 
     const selectedCourseName$ = store.pipe(select(FromPractice.selectSelectedCourseName));
     this.selectedCourse$ = selectedCourseName$.pipe(
@@ -61,9 +64,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
             .map(name => exercises.find(exercise => name === exercise.name))
             .filter(exercise => exercise)))));
 
-    this.showTableOfContent$ = this.store.pipe(select(FromPractice.selectShowTableOfContent));
-    this.allExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseAllActive));
-    this.onlySomeExerciseSelected$ = this.store.pipe(select(FromPractice.selectSelectedCourseExerciseSomeActive));
   }
   ngOnInit(): void {
   }

@@ -1,5 +1,5 @@
 import { Observable, of, concat, EMPTY, BehaviorSubject } from 'rxjs';
-import { exhaustMap, catchError, map, take, concatMap, switchMap } from 'rxjs/operators';
+import { catchError, map, take, concatMap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
 import { Store, Action, select } from '@ngrx/store';
@@ -64,6 +64,7 @@ export class PlayerEffects {
   private *buildContent(
     content: PracticeContent): IterableIterator<Observable<Action>> {
 
+    yield of(MediaActions.setTitle({ title: content.course.name }));
     const config: AudioConfig = {
       audioEncoding: AudioEncoding.MP3,
       speakingRate: content.pref.speed
@@ -78,12 +79,16 @@ export class PlayerEffects {
     for (const line of this.buildSpeech(config, speaker, content.course.valedictions)) {
       yield line;
     }
+    yield of(MediaActions.stop());
   }
   private *buildExercises(
     config: AudioConfig, speaker: Speaker, content: PracticeContent): IterableIterator<Observable<Action>> {
 
+    const courseName = content.course.name;
     for (const activatedExercise of content.exercises) {
       const exercise = activatedExercise.exercise;
+
+      yield of(MediaActions.setTitle({title: `${courseName} - ${exercise.name}`}));
       // Instuction.
       for (const action of this.saySentance(config, speaker, exercise.instruction)) {
         yield action;
@@ -97,7 +102,6 @@ export class PlayerEffects {
       }
     }
   }
-
   private *saySentance(
     config: AudioConfig, speaker: Speaker, sentance: Sentence): IterableIterator<Observable<Action>> {
     yield concat(

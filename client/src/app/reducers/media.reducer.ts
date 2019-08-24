@@ -10,7 +10,7 @@ export interface State {
   loading: boolean;
   message: string | undefined;
   error: any | undefined;
-
+  title: string | undefined;
   subtitle: string | undefined;
   totalChapter: number | undefined;
   currentChapter: number | undefined;
@@ -25,6 +25,7 @@ const initialState: State = {
   message: undefined,
   error: undefined,
 
+  title: undefined,
   subtitle: undefined,
   totalChapter: undefined,
   currentChapter: undefined,
@@ -96,9 +97,13 @@ const mediaReducer = createReducer(
   on(MediaActions.stopLoading,
     state => ({ ...state, loading: false })),
 
+  on(MediaActions.setTitle,
+    (state, { title }) => ({
+      ...state, title })),
+  
   on(MediaActions.setSubtitle,
     (state, { subtitle }) => ({
-      ...state, subtitle: subtitle})),
+      ...state, subtitle })),
 
   on(MediaActions.setTotalChapter,
     (state, { totalChapter }) => ({
@@ -138,6 +143,7 @@ export const selectError = createSelector(selectFeature, state => state.error);
 export const selectRunning = createSelector(selectFeature, state => state.playing || state.paused);
 export const selectLoading = createSelector(selectFeature, state => state.loading);
 
+export const selectTitle = createSelector(selectFeature, state => state.title);
 export const selectSubtitle = createSelector(selectFeature, state => state.subtitle);
 export const selectTotalChapter = createSelector(selectFeature, state => state.totalChapter);
 export const selectCurrentChapter = createSelector(selectFeature, state => state.currentChapter);

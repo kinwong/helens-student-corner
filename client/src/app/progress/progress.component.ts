@@ -17,19 +17,20 @@ interface Ratio {
 })
 export class ProgressComponent implements OnInit {
   ready$: Observable<boolean>;
-  heading$: Observable<string>;
-  chapter$: Observable<Ratio>;
-  time$: Observable<Ratio>;
-
+  title$: Observable<string>;
   subtitle$: Observable<string>;
   mode$: Observable<string>;
   showChapter$: Observable<boolean>;
   showTime$: Observable<boolean>;
+  chapter$: Observable<Ratio>;
+  time$: Observable<Ratio>;
+
 
   constructor(private store: Store<State>) {
     this.ready$ = store.pipe(select(FromMedia.selectPlaying));
-
+    this.title$ = store.pipe(select(FromMedia.selectTitle));
     this.subtitle$ = store.pipe(select(FromMedia.selectSubtitle));
+
     this.mode$ = store.pipe(
       select(FromMedia.selectLoading),
       map(loading => loading ? 'buffer' : 'determinate'));
@@ -51,13 +52,12 @@ export class ProgressComponent implements OnInit {
   ngOnInit() {
   }
 }
-
 function toRatio(total: number, current: number): Ratio | undefined {
   if (total === undefined || current === undefined || total === 0) {
     return undefined;
   }
   return <Ratio>{
     total: 100,
-    current: Math.floor(current * 100 / total)
+    current: Math.floor(current * 100.0 / total)
   };
 }
