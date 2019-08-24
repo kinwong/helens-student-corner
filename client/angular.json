@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "helen-student-corner": {
+    "helens-student-corner": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/helen-student-corner",
+            "outputPath": "dist/helens-student-corner",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "helen-student-corner:build"
+            "browserTarget": "helens-student-corner:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "helen-student-corner:build:production"
+              "browserTarget": "helens-student-corner:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "helen-student-corner:build"
+            "browserTarget": "helens-student-corner:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         }
       }
     },
-    "helen-student-corner-e2e": {
+    "helens-student-corner-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -117,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "helen-student-corner:serve"
+            "devServerTarget": "helens-student-corner:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "helen-student-corner:serve:production"
+              "devServerTarget": "helens-student-corner:serve:production"
             }
           }
         },
@@ -137,7 +137,7 @@
       }
     }
   },
-  "defaultProject": "helen-student-corner",
+  "defaultProject": "helens-student-corner",
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }

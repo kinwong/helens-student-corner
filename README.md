@@ -15,4 +15,3 @@ This starter can be used in two different ways:
 
 - `npm run start:prod`: Builds the `client` and `server` projects and starts it with `NODE_ENV=production`. This by default sets `express.static` to `client/dist` to use this node server to serve frontend also.
 
-
