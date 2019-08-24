@@ -1060,32 +1060,32 @@ const arpeggiosScaleExercise: Exercise = {
 };
 
 export const courses: Course[] = [
-  {
-    name: 'Grade 1 Exam Scales Practice',
-    description:
-      '<p>All items are to be played from memory. The examiner will be looking for: <br/>' +
-      '<ol>' +
-      '<li>a positive sense of rhythm without undue accentuation;</li>' +
-      '<li>even, firm tone and a musical curve;</li>' +
-      '<li>good legato;</li>' +
-      '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' +
-      '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' +
-      '</ol>' +
-      '</p>',
-    greetings: [
-      'Good afternoon, please be seated and get your stool adjusted,',
-      'We will start when you\'re ready.'
-    ],
-    exerciseNames: [
-      majorScaleExercise.name,
-      minorScaleExercise.name,
-      melodicMinorScaleExercise.name
-    ],
-    valedictions: [
-      'Thank you very much.',
-      'Let\'s listen to your three pieces.'
-    ]
-  },
+  // {
+  //   name: 'Grade 1 Exam Scales Practice',
+  //   description:
+  //     '<p>All items are to be played from memory. The examiner will be looking for: <br/>' +
+  //     '<ol>' +
+  //     '<li>a positive sense of rhythm without undue accentuation;</li>' +
+  //     '<li>even, firm tone and a musical curve;</li>' +
+  //     '<li>good legato;</li>' +
+  //     '<li>accurate and fluent realization of the different types of scales and arpeggios;</li>' +
+  //     '<li>convincing negotiation of technical challenges such as smooth passage of the thumb and hand co-ordination.</li>' +
+  //     '</ol>' +
+  //     '</p>',
+  //   greetings: [
+  //     'Good afternoon, please be seated and get your stool adjusted,',
+  //     'We will start when you\'re ready.'
+  //   ],
+  //   exerciseNames: [
+  //     majorScaleExercise.name,
+  //     minorScaleExercise.name,
+  //     melodicMinorScaleExercise.name
+  //   ],
+  //   valedictions: [
+  //     'Thank you very much.',
+  //     'Let\'s listen to your three pieces.'
+  //   ]
+  // },
   {
     name: 'Grade 5 Exam Scales Practice',
     description:
