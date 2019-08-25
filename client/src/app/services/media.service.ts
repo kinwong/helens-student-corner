@@ -1,4 +1,4 @@
-import { Observable, defer, interval, NEVER, Subscription } from 'rxjs';
+import { Observable, defer, interval, NEVER, Subscription, BehaviorSubject } from 'rxjs';
 import { withLatestFrom, filter, switchMap, take, map, reduce, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Howl } from 'howler';
@@ -15,11 +15,15 @@ export interface MediaProgress {
 })
 export class MediaService {
   constructor(private logger: NGXLogger) {
+    // This is to fix a playback bug in Safari.
+    const sound = new Howl({src: ['']});
+    sound.play();
+    sound.stop();
   }
   /**
    * Creates a pausible wave sound from base64 encoded MP3.
    */
-  public createSound(mp3: string, pause$: Observable<boolean>): Observable<MediaProgress> {
+  public createSound(mp3: string, pause$: BehaviorSubject<boolean>): Observable<MediaProgress> {
     const data = 'data:audio/mp3;base64,' + mp3;
     let soundId: number;
     let subscriptionTimer: Subscription;
@@ -61,22 +65,32 @@ export class MediaService {
             observer.complete();
           }
         });
-        const subscription = pause$.pipe(distinctUntilChanged())
+
+        const subscription = pause$
           .subscribe(paused => {
-            if (paused) {
-              if (sound.playing()) {
-                this.logger.debug(`sound[${soundId}] is being paused...`);
-                sound.pause(soundId);
+            this.logger.debug(`Paused is received to be ${paused}!`);
+            if (!paused) {
+              if (soundId === undefined) {
+                // Initial play.
+                soundId = sound.play();
+                this.logger.info(`Sound[${soundId}] has been initially played...`);
+              } else {
+                // Sound was played before.
+                if (!sound.playing()) {
+                  this.logger.debug(`Sound[${soundId}] is being resumed...`);
+                  sound.play(soundId);
+                }
               }
             } else {
-              if (!sound.playing() && (soundId !== undefined)) {
-                this.logger.debug(`sound[${soundId}] is being resumed...`);
-                sound.play(soundId);
+              if (soundId !== undefined) {
+                if (sound.playing()) {
+                  this.logger.debug(`Sound[${soundId}] is being paused...`);
+                  sound.pause(soundId);
+                }
               }
             }
           });
-        // Initial play is called.
-        soundId = sound.play();
+
         return () => {
           this.logger.info(`Sound[${soundId}] is being disposed.`);
           if (subscriptionTimer) { subscriptionTimer.unsubscribe(); }
@@ -93,7 +107,7 @@ export class MediaService {
    * @returns stepTimer and completeTimer.
    */
   public createWaiter(
-    duration: number, pause$: Observable<boolean>): Observable<MediaProgress> {
+    duration: number, pause$: BehaviorSubject<boolean>): Observable<MediaProgress> {
     const totalInterval = Math.floor(duration / defaultInterval);
     let progress = 0;
     const waiter$ = interval(defaultInterval)
