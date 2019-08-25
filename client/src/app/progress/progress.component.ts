@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import * as FromMedia from '../reducers/media.reducer';
 import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged, tap, share } from 'rxjs/operators';
 
 interface Ratio {
   total: number;
@@ -38,12 +38,18 @@ export class ProgressComponent implements OnInit {
     this.chapter$ = combineLatest(
       [ store.pipe(select(FromMedia.selectTotalChapter)),
         store.pipe(select(FromMedia.selectCurrentChapter))])
-        .pipe(map(([total, current]) => toRatio(total, current)));
+        .pipe(
+          map(([total, current]) => toRatio(total, current)),
+          distinctUntilChanged(),
+          share());
 
     this.time$ = combineLatest(
       [store.pipe(select(FromMedia.selectTotalTime)),
         store.pipe(select(FromMedia.selectCurrentTime))])
-        .pipe(map(([total, current]) => toRatio(total, current)));
+        .pipe(
+          map(([total, current]) => toRatio(total, current)),
+          distinctUntilChanged(),
+          share());
 
     this.showChapter$ = this.chapter$.pipe(map(ratio => ratio !== undefined));
     this.showTime$ = this.time$.pipe(map(ratio => ratio !== undefined));

@@ -18,6 +18,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 /**
  * Imports and exports all Angular Material modules.
@@ -42,6 +43,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatStepperModule,
     MatTableModule,
     MatToolbarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatButtonModule,
@@ -62,6 +64,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatStepperModule,
     MatTableModule,
     MatToolbarModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class MaterialModule {}

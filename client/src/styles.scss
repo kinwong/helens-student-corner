@@ -1,32 +1,7 @@
-//@import '~@angular/material/theming';
-//@import './app-theme';
-// @import './styles/api';
-// @import './styles/markdown';
-// @import './styles/tables';
-//@import './styles/general';
-
-// Include material core styles.
-//@include mat-core();
-
-// Define the light theme.
-// $primary: mat-palette($mat-indigo);
-// $accent:  mat-palette($mat-pink, A200, A100, A400);
-// $theme: mat-light-theme($primary, $accent);
-
-// @include angular-material-theme($theme);
-//@include material-docs-app-theme($theme);
-
-// Define a custom typography config that overrides the font-family as well as the
-// `headlines` and `body-1` levels.
-// $custom-typography: mat-typography-config(
-//   $font-family: 'Roboto, monospace',
-//   $headline: mat-typography-level(32px, 48px, 700),
-//   $body-1: mat-typography-level(16px, 24px, 500)
-// );
-// /* You can add global styles to this file, and also import other style files */
-
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import '@angular/material/prebuilt-themes/purple-green.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: black;
+}

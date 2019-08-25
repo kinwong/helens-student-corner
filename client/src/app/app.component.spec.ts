@@ -4,7 +4,7 @@ import { MaterialModule } from './material.module';
 import { AppRouters } from './app.routes';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PracticeComponent } from './practice/practice.component';
-import { NavbarComponent } from './nav/navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

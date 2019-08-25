@@ -1,12 +1,11 @@
 import { Observable, of, concat, EMPTY, BehaviorSubject } from 'rxjs';
-import { catchError, map, take, concatMap, switchMap } from 'rxjs/operators';
+import { catchError, map, concatMap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
 import { Store, Action, select } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
 
 import { State } from '../reducers';
-
 import * as FromPractice from '../reducers/practice.reducer';
 import * as FromMedia from '../reducers/media.reducer';
 
@@ -20,8 +19,12 @@ import { MediaService } from '../services/media.service';
 import { AudioConfig, AudioEncoding } from '../models/contract';
 import { Sentence, Scale } from '../models/models';
 
-function toSsml(text: string) {
+function toSsml(text: string): string {
   return `<speak>${text}</speak>`;
+}
+
+function crotchetToMilliseconds(crotchet: number): number {
+  return 60 * 1000 / crotchet / 2;
 }
 
 @Injectable()
@@ -125,7 +128,9 @@ export class PlayerEffects {
 
     const octave = (scale.octaves) ? scale.octaves : 4;
     const notes = scale.notes ? scale.notes : 12;
-    const duration = octave * notes * crotchet;
+    const delay = scale.delay? scale.delay : 2000;
+    const duration = octave * notes * crotchetToMilliseconds(crotchet) + delay;
+
     yield this.media.createWaiter(duration, this.paused$).pipe(
       map(progress => MediaActions.setProgress({
         totalTime: progress.duration,
@@ -152,8 +157,4 @@ export class PlayerEffects {
         })));
     return speech$;
   }
-  // onPause$(): Observable {
-  // }
-  // onStop$(): Observable {
-  // }
 }

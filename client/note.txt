@@ -1,1 +1,7 @@
 https://github.com/ngrx/platform/tree/master/docs/schematics
+
+https://cloud.google.com/compute/docs/containers/deploying-containers
+
+
+docker build  -t helens-student-corner -f ./client/Dockerfile .
+

@@ -20,7 +20,23 @@ export const reducers: ActionReducerMap<State> = {
   media: fromMedia.reducer,
 };
 
-// console.log all actions
+let actionReducer: ActionReducer<State>;
+function reduceToLog(state, action) {
+  const result = actionReducer(state, action);
+  console.groupCollapsed(action.type);
+  console.log('prev', state);
+  console.log('action', action);
+  console.log('next', result);
+  console.groupEnd();
+  return result;
+}
 
-// export const metaReducers: MetaReducer<State>[] =
-//   !environment.production ? [] : [];
+// console.log all actions
+export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+  actionReducer = reducer;
+  return reduceToLog;
+}
+export const metaReducers: MetaReducer<State>[] =
+  (!environment.production) ? [logger] : [];
+
+

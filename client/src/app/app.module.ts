@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { StoreModule, MetaReducer, ActionReducer } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { EntityDataModule } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,7 +16,7 @@ import { MaterialModule } from './material.module';
 import { AppRouters } from './app.routes';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './nav/navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { PlayerComponent } from './player/player.component';
 import { PracticeComponent } from './practice/practice.component';
 import { PreferencesComponent } from './preferences/preferences.component';
@@ -25,28 +25,15 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html';
-import { reducers, State } from './reducers';
 
-import { environment } from 'src/environments/environment';
 import { AppEffects } from './app.effects';
 import { PlayerEffects } from './effects/player.effects';
 import { PracticeContentEffects } from './effects/practice-content.effects';
-import { Course, Exercise } from './models/models';
+
+import { environment } from 'src/environments/environment';
+import { reducers, metaReducers } from './reducers';
 import { entityConfig } from './models/entity-metadata';
 
-// function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-//   return (state, action) => {
-//     const result = reducer(state, action);
-//     console.groupCollapsed(action.type);
-//     console.log('prev', state);
-//     console.log('action', action);
-//     console.log('next', result);
-//     console.groupEnd();
-//     return result;
-//   };
-// }
-const metaReducers: MetaReducer<State>[] =
-  !environment.production ? [] : [];
 
 @NgModule({
   declarations: [

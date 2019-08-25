@@ -1,6 +1,24 @@
-h2 {
-  text-align: center;
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
+.spinner {
+  position: absolute;
+}
+
 h3 {
   text-align: center;
+  z-index: 100;
+}
+h2 {
+  text-align: center;
+  z-index: 100;
+}
+
+.text {
+  z-index: 100;
+
 }
