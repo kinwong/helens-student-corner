@@ -36,6 +36,7 @@ export const setCurrentTime = createAction(
   export const startLoading = createAction('[Media] Start Loading');
   export const stopLoading = createAction('[Media] Stop Loading');
 
-  export const setProgress = createAction(
-    '[Media] Set Chapter Progress',
+  export const setTimeProgress = createAction(
+    '[Media] Set Time Progress',
     props<{totalTime: number, currentTime: number}>());
+    export const clearTimeProgress = createAction('[Media] Clear Time Progress');

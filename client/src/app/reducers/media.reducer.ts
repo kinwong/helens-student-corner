@@ -74,11 +74,14 @@ const mediaReducer = createReducer(
   on(MediaActions.stop,
     _ => ({ ...initialState })),
 
-  on(MediaActions.setProgress,
+  on(MediaActions.setTimeProgress,
     (state, { totalTime, currentTime }) => ({
       ...state, totalTime, currentTime
     })
   ),
+  on(MediaActions.clearTimeProgress,
+    state => ({ ...state, totalTime: undefined, currentTime: undefined })),
+
   on(MediaActions.reportMessage,
     (state, {message}) => ({
       ...state, message: message
@@ -100,7 +103,7 @@ const mediaReducer = createReducer(
   on(MediaActions.setTitle,
     (state, { title }) => ({
       ...state, title })),
-  
+
   on(MediaActions.setSubtitle,
     (state, { subtitle }) => ({
       ...state, subtitle })),

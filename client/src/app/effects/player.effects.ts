@@ -1,5 +1,5 @@
 import { Observable, of, concat, EMPTY, BehaviorSubject } from 'rxjs';
-import { catchError, map, concatMap, switchMap } from 'rxjs/operators';
+import { catchError, map, concatMap, switchMap, flatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
 import { Store, Action, select } from '@ngrx/store';
@@ -91,7 +91,9 @@ export class PlayerEffects {
     for (const activatedExercise of content.exercises) {
       const exercise = activatedExercise.exercise;
 
-      yield of(MediaActions.setTitle({title: `${courseName} - ${exercise.name}`}));
+      yield of(
+        MediaActions.clearTimeProgress(),
+        MediaActions.setTitle({title: `${courseName} - ${exercise.name}`}));
       // Instuction.
       for (const action of this.saySentance(config, speaker, exercise.instruction)) {
         yield action;
@@ -113,26 +115,25 @@ export class PlayerEffects {
 
     if (sentance.delay) {
       yield this.media.createWaiter(sentance.delay, this.paused$)
-        .pipe(map(progress => MediaActions.setProgress({
-          totalTime: progress.duration,
-          currentTime: progress.current
-        })));
+        .pipe(flatMap(_ => EMPTY));
     }
   }
 
   private *sayScale(
     config: AudioConfig, speaker: Speaker, crotchet: number, scale: Scale): IterableIterator<Observable<Action>> {
     yield concat(
-      of(MediaActions.setSubtitle({ subtitle: scale.display })),
+      of(
+        MediaActions.setSubtitle({ subtitle: scale.display }),
+        MediaActions.clearTimeProgress()),
       (scale.speech) ? this.say$(config, speaker, scale.speech) : this.say$(config, speaker, scale.display));
 
     const octave = (scale.octaves) ? scale.octaves : 4;
     const notes = scale.notes ? scale.notes : 12;
-    const delay = scale.delay? scale.delay : 2000;
+    const delay = scale.delay ? scale.delay : 2000;
     const duration = octave * notes * crotchetToMilliseconds(crotchet) + delay;
 
     yield this.media.createWaiter(duration, this.paused$).pipe(
-      map(progress => MediaActions.setProgress({
+      map(progress => MediaActions.setTimeProgress({
         totalTime: progress.duration,
         currentTime: progress.current
       })));
@@ -151,10 +152,7 @@ export class PlayerEffects {
     const speech$ = this.speech.toSpeech(speaker.voice, config, ssml)
       .pipe(
         concatMap(mp3 => this.media.createSound(mp3, this.paused$)),
-        map(progress => MediaActions.setProgress({
-          totalTime: progress.duration,
-          currentTime: progress.current
-        })));
+        concatMap(_ => EMPTY));
     return speech$;
   }
 }
