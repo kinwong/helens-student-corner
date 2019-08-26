@@ -25,9 +25,9 @@
         </mat-expansion-panel-header>
 
         <section class="mat-typography">
-          <div [innerHTML]="(selectedCourse$ | async).description | sanitizeHtml"></div>
+          <div [innerHTML]="(selectedCourse$ | async)?.description | sanitizeHtml"></div>
           <table mat-table class="course-table" 
-            [dataSource]="(selectedCourseExercise$ | async)">
+            [dataSource]="selectedCourseExercise$ | async">
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let exercise; columns: columnsToDisplay"></tr>
             <!-- Selection checkbox -->

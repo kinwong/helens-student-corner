@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { State } from '../reducers';
@@ -10,7 +10,8 @@ import { map, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+  styleUrls: ['./player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayerComponent implements OnInit {
   playing$: Observable<boolean>;
@@ -18,7 +19,10 @@ export class PlayerComponent implements OnInit {
   playButtonText$: Observable<string>;
   paused$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private store: Store<State>) {
+  constructor(
+    private zone: NgZone,
+    private store: Store<State>) {
+
     this.playing$ = store.pipe(select(FromMedia.selectPlaying));
     this.running$ = store.pipe(select(FromMedia.selectRunning));
     this.playButtonText$ = store.pipe(
