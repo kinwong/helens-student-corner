@@ -1,9 +1,11 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import * as FromMedia from '../reducers/media.reducer';
-import { Observable, combineLatest, Subject, timer } from 'rxjs';
-import { map, distinctUntilChanged, tap, share, debounce, throttleTime } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
+import { map, distinctUntilChanged, share, observeOn } from 'rxjs/operators';
+import { enterZone } from '../core/zone-scheduler';
+import { async } from 'rxjs/internal/scheduler/async';
 
 interface Ratio {
   total: number;
@@ -16,7 +18,6 @@ interface Ratio {
   styleUrls: ['./progress.component.scss']
 })
 export class ProgressComponent implements OnInit {
-  redraw$: Subject<boolean>;
   ready$: Observable<boolean>;
   title$: Observable<string>;
   subtitle$: Observable<string>;
@@ -29,29 +30,24 @@ export class ProgressComponent implements OnInit {
 
   constructor(
     private zone: NgZone,
-    private cd: ChangeDetectorRef,
     private store: Store<State>) {
-
-    this.redraw$ = new Subject();
-    this.redraw$.pipe(throttleTime(100))
-      .subscribe(_ => this.cd.detectChanges());
 
     this.ready$ = store.pipe(
       select(FromMedia.selectPlaying),
-      tap(_ => this.redraw$.next()));
+      observeOn(enterZone(this.zone, async)));
 
     this.title$ = store.pipe(
-      select(FromMedia.selectTitle,
-      tap(_ => this.redraw$.next())));
+      select(FromMedia.selectTitle),
+      observeOn(enterZone(this.zone, async)));
 
     this.subtitle$ = store.pipe(
       select(FromMedia.selectSubtitle),
-      tap(_ => this.redraw$.next()));
+      observeOn(enterZone(this.zone, async)));
 
     this.mode$ = store.pipe(
       select(FromMedia.selectLoading),
       map(loading => loading ? 'buffer' : 'determinate'),
-      tap(_ => this.redraw$.next()));
+      observeOn(enterZone(this.zone, async)));
 
     this.chapter$ = combineLatest(
       [ store.pipe(select(FromMedia.selectTotalChapter)),
@@ -59,7 +55,7 @@ export class ProgressComponent implements OnInit {
         .pipe(
           map(([total, current]) => toRatio(total, current)),
           distinctUntilChanged(),
-          tap(_ => this.redraw$.next(true)),
+          observeOn(enterZone(this.zone, async)),
           share());
 
     this.time$ = combineLatest(
@@ -68,13 +64,12 @@ export class ProgressComponent implements OnInit {
         .pipe(
           map(([total, current]) => toRatio(total, current)),
           distinctUntilChanged(),
-          tap(_ => this.redraw$.next()),
+          observeOn(enterZone(this.zone, async)),
           share());
 
     this.showChapter$ = this.chapter$.pipe(map(ratio => ratio !== undefined));
     this.showTime$ = this.time$.pipe(map(ratio => ratio !== undefined));
   }
-
   ngOnInit() {
   }
 }

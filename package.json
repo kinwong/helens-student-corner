@@ -23,6 +23,7 @@
     "concurrently": "^4.1.0"
   },
   "dependencies": {
-    "ngrx": "^2.0.1"
+    "ngrx": "^2.0.1",
+    "ngx-zone-scheduler": "^2.2.1"
   }
 }
