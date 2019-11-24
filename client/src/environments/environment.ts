@@ -17,7 +17,7 @@ export const environment = {
       textToSspeech: {
         baseUrl: 'https://texttospeech.googleapis.com',
         version: 'v1',
-        key: 'AIzaSyCj2Tbuud7sNPzUUwV0IID4PFBk6byu9vk'
+        key: 'AIzaSyAfKI5z2HMnT9HO7NStcfw59wG6N_42SiQ'
       }
     }
   }
